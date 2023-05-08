@@ -1,5 +1,4 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Next.js",
   "compilerOptions": {
     "composite": false,
@@ -24,6 +23,6 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": ["src", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["src", "pages", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

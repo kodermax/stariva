@@ -48,7 +48,7 @@ function HomePage() {
                   style={{
                     lineHeight: "1",
                     fontVariantLigatures: "none",
-                    WebkitTextAlign: "center",
+                    WebkitBoxAlign: "center",
                     textAlign: "center",
                   }}
                   strokeLinejoin="miter"
@@ -64,7 +64,7 @@ function HomePage() {
                     style={{
                       lineHeight: "1",
                       fontVariantLigatures: "none",
-                      WebkitTextAlign: "center",
+                      WebkitBoxAlign: "center",
                       textAlign: "center",
                     }}
                     fill="#3437a5"
@@ -75,7 +75,7 @@ function HomePage() {
                     style={{
                       lineHeight: "1",
                       fontVariantLigatures: "none",
-                      WebkitTextAlign: "center",
+                      WebkitBoxAlign: "center",
                       textAlign: "center",
                     }}
                     fill="#3745b1"
@@ -86,7 +86,7 @@ function HomePage() {
                     style={{
                       lineHeight: "1",
                       fontVariantLigatures: "none",
-                      WebkitTextAlign: "center",
+                      WebkitBoxAlign: "center",
                       textAlign: "center",
                     }}
                     fill="#3b54bd"
@@ -97,7 +97,7 @@ function HomePage() {
                     style={{
                       lineHeight: "1",
                       fontVariantLigatures: "none",
-                      WebkitTextAlign: "center",
+                      WebkitBoxAlign: "center",
                       textAlign: "center",
                     }}
                     fill="#3e62ca"
@@ -108,7 +108,7 @@ function HomePage() {
                     style={{
                       lineHeight: "1",
                       fontVariantLigatures: "none",
-                      WebkitTextAlign: "center",
+                      WebkitBoxAlign: "center",
                       textAlign: "center",
                     }}
                     fill="#4170d6"
@@ -119,7 +119,7 @@ function HomePage() {
                     style={{
                       lineHeight: "1",
                       fontVariantLigatures: "none",
-                      WebkitTextAlign: "center",
+                      WebkitBoxAlign: "center",
                       textAlign: "center",
                     }}
                     fill="#457fe2"
@@ -130,7 +130,7 @@ function HomePage() {
                     style={{
                       lineHeight: "1",
                       fontVariantLigatures: "none",
-                      WebkitTextAlign: "center",
+                      WebkitBoxAlign: "center",
                       textAlign: "center",
                     }}
                     fill="#488dee"
