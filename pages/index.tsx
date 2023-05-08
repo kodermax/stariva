@@ -1,90 +1,150 @@
-import React from 'react'
+import React from "react";
 
 function HomePage() {
   return (
-    <div className='outer'>
-      <header className='header'>
-        <a href='https://nest-saas.com'>
-          <div className='logo'>
-            <svg width={47} fill='none' height={26} viewBox='0 0 268 150' xmlns='http://www.w3.org/2000/svg'>
-              <rect
-                rx='25.1443'
-                width='50.2886'
-                height='143.953'
-                fill={'#666CFF'}
-                transform='matrix(-0.865206 0.501417 0.498585 0.866841 195.571 0)'
-              />
-              <rect
-                rx='25.1443'
-                width='50.2886'
-                height='143.953'
-                fillOpacity='0.4'
-                fill='url(#paint0_linear_7821_79167)'
-                transform='matrix(-0.865206 0.501417 0.498585 0.866841 196.084 0)'
-              />
-              <rect
-                rx='25.1443'
-                width='50.2886'
-                height='143.953'
-                fill={'#666CFF'}
-                transform='matrix(0.865206 0.501417 -0.498585 0.866841 173.147 0)'
-              />
-              <rect
-                rx='25.1443'
-                width='50.2886'
-                height='143.953'
-                fill={'#666CFF'}
-                transform='matrix(-0.865206 0.501417 0.498585 0.866841 94.1973 0)'
-              />
-              <rect
-                rx='25.1443'
-                width='50.2886'
-                height='143.953'
-                fillOpacity='0.4'
-                fill='url(#paint1_linear_7821_79167)'
-                transform='matrix(-0.865206 0.501417 0.498585 0.866841 94.1973 0)'
-              />
-              <rect
-                rx='25.1443'
-                width='50.2886'
-                height='143.953'
-                fill={'#666CFF'}
-                transform='matrix(0.865206 0.501417 -0.498585 0.866841 71.7728 0)'
-              />
-              <defs>
-                <linearGradient
-                  y1='0'
-                  x1='25.1443'
-                  x2='25.1443'
-                  y2='143.953'
-                  id='paint0_linear_7821_79167'
-                  gradientUnits='userSpaceOnUse'
+    <div className="outer">
+      <div className="wrap">
+        <div className="content">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="1024"
+            height="768"
+            version="1.1"
+            viewBox="0 0 1024 768"
+          >
+            <linearGradient
+              x1="30%"
+              x2="-10%"
+              y1="120%"
+              y2="30%"
+              spreadMethod="pad"
+            >
+              <stop offset="0%" stopColor="#fff" stopOpacity="1"></stop>
+              <stop offset="100%" stopColor="#000" stopOpacity="1"></stop>
+            </linearGradient>
+            <linearGradient
+              x1="30%"
+              x2="-10%"
+              y1="120%"
+              y2="30%"
+              gradientTransform="rotate(-30)"
+              spreadMethod="pad"
+            >
+              <stop offset="0%" stopColor="#fff" stopOpacity="1"></stop>
+              <stop offset="50%" stopColor="#ccc" stopOpacity="1"></stop>
+              <stop offset="100%" stopColor="#000" stopOpacity="1"></stop>
+            </linearGradient>
+            <g>
+              <image
+                width="480"
+                height="480"
+                x="272"
+                y="144"
+                display="none"
+              ></image>
+              <g>
+                <image x="0" y="0" display="none"></image>
+                <g
+                  style={{
+                    lineHeight: "1",
+                    fontVariantLigatures: "none",
+                    WebkitTextAlign: "center",
+                    textAlign: "center",
+                  }}
+                  strokeLinejoin="miter"
+                  strokeMiterlimit="2"
+                  strokeWidth="0"
+                  fontFamily="Daniel"
+                  fontSize="72"
+                  fontStyle="normal"
+                  fontWeight="normal"
+                  textAnchor="middle"
                 >
-                  <stop />
-                  <stop offset='1' stopOpacity='0' />
-                </linearGradient>
-                <linearGradient
-                  y1='0'
-                  x1='25.1443'
-                  x2='25.1443'
-                  y2='143.953'
-                  id='paint1_linear_7821_79167'
-                  gradientUnits='userSpaceOnUse'
-                >
-                  <stop />
-                  <stop offset='1' stopOpacity='0' />
-                </linearGradient>
-              </defs>
-            </svg>
-          </div>
-        </a>
-      </header>
-      <div className='wrap'>
-        <div className='content'>
-          <h1>Stariva</h1>
+                  <path
+                    style={{
+                      lineHeight: "1",
+                      fontVariantLigatures: "none",
+                      WebkitTextAlign: "center",
+                      textAlign: "center",
+                    }}
+                    fill="#3437a5"
+                    stroke="#3437a5"
+                    d="M404.742 398.806q0 2.614-4.977 6.133-3.972 2.765-7.491 4.022-2.665.905-32.326 7.591-22.321 5.027-29.058 10.608-1.056-.1-2.413-1.307v-3.117q5.48-4.223 11.21-6.284 6.335-2.213 18.15-5.028l18.299-4.374q4.173-.955 8.798-2.413 5.279-1.659 8.345-3.418.654-.352 2.966-2.816-1.608-2.865-5.228-4.625-2.413-1.206-6.787-2.513-3.268-.956-12.568-3.72-43.185-13.223-43.185-24.936 0-3.419 2.212-4.927.251-.201 5.63-1.81 29.913-8.748 44.844-8.748h1.71q9.25 0 12.82 4.123-.654.754-.755 1.609-8.596-1.207-9.904-1.207-5.58 0-19.003 2.564-12.267 2.413-23.628 5.38-4.726 1.306-7.491 3.418 3.117 5.228 11.21 9.1 1.207.552 13.776 5.932l10.356 2.815q34.488 9.552 34.488 17.948z"
+                  ></path>
+                  <path
+                    style={{
+                      lineHeight: "1",
+                      fontVariantLigatures: "none",
+                      WebkitTextAlign: "center",
+                      textAlign: "center",
+                    }}
+                    fill="#3745b1"
+                    stroke="#3745b1"
+                    d="M464.215 392.17q-11.513 0-19.808 3.82-2.01.905-2.463 2.564-.1 2.363-.804 8.597-.252 2.312-.252 4.776 0 .503.201 3.368.252 2.816.252 3.268 0 3.972-1.961 6.586-.402-.1-2.212-.855-1.96-5.077-1.96-11.814 0-1.66.552-6.636.503-4.877.503-6.586 0-1.508-1.056-2.262-.905.352-6.435.905-.955.2-5.73.905-.856.1-3.118.351-.503.05-2.463 1.61-.503.452-.503 1.96v.352h-2.212q-.754 0-3.167-2.061-2.363-2.112-2.363-2.715 0-3.117 11.06-4.625 13.524-1.86 16.138-3.268 1.508-.905 3.318-19.858.905-9.351 3.72-23.98.252-1.257.805-3.872.2-.553 3.519-2.161l.854 6.183q-.251 1.257-.955 5.279l-2.111 12.92q-.352 1.609-.805 6.184l-.854 17.947 20.31-.2z"
+                  ></path>
+                  <path
+                    style={{
+                      lineHeight: "1",
+                      fontVariantLigatures: "none",
+                      WebkitTextAlign: "center",
+                      textAlign: "center",
+                    }}
+                    fill="#3b54bd"
+                    stroke="#3b54bd"
+                    d="M513.734 426.003q-1.055 1.458-2.312 1.458-.805 0-5.43-4.826-4.625-4.876-6.183-4.876 0 0 0 0 0 .1-10.96 4.223-11.21 4.172-14.278 4.172-2.513 0-5.58-2.463-3.067-2.464-3.067-4.625 0-5.58 12.217-13.021 11.462-7.038 17.495-7.038 2.514 0 4.525 2.865v2.162q-1.006 1.458-2.313 1.458-.251 0-1.76-.654-1.457-.653-1.76-.653-2.01 0-9.2 4.122-6.836 3.871-9.149 5.782-2.313 2.01-2.966 4.575 1.76 1.659 4.173 1.659 1.256 0 12.116-4.173 10.808-4.223 13.07-4.223 3.319 0 4.777 1.659.352.402 2.564 4.525 1.659 3.116 4.021 5.63z"
+                  ></path>
+                  <path
+                    style={{
+                      lineHeight: "1",
+                      fontVariantLigatures: "none",
+                      WebkitTextAlign: "center",
+                      textAlign: "center",
+                    }}
+                    fill="#3e62ca"
+                    stroke="#3e62ca"
+                    d="M562.6 400.113l-1.609 1.458q-5.278-1.66-8.194-1.66h-.402q-3.77.202-5.53.202h-4.022q-.1 0-3.52 1.106-2.161.15-6.384 1.106-6.737 2.966-8.044 10.457-.553 2.966-.553 5.228 0 .603.05 1.207.403 5.58.403 6.585-1.157.302-3.72.604-1.408-2.715-1.408-3.77 0-.554.251-2.866.15-2.313.15-3.117 0-4.223 3.721-14.53 1.257-2.614 3.62-4.273 5.128-3.519 18.953-3.519 13.875.05 16.238 3.67z"
+                  ></path>
+                  <path
+                    style={{
+                      lineHeight: "1",
+                      fontVariantLigatures: "none",
+                      WebkitTextAlign: "center",
+                      textAlign: "center",
+                    }}
+                    fill="#4170d6"
+                    stroke="#4170d6"
+                    d="M584.168 377.389l.05.201q0 1.96-4.123 4.776-1.206-.352-4.926-4.122 1.508-3.62 3.267-3.62 1.66 0 5.732 2.765zm-4.726 38.409q-.603 8.144-.603 9.451-2.414 1.358-4.324 1.358-.804-2.313-.804-5.731 0-19.004 4.725-20.16 1.66.754 1.81 2.564-.05-.654-.15-.704.05.553.05 1.357 0 3.57-.704 11.865z"
+                  ></path>
+                  <path
+                    style={{
+                      lineHeight: "1",
+                      fontVariantLigatures: "none",
+                      WebkitTextAlign: "center",
+                      textAlign: "center",
+                    }}
+                    fill="#457fe2"
+                    stroke="#457fe2"
+                    d="M646.004 392.572q-3.77 1.709-9.15 4.776-.452.251-6.938 6.837-22.422 22.723-27.449 22.723-1.156 0-4.323-5.278-2.916-4.776-3.57-6.536-.754-2.262-2.815-8.094-1.508-4.173-4.424-7.44v-4.223q2.614-.604 2.614-.704 0-.05-.15-.05 1.055 0 7.59 11.613 6.586 11.613 7.944 11.613 1.709 0 11.26-9.1 10.76-10.306 12.167-11.26 6.586-4.626 13.121-8.698h3.318l.805.754z"
+                  ></path>
+                  <path
+                    style={{
+                      lineHeight: "1",
+                      fontVariantLigatures: "none",
+                      WebkitTextAlign: "center",
+                      textAlign: "center",
+                    }}
+                    fill="#488dee"
+                    stroke="#488dee"
+                    d="M695.523 426.003q-1.056 1.458-2.312 1.458-.805 0-5.43-4.826-4.625-4.876-6.184-4.876 0 0 0 0 0 .1-10.96 4.223-11.21 4.172-14.277 4.172-2.514 0-5.58-2.463-3.067-2.464-3.067-4.625 0-5.58 12.217-13.021 11.462-7.038 17.495-7.038 2.513 0 4.524 2.865v2.162q-1.005 1.458-2.312 1.458-.252 0-1.76-.654-1.458-.653-1.76-.653-2.01 0-9.2 4.122-6.837 3.871-9.15 5.782-2.312 2.01-2.965 4.575 1.76 1.659 4.172 1.659 1.257 0 12.116-4.173 10.81-4.223 13.071-4.223 3.318 0 4.776 1.659.352.402 2.564 4.525 1.66 3.116 4.022 5.63z"
+                  ></path>
+                </g>
+                <image x="0" y="0" display="none"></image>
+              </g>
+            </g>
+          </svg>
         </div>
       </div>
     </div>
-  )
+  );
 }
-export default HomePage
+export default HomePage;
