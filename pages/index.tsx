@@ -12,7 +12,6 @@ const StyledGradientText = styled(m.h1)({
   fontFamily: "'Daniel', sans-serif",
   fontSize: `${64 / 16}rem`,
   textAlign: "center",
-  letterSpacing: 8,
   "@media(min-width:900px)": {
     fontSize: `${96 / 16}rem`,
   },
