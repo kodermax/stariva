@@ -44,14 +44,6 @@ a:hover {
   padding: 2vw
 }
 
-.logo svg {
-  height: 35px;
-}
-
-.logo svg g,
-.logo svg path {
-  fill: #fff
-}
 
 .content {
   padding: 0 30px;
@@ -60,38 +52,7 @@ a:hover {
   text-align: center
 }
 
-h1,
-h2 {
-  padding: 0;
-  color: #fff
-}
 
-h1 {
-  margin: 0 0 10px;
-  font-weight: 600;
-  font-size: 70px;
-  line-height: 1.1em;
-  letter-spacing: -1px;
-}
-
-h2 {
-  margin: 0;
-  font-weight: 200;
-  font-size: 23px;
-  line-height: 1.3em;
-  letter-spacing: 1px
-}
-
-@media screen and (max-width:800px) {
-  h1 {
-    font-size: 6.5vw;
-    letter-spacing: 2px
-  }
-
-  h2 {
-    font-size: 14px
-  }
-}
 
 .outer {
   bottom: 0;
