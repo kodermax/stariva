@@ -9,7 +9,7 @@ const StyledGradientText = styled(m.h1)({
     `300deg, #00AB55 0%, #FFAB00 25%, #00AB55 50%, #FFAB00 75%, #00AB55 100%`
   ),
   backgroundSize: "400%",
-  fontFamily: "'Barlow', sans-serif",
+  fontFamily: "'Daniel', sans-serif",
   fontSize: `${64 / 16}rem`,
   textAlign: "center",
   lineHeight: 1,

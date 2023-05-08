@@ -7,7 +7,7 @@ import { MotionLazyContainer } from "../src/components/animate";
 
 const clientSideEmotionCache = createEmotionCache();
 
-interface MyAppProps extends AppProps {
+export interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
