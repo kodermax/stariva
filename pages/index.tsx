@@ -1,7 +1,7 @@
 import { m } from "framer-motion";
 import React from "react";
 import { textGradient } from "../src/utils/cssStyles";
-import { styled } from "@mui/material";
+import { Typography, styled } from "@mui/material";
 import { varFade } from "../src/components/animate";
 
 const StyledGradientText = styled(m.h1)({
@@ -15,6 +15,7 @@ const StyledGradientText = styled(m.h1)({
   "@media(min-width:900px)": {
     fontSize: `${96 / 16}rem`,
   },
+  margin: 0,
 });
 
 function HomePage() {
@@ -35,6 +36,9 @@ function HomePage() {
               Stariva
             </StyledGradientText>
           </m.div>
+          <Typography variant="body1" sx={{ color: "rgb(145, 158, 171)" }}>
+            info@stariva.shop
+          </Typography>
         </div>
       </div>
     </div>
