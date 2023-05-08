@@ -2,8 +2,9 @@ import { m } from "framer-motion";
 import React from "react";
 import { textGradient } from "../src/utils/cssStyles";
 import { styled } from "@mui/material";
+import { varFade } from "../src/components/animate";
 
-const StyledGradientText = styled(m.h1)(() => ({
+const StyledGradientText = styled(m.h1)({
   ...textGradient(
     `300deg, #00AB55 0%, #FFAB00 25%, #00AB55 50%, #FFAB00 75%, #00AB55 100%`
   ),
@@ -19,24 +20,26 @@ const StyledGradientText = styled(m.h1)(() => ({
   "@media(min-width:900px)": {
     fontSize: `${96 / 16}rem`,
   },
-}));
+});
 
 function HomePage() {
   return (
     <div className="outer">
       <div className="wrap">
         <div className="content">
-          <StyledGradientText
-            animate={{ backgroundPosition: "200% center" }}
-            transition={{
-              repeatType: "reverse",
-              ease: "linear",
-              duration: 20,
-              repeat: Infinity,
-            }}
-          >
-            Stariva
-          </StyledGradientText>
+          <m.div variants={varFade().in}>
+            <StyledGradientText
+              animate={{ backgroundPosition: "200% center" }}
+              transition={{
+                repeatType: "reverse",
+                ease: "linear",
+                duration: 20,
+                repeat: Infinity,
+              }}
+            >
+              Stariva
+            </StyledGradientText>
+          </m.div>
         </div>
       </div>
     </div>
