@@ -6,7 +6,7 @@ import { varFade } from "../src/components/animate";
 
 const StyledGradientText = styled(m.h1)({
   ...textGradient(
-    `300deg, #00AB55 0%, #FFAB00 25%, #00AB55 50%, #FFAB00 75%, #00AB55 100%`
+    `300deg, #3437a5 0%, #488dee 25%, #3437a5 50%, #488dee 75%, #3437a5 100%`
   ),
   backgroundSize: "400%",
   fontFamily: "'Daniel', sans-serif",
