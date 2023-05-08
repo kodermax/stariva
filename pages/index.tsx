@@ -1,7 +1,7 @@
 import { m } from "framer-motion";
 import React from "react";
 import { textGradient } from "../src/utils/cssStyles";
-import styled from "@emotion/styled";
+import { styled } from "@mui/material";
 
 const StyledGradientText = styled(m.h1)(() => ({
   ...textGradient(
