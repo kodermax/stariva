@@ -6,7 +6,6 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 import { MotionLazyContainer } from "../src/components/animate";
 import * as snippet from "@segment/snippet";
 
-import { useEffect } from "react";
 import Page from "../src/components/page/Page";
 import Script from "next/script";
 
@@ -36,12 +35,6 @@ function App({
   emotionCache = clientSideEmotionCache,
   pageProps,
 }: MyAppProps) {
-  useEffect(() => {
-    setTimeout(() => {
-      window.analytics.page("/");
-    }, 5000);
-  }, []);
-
   return (
     <CacheProvider value={emotionCache}>
       <MotionLazyContainer>
