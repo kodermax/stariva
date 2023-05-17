@@ -12,7 +12,7 @@
     "@emotion/react": "^11.11.0",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.11.0",
-    "@mui/material": "^5.13.0",
+    "@mui/material": "^5.13.1",
     "@segment/analytics-next": "^1.51.7",
     "@segment/snippet": "^4.16.0",
     "@vercel/analytics": "^1.0.1",
