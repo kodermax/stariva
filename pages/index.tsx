@@ -18,7 +18,7 @@ const StyledGradientText = styled(m.h1)({
   margin: 0,
 });
 
-function HomePage() {
+export default function HomePage() {
   return (
     <div className="outer">
       <div className="wrap">
@@ -44,4 +44,3 @@ function HomePage() {
     </div>
   );
 }
-export default HomePage;
