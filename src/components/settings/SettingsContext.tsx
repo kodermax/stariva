@@ -17,7 +17,6 @@ import {
   ThemeLayoutValue,
   ThemeStretchValue,
   ThemeContrastValue,
-  ThemeDirectionValue,
   SettingsContextProps,
   ThemeColorPresetsValue,
 } from "./types";
@@ -30,11 +29,6 @@ const initialState: SettingsContextProps = {
   // Mode
   onToggleMode: () => {},
   onChangeMode: () => {},
-
-  // Direction
-  onToggleDirection: () => {},
-  onChangeDirection: () => {},
-  onChangeDirectionByLang: () => {},
 
   // Layout
   onChangeLayout: () => {},
@@ -83,24 +77,9 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
   const [themeContrast, setThemeContrast] = useState(
     defaultSettings.themeContrast
   );
-  const [themeDirection, setThemeDirection] = useState(
-    defaultSettings.themeDirection
-  );
   const [themeColorPresets, setThemeColorPresets] = useState(
     defaultSettings.themeColorPresets
   );
-
-  const langStorage =
-    typeof window !== "undefined" ? localStorage.getItem("i18nextLng") : "";
-
-  const isArabic = langStorage === "ar";
-
-  useEffect(() => {
-    if (isArabic) {
-      onChangeDirectionByLang("ar");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isArabic]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -109,8 +88,6 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
       const stretch = getCookie("themeStretch") || defaultSettings.themeStretch;
       const contrast =
         getCookie("themeContrast") || defaultSettings.themeContrast;
-      const direction =
-        getCookie("themeDirection") || defaultSettings.themeDirection;
       const colorPresets =
         getCookie("themeColorPresets") || defaultSettings.themeColorPresets;
 
@@ -118,7 +95,6 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
       setThemeLayout(layout as ThemeLayoutValue);
       setThemeStretch(stretch as ThemeStretchValue);
       setThemeContrast(contrast as ThemeContrastValue);
-      setThemeDirection(direction as ThemeDirectionValue);
       setThemeColorPresets(colorPresets as ThemeColorPresetsValue);
     }
   }, []);
@@ -139,28 +115,6 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     },
     []
   );
-
-  // Direction
-  const onToggleDirection = useCallback(() => {
-    const value = themeDirection === "rtl" ? "ltr" : "rtl";
-    setThemeDirection(value);
-    setCookie("themeDirection", value);
-  }, [themeDirection]);
-
-  const onChangeDirection = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const value = event.target.value as ThemeDirectionValue;
-      setThemeDirection(value);
-      setCookie("themeDirection", value);
-    },
-    []
-  );
-
-  const onChangeDirectionByLang = useCallback((lang: string) => {
-    const value = lang === "ar" ? "rtl" : "ltr";
-    setThemeDirection(value);
-    setCookie("themeDirection", value);
-  }, []);
 
   // Layout
   const onChangeLayout = useCallback(
@@ -211,7 +165,6 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     setThemeLayout(defaultSettings.themeLayout);
     setThemeStretch(defaultSettings.themeStretch);
     setThemeContrast(defaultSettings.themeContrast);
-    setThemeDirection(defaultSettings.themeDirection);
     setThemeColorPresets(defaultSettings.themeColorPresets);
     removeCookie("themeMode");
     removeCookie("themeLayout");
@@ -227,12 +180,6 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
       themeMode,
       onToggleMode,
       onChangeMode,
-
-      // Direction
-      themeDirection,
-      onToggleDirection,
-      onChangeDirection,
-      onChangeDirectionByLang,
 
       // Layout
       themeLayout,
@@ -259,18 +206,14 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     [
       onChangeColorPresets,
       onChangeContrast,
-      onChangeDirection,
-      onChangeDirectionByLang,
       onChangeLayout,
       onChangeMode,
       onResetSetting,
       onToggleContrast,
-      onToggleDirection,
       onToggleMode,
       onToggleStretch,
       themeColorPresets,
       themeContrast,
-      themeDirection,
       themeLayout,
       themeMode,
       themeStretch,

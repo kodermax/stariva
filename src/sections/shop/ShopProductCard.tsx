@@ -1,10 +1,7 @@
 import { paramCase } from "change-case";
 
-// next
-import NextLink from "next/link";
-
 // @mui
-import { Box, Card, Link, Stack } from "@mui/material";
+import { Box, Button, Card, Stack } from "@mui/material";
 
 // routes
 
@@ -13,6 +10,7 @@ import { fCurrency } from "../../utils/formatNumber";
 import Label from "../../components/label";
 import Image from "../../components/image";
 import { ColorPreview } from "../../components/color-utils";
+import Link from "../../components/link/Link";
 
 // ----------------------------------------------------------------------
 
@@ -53,11 +51,9 @@ export default function ShopProductCard({ product }: Props) {
       </Box>
 
       <Stack spacing={2.5} sx={{ p: 3 }}>
-        <NextLink href={linkTo} passHref>
-          <Link color="inherit" variant="subtitle2" noWrap>
-            {name}
-          </Link>
-        </NextLink>
+        <Button color="inherit" noWrap component={Link} href={linkTo}>
+          {name}
+        </Button>
 
         <Stack
           direction="row"

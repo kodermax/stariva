@@ -4,11 +4,10 @@ import { useEffect } from "react";
 import Head from "next/head";
 
 // @mui
-import { Container, Stack } from "@mui/material";
+import { Container } from "@mui/material";
 
 // components
 
-import ShopProductSearch from "../../src/sections/shop/ShopProductSearch";
 import ShopProductList from "../../src/sections/shop/ShopProductList";
 import { useDispatch, useSelector } from "../../src/redux/store";
 import { getProducts } from "../../src/redux/slices/product";
@@ -36,18 +35,7 @@ export default function ShopPage() {
       <Head>
         <title> Магазин | Stariva</title>
       </Head>
-
       <Container maxWidth={"lg"}>
-        <Stack
-          spacing={2}
-          direction={{ xs: "column", sm: "row" }}
-          alignItems={{ sm: "center" }}
-          justifyContent="space-between"
-          sx={{ mb: 2 }}
-        >
-          <ShopProductSearch />
-        </Stack>
-
         <ShopProductList products={products} loading={!products.length} />
       </Container>
     </>

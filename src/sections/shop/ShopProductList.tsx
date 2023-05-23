@@ -30,7 +30,7 @@ export default function ShopProductList({
       }}
       {...other}
     >
-      {(loading ? [...Array(12)] : products).map((product, index) =>
+      {(loading ? [...Array(12)] : products).map((product, index: number) =>
         product ? (
           <ShopProductCard key={product.id} product={product} />
         ) : (

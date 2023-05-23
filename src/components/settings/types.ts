@@ -22,7 +22,6 @@ export type SettingsValueProps = {
   themeLayout: ThemeLayoutValue;
   themeStretch: ThemeStretchValue;
   themeContrast: ThemeContrastValue;
-  themeDirection: ThemeDirectionValue;
   themeColorPresets: ThemeColorPresetsValue;
 };
 
@@ -36,11 +35,6 @@ export type SettingsContextProps = SettingsValueProps & {
   // Mode
   onToggleMode: VoidFunction;
   onChangeMode: (event: React.ChangeEvent<HTMLInputElement>) => void;
-
-  // Direction
-  onToggleDirection: VoidFunction;
-  onChangeDirection: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeDirectionByLang: (lang: string) => void;
 
   // Layout
   onChangeLayout: (event: React.ChangeEvent<HTMLInputElement>) => void;
