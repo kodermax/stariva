@@ -8,6 +8,10 @@ import * as snippet from "@segment/snippet";
 
 import Page from "../src/components/page/Page";
 import Script from "next/script";
+import { Provider as ReduxProvider } from "react-redux";
+import { store } from "../src/redux/store";
+import ThemeProvider from "../src/theme";
+import { ThemeSettings } from "../src/components/settings";
 
 const clientSideEmotionCache = createEmotionCache();
 const DEFAULT_WRITE_KEY = "EdsFmaIrca2R4g21YYK5eshSanBu6nur";
@@ -37,16 +41,22 @@ function App({
 }: MyAppProps) {
   return (
     <CacheProvider value={emotionCache}>
-      <MotionLazyContainer>
-        <Page>
-          <Script
-            id="segment-script"
-            dangerouslySetInnerHTML={{ __html: renderSnippet() }}
-          />
-          <Component {...pageProps} />
-        </Page>
-      </MotionLazyContainer>
-      <Analytics />
+      <ReduxProvider store={store}>
+        <MotionLazyContainer>
+          <ThemeProvider>
+            <ThemeSettings>
+              <Page>
+                <Script
+                  id="segment-script"
+                  dangerouslySetInnerHTML={{ __html: renderSnippet() }}
+                />
+                <Component {...pageProps} />
+              </Page>
+            </ThemeSettings>
+          </ThemeProvider>
+        </MotionLazyContainer>
+        <Analytics />
+      </ReduxProvider>
     </CacheProvider>
   );
 }
