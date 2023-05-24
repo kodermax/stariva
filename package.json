@@ -21,7 +21,7 @@
     "autosuggest-highlight": "^3.3.4",
     "axios": "^1.4.0",
     "change-case": "^4.1.2",
-    "framer-motion": "^10.12.14",
+    "framer-motion": "^10.12.16",
     "lodash": "^4.17.21",
     "lodash.orderby": "^4.6.0",
     "lodash.sum": "^4.0.2",
