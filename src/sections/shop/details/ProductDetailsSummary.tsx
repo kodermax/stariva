@@ -22,20 +22,20 @@ import {
 // routes
 
 // utils
-import { fShortenNumber, fCurrency } from "../../../../utils/formatNumber";
+import { fShortenNumber, fCurrency } from "../../../utils/formatNumber";
 
 // @types
-import { IProduct, ICheckoutCartItem } from "../../../../@types/product";
+import { IProduct, ICheckoutCartItem } from "../../../@types/product";
 
 // _mock
-import { _socials } from "../../../../_mock/arrays";
+import { _socials } from "../../../_mock/arrays";
 
 // components
-import Label from "../../../../components/label";
-import Iconify from "../../../../components/iconify";
-import { ColorSinglePicker } from "../../../../components/color-utils";
-import FormProvider, { RHFSelect } from "../../../../components/hook-form";
-import { IncrementerButton } from "../../../../components/custom-input";
+import Label from "../../../components/label";
+import Iconify from "../../../components/iconify";
+import { ColorSinglePicker } from "../../../components/color-utils";
+import FormProvider, { RHFSelect } from "../../../components/hook-form";
+import { IncrementerButton } from "../../../components/custom-input";
 import { PATH_DASHBOARD } from "../../../routes/paths";
 
 // ----------------------------------------------------------------------

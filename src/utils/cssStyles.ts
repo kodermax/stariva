@@ -1,4 +1,7 @@
-import { alpha } from "@mui/material/styles";
+// @mui
+import { alpha } from '@mui/material/styles';
+
+// ----------------------------------------------------------------------
 
 type BgBlurProps = {
   blur?: number;
@@ -58,8 +61,9 @@ export function bgGradient(props?: BgGradientProps) {
 
   if (imgUrl) {
     return {
-      background: `linear-gradient(${direction}, ${startColor || color}, ${endColor || color
-        }), url(${imgUrl})`,
+      background: `linear-gradient(${direction}, ${startColor || color}, ${
+        endColor || color
+      }), url(${imgUrl})`,
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center center',
@@ -91,6 +95,16 @@ export function filterStyles(value: string) {
   };
 }
 
+// ----------------------------------------------------------------------
+
+export const hideScrollbarY = {
+  msOverflowStyle: 'none',
+  scrollbarWidth: 'none',
+  overflowY: 'scroll',
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
+} as const;
 
 // ----------------------------------------------------------------------
 

@@ -11,14 +11,14 @@ import {
 } from "@mui/material";
 
 // utils
-import { fDate } from "../../../../utils/formatTime";
-import { fShortenNumber } from "../../../../utils/formatNumber";
+import { fShortenNumber } from "../../../utils/formatNumber";
 
 // @types
-import { IProductReview } from "../../../../@types/product";
+import { IProductReview } from "../../../@types/product";
 
 // components
-import Iconify from "../../../../components/iconify";
+import Iconify from "../../../components/iconify";
+import { fDate } from "../../../utils/formatTime";
 
 // ----------------------------------------------------------------------
 

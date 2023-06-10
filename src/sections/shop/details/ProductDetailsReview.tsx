@@ -13,17 +13,15 @@ import {
 } from "@mui/material";
 
 // utils
-import { fShortenNumber } from "../../../../utils/formatNumber";
-
-// @types
-import { IProduct } from "../../../../@types/product";
 
 // components
-import Iconify from "../../../../components/iconify";
+import Iconify from "../../../components/iconify";
 
 //
 import ProductDetailsReviewList from "./ProductDetailsReviewList";
 import ProductDetailsReviewNewDialog from "./ProductDetailsNewReviewForm";
+import { fShortenNumber } from "../../../utils/formatNumber";
+import { IProduct } from "../../../@types/product";
 
 // ----------------------------------------------------------------------
 
