@@ -5183,10 +5183,10 @@ yaml@^1.10.0:
   resolved "https://registry.npmjs.org/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
   integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
 
-yet-another-react-lightbox@^3.10.2:
-  version "3.10.2"
-  resolved "https://registry.yarnpkg.com/yet-another-react-lightbox/-/yet-another-react-lightbox-3.10.2.tgz#02e072aad4b9eae32141a14955b3d2e113ace6c0"
-  integrity sha512-ByMfscFVkng0nlMV14YtdzktoFlGyrCqw8xEbMYoOPz1mA+FMyuJbfPGldIBJPjy5ZV3QPbJjXrwXjuu0FkS2w==
+yet-another-react-lightbox@^3.11.2:
+  version "3.11.2"
+  resolved "https://registry.yarnpkg.com/yet-another-react-lightbox/-/yet-another-react-lightbox-3.11.2.tgz#b9387bda541fd41ed60856b9d55fce5a38185892"
+  integrity sha512-5pnCxLQltP11rbIo7s/vAuw9TZyws2jlvYFhU1lPYcFeKmQoGAN59PstG1QXLtsRPSKA6PhxrDr0AfXRFeuT/w==
 
 yocto-queue@^0.1.0:
   version "0.1.0"
