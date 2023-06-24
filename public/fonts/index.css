@@ -20,3 +20,42 @@
 }
 
  
+@font-face {
+  font-family: 'Daniel';
+  src: url('Daniel-Bold.eot');
+  src: local('Daniel Bold'), local('Daniel-Bold'),
+      url('Daniel-Bold.eot?#iefix') format('embedded-opentype'),
+      url('Daniel-Bold.woff2') format('woff2'),
+      url('Daniel-Bold.woff') format('woff'),
+      url('Daniel-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Daniel';
+  src: url('Daniel-Black.eot');
+  src: local('Daniel Black'), local('Daniel-Black'),
+      url('Daniel-Black.eot?#iefix') format('embedded-opentype'),
+      url('Daniel-Black.woff2') format('woff2'),
+      url('Daniel-Black.woff') format('woff'),
+      url('Daniel-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Daniel';
+  src: url('Daniel-Regular.eot');
+  src: local('Daniel Regular'), local('Daniel-Regular'),
+      url('Daniel-Regular.eot?#iefix') format('embedded-opentype'),
+      url('Daniel-Regular.woff2') format('woff2'),
+      url('Daniel-Regular.woff') format('woff'),
+      url('Daniel-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+

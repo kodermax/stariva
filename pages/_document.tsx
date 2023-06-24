@@ -1,65 +1,65 @@
-import * as React from "react";
+import * as React from 'react';
 
 // next
-import Document, { Html, Head, Main, NextScript } from "next/document";
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 // @emotion
-import createEmotionServer from "@emotion/server/create-instance";
-import createEmotionCache from "../src/utils/createEmotionCache";
+import createEmotionServer from '@emotion/server/create-instance';
+import createEmotionCache from '../src/utils/createEmotionCache';
 
 // ----------------------------------------------------------------------
 
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en">
+      <Html lang='en'>
         <Head>
-          <meta charSet="utf-8" />
-          <link rel="manifest" href="/manifest.json" />
+          <meta charSet='utf-8' />
+          <link rel='manifest' href='/manifest.json' />
 
           {/* Favicon */}
           <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="/favicon/apple-touch-icon.png"
+            rel='apple-touch-icon'
+            sizes='180x180'
+            href='/favicon/apple-touch-icon.png'
           />
           <link
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-            href="/favicon/favicon-32x32.png"
+            rel='icon'
+            type='image/png'
+            sizes='32x32'
+            href='/favicon/favicon-32x32.png'
           />
           <link
-            rel="icon"
-            type="image/png"
-            sizes="16x16"
-            href="/favicon/favicon-16x16.png"
+            rel='icon'
+            type='image/png'
+            sizes='16x16'
+            href='/favicon/favicon-16x16.png'
           />
 
           {/* Fonts */}
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link rel='preconnect' href='https://fonts.googleapis.com' />
+          <link rel='preconnect' href='https://fonts.gstatic.com' />
+          <link href='/fonts/index.css' rel='stylesheet' />
           <link
-            href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
-            rel="stylesheet"
+            href='https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap'
+            rel='stylesheet'
           />
           <link
-            href="https://fonts.googleapis.com/css2?family=Barlow:wght@900&display=swap"
-            rel="stylesheet"
+            href='https://fonts.googleapis.com/css2?family=Barlow:wght@900&display=swap'
+            rel='stylesheet'
           />
-          <link href="https://fonts.cdnfonts.com/css/daniel" rel="stylesheet" />
 
           {/* Emotion */}
-          <meta name="emotion-insertion-point" content="" />
+          <meta name='emotion-insertion-point' content='' />
           {(this.props as any).emotionStyleTags}
 
           {/* Meta */}
           <meta
-            name="description"
-            content="Интерьеры и аксессуары ручной работы"
+            name='description'
+            content='Интерьеры и аксессуары ручной работы'
           />
-          <meta name="keywords" content="ручная работа,макроме" />
-          <meta name="author" content="Max" />
+          <meta name='keywords' content='ручная работа,макроме' />
+          <meta name='author' content='Max' />
         </Head>
 
         <body>
@@ -94,7 +94,7 @@ MyDocument.getInitialProps = async (ctx) => {
 
   const emotionStyleTags = emotionStyles.styles.map((style) => (
     <style
-      data-emotion={`${style.key} ${style.ids.join(" ")}`}
+      data-emotion={`${style.key} ${style.ids.join(' ')}`}
       key={style.key}
       // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{ __html: style.css }}

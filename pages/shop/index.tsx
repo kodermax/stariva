@@ -1,23 +1,17 @@
-import { useEffect } from "react";
+import { ReactElement, useEffect } from 'react';
 
 // next
-import Head from "next/head";
+import Head from 'next/head';
 
 // @mui
-import { Container } from "@mui/material";
+import { Container } from '@mui/material';
 
 // components
 
-import ShopProductList from "../../src/sections/shop/ShopProductList";
-import { useDispatch, useSelector } from "../../src/redux/store";
-import { getProducts } from "../../src/redux/slices/product";
-import SimpleLayout from "../../src/layouts/simple/SimpleLayout";
-
-// ----------------------------------------------------------------------
-
-ShopPage.getLayout = (page: React.ReactElement) => (
-  <SimpleLayout>{page}</SimpleLayout>
-);
+import ShopProductList from '../../src/sections/shop/ShopProductList';
+import { useDispatch, useSelector } from '../../src/redux/store';
+import { getProducts } from '../../src/redux/slices/product';
+import MainLayout from '../../src/layouts/main/MainLayout';
 
 // ----------------------------------------------------------------------
 
@@ -35,9 +29,11 @@ export default function ShopPage() {
       <Head>
         <title> Магазин | Stariva</title>
       </Head>
-      <Container maxWidth={"lg"}>
+      <Container maxWidth={'lg'}>
         <ShopProductList products={products} loading={!products.length} />
       </Container>
     </>
   );
 }
+
+ShopPage.getLayout = (page: ReactElement) => <MainLayout>{page}</MainLayout>;

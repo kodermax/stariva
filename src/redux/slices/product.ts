@@ -9,6 +9,7 @@ import { IProductState, ICheckoutCartItem } from '../../@types/product';
 
 //
 import { dispatch } from '../store';
+import { products } from 'src/data/products'
 
 // ----------------------------------------------------------------------
 
@@ -198,14 +199,8 @@ export const {
 // ----------------------------------------------------------------------
 
 export function getProducts() {
-  return async () => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.get('/api/products');
-      dispatch(slice.actions.getProductsSuccess(response.data.products));
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
+  return () => {
+    dispatch(slice.actions.getProductsSuccess(products));
   };
 }
 
