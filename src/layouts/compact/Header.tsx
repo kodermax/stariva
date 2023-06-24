@@ -1,14 +1,19 @@
 // next
 import NextLink from 'next/link';
+
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { AppBar, Toolbar, Box, BoxProps, Link } from '@mui/material';
+
 // config
 import { HEADER } from '../../config';
+
 // utils
 import { bgBlur } from '../../utils/cssStyles';
+
 // routes
 import { PATH_PAGE } from '../../routes/paths';
+
 // components
 import Logo from '../../components/logo';
 
@@ -22,7 +27,7 @@ export default function Header({ isOffset }: Props) {
   const theme = useTheme();
 
   return (
-    <AppBar color="transparent" sx={{ boxShadow: 0 }}>
+    <AppBar color='transparent' sx={{ boxShadow: 0 }}>
       <Toolbar
         sx={{
           justifyContent: 'space-between',
@@ -45,7 +50,7 @@ export default function Header({ isOffset }: Props) {
         <Logo />
 
         <NextLink href={PATH_PAGE.faqs} passHref>
-          <Link variant="subtitle2" color="inherit">
+          <Link variant='subtitle2' color='inherit'>
             Need Help?
           </Link>
         </NextLink>

@@ -27,6 +27,7 @@
     "change-case": "^4.1.2",
     "date-fns": "^2.30.0",
     "framer-motion": "^10.12.17",
+    "highlight.js": "^11.8.0",
     "lodash": "^4.17.21",
     "lodash.orderby": "^4.6.0",
     "lodash.sum": "^4.0.2",

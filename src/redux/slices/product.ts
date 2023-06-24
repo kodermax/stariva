@@ -9,7 +9,7 @@ import { IProductState, ICheckoutCartItem } from '../../@types/product';
 
 //
 import { dispatch } from '../store';
-import { products } from 'src/data/products'
+import { products } from '../../data/products'
 
 // ----------------------------------------------------------------------
 

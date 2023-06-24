@@ -1,8 +1,11 @@
 import { useRef } from 'react';
+
 // form
 import { useFormContext, Controller } from 'react-hook-form';
+
 // @mui
 import { Stack, TextField, TextFieldProps } from '@mui/material';
+
 // hooks
 import useEventListener from '../../hooks/useEventListener';
 
@@ -13,7 +16,11 @@ type Props = TextFieldProps & {
   inputs: string[];
 };
 
-export default function RHFCodes({ keyName = '', inputs = [], ...other }: Props) {
+export default function RHFCodes({
+  keyName = '',
+  inputs = [],
+  ...other
+}: Props) {
   const codesRef = useRef<HTMLDivElement>(null);
 
   const { control, setValue } = useFormContext();
@@ -56,7 +63,7 @@ export default function RHFCodes({ keyName = '', inputs = [], ...other }: Props)
   useEventListener('paste', handlePaste, codesRef);
 
   return (
-    <Stack direction="row" spacing={2} justifyContent="center" ref={codesRef}>
+    <Stack direction='row' spacing={2} justifyContent='center' ref={codesRef}>
       {inputs.map((name, index) => (
         <Controller
           key={name}
@@ -67,7 +74,7 @@ export default function RHFCodes({ keyName = '', inputs = [], ...other }: Props)
               {...field}
               error={!!error}
               autoFocus={index === 0}
-              placeholder="-"
+              placeholder='-'
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 handleChangeWithNextField(event, field.onChange);
               }}
