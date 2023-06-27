@@ -1,10 +1,10 @@
 // @mui
-import { Box, BoxProps } from "@mui/material";
+import { Box, BoxProps } from '@mui/material';
 
 //
-import ShopProductCard from "./ShopProductCard";
-import { IProduct } from "../../@types/product";
-import SkeletonProductItem from "../../skeleton/SkeletonProductItem";
+import ShopProductCard from './ShopProductCard';
+import { IProduct } from '../../@types/product';
+import SkeletonProductItem from '../../skeleton/SkeletonProductItem';
 
 // ----------------------------------------------------------------------
 
@@ -21,12 +21,12 @@ export default function ShopProductList({
   return (
     <Box
       gap={3}
-      display="grid"
+      display='grid'
       gridTemplateColumns={{
-        xs: "repeat(1, 1fr)",
-        sm: "repeat(2, 1fr)",
-        md: "repeat(3, 1fr)",
-        lg: "repeat(4, 1fr)",
+        xs: 'repeat(1, 1fr)',
+        sm: 'repeat(2, 1fr)',
+        md: 'repeat(3, 1fr)',
+        lg: 'repeat(4, 1fr)',
       }}
       {...other}
     >

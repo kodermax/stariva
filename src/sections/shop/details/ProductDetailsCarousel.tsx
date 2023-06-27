@@ -1,17 +1,17 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from 'react';
 
 // @mui
-import { alpha, useTheme, styled } from "@mui/material/styles";
-import { Box } from "@mui/material";
+import { alpha, useTheme, styled } from '@mui/material/styles';
+import { Box } from '@mui/material';
 
 // utils
 
 // components
-import Image from "../../../components/image";
-import Lightbox from "../../../components/lightbox";
-import Carousel, { CarouselArrowIndex } from "../../../components/carousel";
-import { bgGradient } from "../../../utils/cssStyles";
-import { IProduct } from "../../../@types/product";
+import Image from '../../../components/image';
+import Lightbox from '../../../components/lightbox';
+import Carousel, { CarouselArrowIndex } from '../../../components/carousel';
+import { bgGradient } from '../../../utils/cssStyles';
+import { IProduct } from '../../../@types/product';
 
 // ----------------------------------------------------------------------
 
@@ -23,18 +23,18 @@ type StyledThumbnailsContainerProps = {
   length: number;
 };
 
-const StyledThumbnailsContainer = styled("div", {
-  shouldForwardProp: (prop) => prop !== "length",
+const StyledThumbnailsContainer = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'length',
 })<StyledThumbnailsContainerProps>(({ length, theme }) => ({
-  margin: theme.spacing(0, "auto"),
-  position: "relative",
+  margin: theme.spacing(0, 'auto'),
+  position: 'relative',
 
-  "& .slick-slide": {
+  '& .slick-slide': {
     opacity: 0.48,
-    "&.slick-current": {
+    '&.slick-current': {
       opacity: 1,
     },
-    "& > div": {
+    '& > div': {
       padding: theme.spacing(0, 0.75),
     },
   },
@@ -52,22 +52,22 @@ const StyledThumbnailsContainer = styled("div", {
     maxWidth: THUMB_SIZE * 6,
   }),
   ...(length > 2 && {
-    "&:before, &:after": {
+    '&:before, &:after': {
       ...bgGradient({
-        direction: "to left",
+        direction: 'to left',
         startColor: `${alpha(theme.palette.background.default, 0)} 0%`,
         endColor: `${theme.palette.background.default} 100%`,
       }),
       top: 0,
       zIndex: 9,
       content: "''",
-      height: "100%",
-      position: "absolute",
+      height: '100%',
+      position: 'absolute',
       width: (THUMB_SIZE * 2) / 3,
     },
-    "&:after": {
+    '&:after': {
       right: 0,
-      transform: "scaleX(-1)",
+      transform: 'scaleX(-1)',
     },
   }),
 }));
@@ -127,7 +127,7 @@ export default function ProductDetailsCarousel({ product }: Props) {
     swipeToSlide: true,
     focusOnSelect: true,
     variableWidth: true,
-    centerPadding: "0px",
+    centerPadding: '0px',
     slidesToShow: product.images.length > 3 ? 3 : product.images.length,
   };
 
@@ -150,17 +150,17 @@ export default function ProductDetailsCarousel({ product }: Props) {
 
   const renderLargeImg = (
     <Box
-      sx={{ mb: 3, borderRadius: 2, overflow: "hidden", position: "relative" }}
+      sx={{ mb: 3, borderRadius: 2, overflow: 'hidden', position: 'relative' }}
     >
       <Carousel {...carouselSettings1} asNavFor={nav2} ref={carousel1}>
         {product.images.map((img) => (
           <Image
             key={img}
-            alt="product"
+            alt='product'
             src={img}
-            ratio="1/1"
+            ratio='1/1'
             onClick={() => handleOpenLightbox(img)}
-            sx={{ cursor: "zoom-in" }}
+            sx={{ cursor: 'zoom-in' }}
           />
         ))}
       </Carousel>
@@ -179,15 +179,15 @@ export default function ProductDetailsCarousel({ product }: Props) {
       <Carousel {...carouselSettings2} asNavFor={nav1} ref={carousel2}>
         {product.images.map((img: any, index: number) => (
           <Image
-            key={img.file.id}
+            key={index}
             disabledEffect
-            alt="thumbnail"
-            src={img.file.src}
+            alt='thumbnail'
+            src={img}
             sx={{
               width: THUMB_SIZE,
               height: THUMB_SIZE,
               borderRadius: 1.5,
-              cursor: "pointer",
+              cursor: 'pointer',
               ...(currentIndex === index && {
                 border: (theme) => `solid 2px ${theme.palette.primary.main}`,
               }),
@@ -202,8 +202,8 @@ export default function ProductDetailsCarousel({ product }: Props) {
     <>
       <Box
         sx={{
-          "& .slick-slide": {
-            float: theme.direction === "rtl" ? "right" : "left",
+          '& .slick-slide': {
+            float: theme.direction === 'rtl' ? 'right' : 'left',
           },
         }}
       >
