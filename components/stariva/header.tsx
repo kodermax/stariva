@@ -5,7 +5,7 @@ import Link from "next/link"
 import { TelegramIcon, WhatsappIcon } from "./icons"
 
 const nav = [
-  { label: "Коллекция", href: "/#collection" },
+  { label: "Каталог", href: "/catalog" },
   { label: "Блог", href: "/blog" },
   { label: "О бренде", href: "/#story" },
   { label: "Доставка", href: "/#delivery" },
@@ -61,12 +61,12 @@ export function Header() {
           >
             <WhatsappIcon className="w-4 h-4" />
           </a>
-          <a
-            href="#order"
+          <Link
+            href="/catalog"
             className="label-caps-md px-4 py-2.5 rounded-full border border-espresso text-espresso hover:bg-espresso hover:text-parchment transition-colors"
           >
             Каталог
-          </a>
+          </Link>
         </div>
       </div>
     </header>

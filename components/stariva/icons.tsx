@@ -315,3 +315,82 @@ export function StariveLogo(props: IconProps) {
     </svg>
   )
 }
+
+export function OzonIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path
+        d="M12 3C7 3 3 7 3 12s4 9 9 9 9-4 9-9-4-9-9-9Z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+      />
+      <path
+        d="M12 7c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5Z"
+        fill="currentColor"
+      />
+    </svg>
+  )
+}
+
+export function CottonIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path
+        d="M12 20V8"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+      />
+      <path
+        d="M8 20c0-2 1.8-4 4-4s4 2 4 4"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+      />
+      <circle cx="12" cy="6" r="3.5" stroke="currentColor" strokeWidth="1.3" />
+      <path
+        d="M9.5 4c-1 0-2 1-2 2s1 2 2 2"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+      />
+      <path
+        d="M14.5 4c1 0 2 1 2 2s-1 2-2 2"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+export function HandmadeIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path
+        d="M7 15c0-2 1-4 3-5l1-6c0-1 1-1.5 2-1.5s2 .5 2 1.5l1 6c2 1 3 3 3 5v4c0 1-1 2-2 2H9c-1 0-2-1-2-2v-4Z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+      <path d="M10 10v4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+      <path d="M14 10v4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+export function ShippingIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <rect x="3" y="7" width="12" height="10" rx="1" stroke="currentColor" strokeWidth="1.3" />
+      <path
+        d="M15 11h3.5l2.5 3v3h-6"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+      <circle cx="7.5" cy="17" r="2" stroke="currentColor" strokeWidth="1.3" />
+      <circle cx="17.5" cy="17" r="2" stroke="currentColor" strokeWidth="1.3" />
+    </svg>
+  )
+}
