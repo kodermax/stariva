@@ -1,14 +1,15 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Link from "next/link"
 import { TelegramIcon, WhatsappIcon } from "./icons"
 
 const nav = [
-  { label: "Коллекция", href: "#collection" },
-  { label: "Отзывы", href: "#reviews" },
-  { label: "О бренде", href: "#story" },
-  { label: "Доставка", href: "#delivery" },
-  { label: "Заказать", href: "#order" },
+  { label: "Коллекция", href: "/#collection" },
+  { label: "Блог", href: "/blog" },
+  { label: "О бренде", href: "/#story" },
+  { label: "Доставка", href: "/#delivery" },
+  { label: "Заказать", href: "/#order" },
 ]
 
 export function Header() {
@@ -28,20 +29,20 @@ export function Header() {
       }`}
     >
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10 flex items-center justify-between h-16 lg:h-20">
-        <a href="#top" className="flex items-baseline gap-2">
+        <Link href="/" className="flex items-baseline gap-2">
           <span className="font-serif text-2xl lg:text-3xl tracking-tight text-espresso">Stariva</span>
           <span className="hidden md:inline label-caps text-taupe">est. 2018</span>
-        </a>
+        </Link>
 
         <nav className="hidden lg:flex items-center gap-9">
           {nav.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               className="label-caps-md text-espresso/80 hover:text-terracotta transition-colors"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
