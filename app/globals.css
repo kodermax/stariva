@@ -1,0 +1,146 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Stariva palette */
+  --parchment: #f7f3ee;
+  --sand: #ede6dc;
+  --terracotta: #b85c38;
+  --terracotta-dark: #9a4a2c;
+  --espresso: #2c241b;
+  --taupe: #8c7b6b;
+  --linen: #d4a574;
+  --sage: #a3b18a;
+  --birch: #c9b8a7;
+
+  --background: var(--parchment);
+  --foreground: var(--espresso);
+  --card: var(--parchment);
+  --card-foreground: var(--espresso);
+  --popover: var(--parchment);
+  --popover-foreground: var(--espresso);
+  --primary: var(--terracotta);
+  --primary-foreground: var(--parchment);
+  --secondary: var(--sand);
+  --secondary-foreground: var(--espresso);
+  --muted: var(--sand);
+  --muted-foreground: var(--taupe);
+  --accent: var(--terracotta);
+  --accent-foreground: var(--parchment);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: rgba(44, 36, 27, 0.12);
+  --input: rgba(44, 36, 27, 0.18);
+  --ring: var(--terracotta);
+  --radius: 0.5rem;
+}
+
+@theme inline {
+  --font-sans: var(--font-sans), 'Inter Fallback', system-ui, sans-serif;
+  --font-serif: var(--font-serif), 'Cormorant Garamond Fallback', Georgia, serif;
+  --font-mono: ui-monospace, monospace;
+
+  --color-parchment: var(--parchment);
+  --color-sand: var(--sand);
+  --color-terracotta: var(--terracotta);
+  --color-terracotta-dark: var(--terracotta-dark);
+  --color-espresso: var(--espresso);
+  --color-taupe: var(--taupe);
+  --color-linen: var(--linen);
+  --color-sage: var(--sage);
+  --color-birch: var(--birch);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--parchment);
+    color: var(--espresso);
+    font-feature-settings: "ss01", "cv01";
+  }
+  ::selection {
+    background-color: var(--terracotta);
+    color: var(--parchment);
+  }
+}
+
+@layer utilities {
+  .label-caps {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .label-caps-md {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .film-grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.2  0 0 0 0 0.15  0 0 0 0 0.1  0 0 0 0.35 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    mix-blend-mode: overlay;
+  }
+  .group:hover .film-grain::after {
+    opacity: 0.5;
+  }
+  .marquee-track {
+    animation: marquee 50s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+}
+
+/* Custom scrollbar for atmosphere horizontal scroll */
+.atmosphere-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+.atmosphere-scroll::-webkit-scrollbar-track {
+  background: var(--sand);
+}
+.atmosphere-scroll::-webkit-scrollbar-thumb {
+  background: var(--linen);
+  border-radius: 2px;
+}
