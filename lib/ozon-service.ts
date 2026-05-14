@@ -78,13 +78,14 @@ function slugify(text: string): string {
     .replace(/^-+|-+$/g, "")
 }
 
-function transformOzonProduct(ozonProduct: OzonProductInfo): Product {
-  const { category, subcategory } = mapOfferIdToCategory(ozonProduct.offer_id)
+function transformOzonProduct(ozonProduct: any): Product {
+  const { category, subcategory } = mapOfferIdToCategory(ozonProduct.offer_id || "")
   const price = parseFloat(ozonProduct.price) || 0
   const oldPrice = parseFloat(ozonProduct.old_price) || undefined
   
   // Extract material and dimensions from description if present
-  const descLines = ozonProduct.description.split("\n")
+  const description = ozonProduct.name || ""
+  const descLines = description.split("\n")
   let material = "100% хлопок"
   let dimensions: string | undefined
   let careInstructions: string | undefined
@@ -101,19 +102,23 @@ function transformOzonProduct(ozonProduct: OzonProductInfo): Product {
     }
   }
   
-  // Create short description from first paragraph
-  const shortDescription = ozonProduct.description.split("\n\n")[0]?.slice(0, 150) + "..." || ozonProduct.name
+  // Create short description from name
+  const shortDescription = ozonProduct.name?.slice(0, 150) || ""
+  
+  // Get stock info
+  const stocks = ozonProduct.stocks || { present: 0, coming: 0, reserved: 0 }
+  const inStock = (stocks.present || 0) > 0 || (stocks.coming || 0) > 0
   
   return {
     id: `ozon-${ozonProduct.id}`,
-    slug: slugify(ozonProduct.name) || `product-${ozonProduct.id}`,
-    name: ozonProduct.name,
-    description: ozonProduct.description,
+    slug: slugify(ozonProduct.name || "") || `product-${ozonProduct.id}`,
+    name: ozonProduct.name || "Без названия",
+    description: ozonProduct.name || "",
     shortDescription,
     price,
     oldPrice: oldPrice && oldPrice > price ? oldPrice : undefined,
     currency: ozonProduct.currency_code || "RUB",
-    images: ozonProduct.images.length > 0 
+    images: ozonProduct.images && ozonProduct.images.length > 0 
       ? ozonProduct.images 
       : ozonProduct.primary_image 
         ? [ozonProduct.primary_image] 
@@ -121,8 +126,8 @@ function transformOzonProduct(ozonProduct: OzonProductInfo): Product {
     category,
     subcategory,
     ozonId: ozonProduct.id,
-    ozonUrl: `https://www.ozon.ru/product/${ozonProduct.sku}`,
-    inStock: ozonProduct.stocks.present > 0 || ozonProduct.stocks.coming > 0,
+    ozonUrl: `https://www.ozon.ru/product/${ozonProduct.sku || ozonProduct.id}`,
+    inStock,
     material,
     dimensions,
     careInstructions,
@@ -137,9 +142,9 @@ async function fetchFromOzon(): Promise<Product[] | null> {
   console.log("[v0] ✓ Ozon credentials found. Client ID starts with:", clientId?.substring(0, 5) + "...")
 
   try {
-    // Use v3/product/info/stocks - single endpoint that returns products with stock info
-    console.log("[v0] 📦 Fetching Ozon products with stocks...")
-    const response = await fetch(`${OZON_API_URL}/v3/product/info/stocks`, {
+    // Step 1: Get product list using v3/product/list (correct endpoint)
+    console.log("[v0] 📦 Fetching Ozon product list...")
+    const listResponse = await fetch(`${OZON_API_URL}/v3/product/list`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -156,27 +161,65 @@ async function fetchFromOzon(): Promise<Product[] | null> {
       next: { revalidate: 3600 },
     })
 
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.log("[v0] ❌ Ozon request failed:", response.status)
+    if (!listResponse.ok) {
+      const errorText = await listResponse.text()
+      console.log("[v0] ❌ Ozon list request failed:", listResponse.status)
       console.log("[v0] Response body:", errorText)
-      console.log("[v0] Request URL:", `${OZON_API_URL}/v3/product/info/stocks`)
+      console.log("[v0] Request URL:", `${OZON_API_URL}/v3/product/list`)
       return null
     }
 
-    const data = await response.json()
-    console.log("[v0] ✓ Received response from Ozon")
-    console.log("[v0] Response keys:", Object.keys(data))
+    const listData: OzonProductListResponse = await listResponse.json()
+    console.log("[v0] ✓ Found", listData.result.items.length, "products in Ozon")
     
-    if (!data.result || !data.result.items) {
-      console.log("[v0] ⚠️ Unexpected response structure:", JSON.stringify(data).substring(0, 200))
+    const productIds = listData.result.items.map((item) => item.product_id)
+
+    if (productIds.length === 0) {
+      console.log("[v0] ⚠️ No products found in Ozon account")
       return []
     }
 
-    console.log("[v0] ✓ Found", data.result.items.length, "products in Ozon")
+    // Step 2: Get detailed product info using v3/product/info/list (correct endpoint)
+    console.log("[v0] 📋 Fetching product details for", productIds.length, "products...")
+    const infoResponse = await fetch(`${OZON_API_URL}/v3/product/info/list`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Client-Id": clientId,
+        "Api-Key": apiKey,
+      },
+      body: JSON.stringify({
+        product_id: productIds,
+      }),
+      next: { revalidate: 3600 },
+    })
+
+    if (!infoResponse.ok) {
+      const errorText = await infoResponse.text()
+      console.log("[v0] ❌ Ozon info request failed:", infoResponse.status)
+      console.log("[v0] Response body:", errorText)
+      console.log("[v0] Request URL:", `${OZON_API_URL}/v3/product/info/list`)
+      return null
+    }
+
+    const infoData = await infoResponse.json()
+    console.log("[v0] ✓ Response received from product info endpoint")
+    console.log("[v0] Response has 'result' key:", 'result' in infoData)
+    console.log("[v0] Response has 'items' key:", 'items' in infoData)
+    console.log("[v0] Items count:", infoData.items?.length || infoData.result?.items?.length || 0)
+    
+    // v3/product/info/list returns items directly, not in result.items
+    const items = infoData.items || infoData.result?.items || []
+    
+    if (items.length === 0) {
+      console.log("[v0] ⚠️ No product details returned")
+      return []
+    }
+    
+    console.log("[v0] ✓ Successfully fetched", items.length, "product details")
     
     // Transform Ozon products to our format
-    const transformedProducts = data.result.items.map((item: any) => transformOzonProduct(item))
+    const transformedProducts = items.map((item: any) => transformOzonProduct(item))
     console.log("[v0] ✓ Transformed", transformedProducts.length, "products for display")
     return transformedProducts
     
