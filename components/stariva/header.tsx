@@ -1,73 +1,277 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { TelegramIcon, WhatsappIcon } from "./icons"
+import { useEffect, useRef, useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
-const nav = [
-  { label: "Коллекция", href: "#collection" },
-  { label: "Отзывы", href: "#reviews" },
-  { label: "О бренде", href: "#story" },
-  { label: "Доставка", href: "#delivery" },
-  { label: "Заказать", href: "#order" },
+const catalogNav = [
+  {
+    label: "Одежда",
+    href: "/catalog/clothes",
+    desc: "Платья, топы, накидки",
+    accent: "#b85c38",
+  },
+  {
+    label: "Интерьер",
+    href: "/catalog/interior",
+    desc: "Абажуры, вигвамы",
+    accent: "#7a6e5f",
+  },
+  {
+    label: "Декор",
+    href: "/catalog/decor",
+    desc: "Панно, плейсменты, кашпо",
+    accent: "#8c7b6b",
+  },
 ]
 
-export function Header() {
+const nav = [
+  { label: "Каталог", href: "/catalog", hasMega: true },
+  { label: "Блог", href: "/blog" },
+  { label: "О нас", href: "/#story" },
+  { label: "Заказать", href: "/#order" },
+]
+
+interface HeaderProps {
+  variant?: "transparent" | "solid"
+}
+
+export function Header({ variant = "solid" }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [megaOpen, setMegaOpen] = useState(false)
+  const megaTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const pathname = usePathname()
+
+  const isSolid = variant === "solid" || scrolled
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    if (variant === "solid") return
+    const onScroll = () => setScrolled(window.scrollY > 32)
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
-  }, [])
+  }, [variant])
+
+  useEffect(() => {
+    setMenuOpen(false)
+    setMegaOpen(false)
+  }, [pathname])
+
+  const isActive = (href: string) => {
+    if (href.startsWith("/#")) return false
+    return pathname === href || pathname.startsWith(href + "/")
+  }
+
+  const openMega = () => {
+    if (megaTimer.current) clearTimeout(megaTimer.current)
+    setMegaOpen(true)
+  }
+  const closeMega = () => {
+    megaTimer.current = setTimeout(() => setMegaOpen(false), 120)
+  }
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
-        scrolled ? "bg-parchment/90 backdrop-blur-md border-b border-espresso/10" : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-10 flex items-center justify-between h-16 lg:h-20">
-        <a href="#top" className="flex items-baseline gap-2">
-          <span className="font-serif text-2xl lg:text-3xl tracking-tight text-espresso">Stariva</span>
-          <span className="hidden md:inline label-caps text-taupe">est. 2018</span>
-        </a>
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+          isSolid
+            ? "bg-parchment/97 backdrop-blur-md border-b border-espresso/8"
+            : "bg-transparent"
+        }`}
+      >
+        <div className="max-w-[1440px] mx-auto px-5 lg:px-12 flex items-center justify-between h-[60px] lg:h-[68px]">
 
-        <nav className="hidden lg:flex items-center gap-9">
-          {nav.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="label-caps-md text-espresso/80 hover:text-terracotta transition-colors"
+          {/* Logo */}
+          <Link
+            href="/"
+            className={`font-serif text-[22px] lg:text-[26px] tracking-[-0.01em] transition-colors flex-shrink-0 ${
+              isSolid ? "text-espresso" : "text-white"
+            }`}
+          >
+            Stariva
+          </Link>
+
+          {/* Desktop Nav */}
+          <nav className="hidden lg:flex items-center gap-1">
+            {nav.map((item) =>
+              item.hasMega ? (
+                <div
+                  key={item.href}
+                  className="relative"
+                  onMouseEnter={openMega}
+                  onMouseLeave={closeMega}
+                >
+                  <Link
+                    href={item.href}
+                    className={`px-4 py-2 rounded-md label-caps-md transition-colors flex items-center gap-1.5 ${
+                      isActive(item.href)
+                        ? "text-terracotta"
+                        : isSolid
+                        ? "text-espresso/70 hover:text-espresso"
+                        : "text-white/80 hover:text-white"
+                    }`}
+                  >
+                    {item.label}
+                    <svg
+                      width="10"
+                      height="10"
+                      viewBox="0 0 10 10"
+                      fill="none"
+                      className={`transition-transform duration-200 ${megaOpen ? "rotate-180" : ""}`}
+                    >
+                      <path d="M2 3.5l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </Link>
+
+                  {/* Mega dropdown */}
+                  <div
+                    onMouseEnter={openMega}
+                    onMouseLeave={closeMega}
+                    className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 transition-all duration-200 ${
+                      megaOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-2 pointer-events-none"
+                    }`}
+                  >
+                    <div className="bg-parchment border border-espresso/10 rounded-xl shadow-[0_8px_40px_rgba(44,36,27,0.10)] p-2 w-64">
+                      {catalogNav.map((cat) => (
+                        <Link
+                          key={cat.href}
+                          href={cat.href}
+                          className={`flex items-start gap-3 px-3 py-3 rounded-lg group hover:bg-sand transition-colors ${
+                            pathname.startsWith(cat.href) ? "bg-sand" : ""
+                          }`}
+                        >
+                          <span
+                            className="w-1.5 h-1.5 rounded-full mt-[6px] flex-shrink-0"
+                            style={{ backgroundColor: cat.accent }}
+                          />
+                          <div>
+                            <div className="text-espresso font-medium text-[13px] group-hover:text-terracotta transition-colors">
+                              {cat.label}
+                            </div>
+                            <div className="text-taupe text-[11px] mt-0.5">{cat.desc}</div>
+                          </div>
+                        </Link>
+                      ))}
+                      <div className="mt-1 pt-1 border-t border-espresso/8">
+                        <Link
+                          href="/catalog"
+                          className="flex items-center justify-between px-3 py-2.5 text-taupe hover:text-terracotta label-caps text-[10px] transition-colors"
+                        >
+                          Весь каталог
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                            <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`px-4 py-2 rounded-md label-caps-md transition-colors relative ${
+                    isActive(item.href)
+                      ? "text-terracotta"
+                      : isSolid
+                      ? "text-espresso/70 hover:text-espresso"
+                      : "text-white/80 hover:text-white"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
+          </nav>
+
+          {/* Right: CTA + Burger */}
+          <div className="flex items-center gap-3">
+            <Link
+              href="/catalog"
+              className={`hidden lg:inline-flex items-center gap-2 label-caps-md px-4 py-2 rounded-full border transition-all ${
+                isSolid
+                  ? "border-espresso/20 text-espresso hover:bg-espresso hover:text-parchment"
+                  : "border-white/40 text-white hover:bg-white hover:text-espresso"
+              }`}
             >
-              {item.label}
-            </a>
-          ))}
-        </nav>
+              Каталог
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
 
-        <div className="flex items-center gap-3">
-          <a
-            href="https://t.me/stariva"
-            aria-label="Telegram"
-            className="hidden md:flex w-9 h-9 items-center justify-center rounded-full border border-espresso/15 text-espresso/80 hover:border-terracotta hover:text-terracotta transition-colors"
-          >
-            <TelegramIcon className="w-4 h-4" />
-          </a>
-          <a
-            href="https://wa.me/79990000000"
-            aria-label="WhatsApp"
-            className="hidden md:flex w-9 h-9 items-center justify-center rounded-full border border-espresso/15 text-espresso/80 hover:border-terracotta hover:text-terracotta transition-colors"
-          >
-            <WhatsappIcon className="w-4 h-4" />
-          </a>
-          <a
-            href="#order"
-            className="label-caps-md px-4 py-2.5 rounded-full border border-espresso text-espresso hover:bg-espresso hover:text-parchment transition-colors"
-          >
-            Каталог
-          </a>
+            {/* Burger */}
+            <button
+              aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
+              onClick={() => setMenuOpen((v) => !v)}
+              className={`lg:hidden flex flex-col justify-center items-center w-9 h-9 gap-[5px] rounded-full border transition-colors ${
+                isSolid
+                  ? "border-espresso/15 text-espresso"
+                  : "border-white/30 text-white"
+              }`}
+            >
+              <span className={`block h-px w-[18px] bg-current transition-all duration-300 ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`} />
+              <span className={`block h-px w-[18px] bg-current transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
+              <span className={`block h-px w-[18px] bg-current transition-all duration-300 ${menuOpen ? "-translate-y-[7px] -rotate-45" : ""}`} />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile drawer */}
+      <div className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ${menuOpen ? "visible" : "invisible"}`}>
+        <div
+          className={`absolute inset-0 bg-espresso/40 backdrop-blur-sm transition-opacity duration-300 ${menuOpen ? "opacity-100" : "opacity-0"}`}
+          onClick={() => setMenuOpen(false)}
+        />
+        <div className={`absolute top-0 right-0 h-full w-[300px] bg-parchment shadow-2xl flex flex-col transition-transform duration-300 ${menuOpen ? "translate-x-0" : "translate-x-full"}`}>
+          <div className="flex items-center justify-between px-6 h-[60px] border-b border-espresso/8">
+            <span className="font-serif text-xl text-espresso">Stariva</span>
+            <button onClick={() => setMenuOpen(false)} className="w-8 h-8 flex items-center justify-center text-espresso/50 hover:text-espresso">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M2 2l12 12M14 2L2 14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+              </svg>
+            </button>
+          </div>
+
+          <div className="flex-1 overflow-y-auto px-5 py-6 flex flex-col gap-1">
+            {/* Catalog sub-links */}
+            <div className="label-caps text-taupe text-[10px] px-1 mb-2">Каталог</div>
+            {catalogNav.map((cat) => (
+              <Link
+                key={cat.href}
+                href={cat.href}
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-3 py-3 px-1 border-b border-espresso/6 group"
+              >
+                <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: cat.accent }} />
+                <div>
+                  <div className="text-espresso text-[15px]">{cat.label}</div>
+                  <div className="text-taupe text-[11px]">{cat.desc}</div>
+                </div>
+              </Link>
+            ))}
+
+            <div className="mt-4 label-caps text-taupe text-[10px] px-1 mb-2">Навигация</div>
+            {[{ label: "Весь каталог", href: "/catalog" }, { label: "Блог", href: "/blog" }, { label: "О нас", href: "/#story" }, { label: "Заказать", href: "/#order" }].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setMenuOpen(false)}
+                className={`py-3 px-1 border-b border-espresso/6 flex items-center justify-between group ${
+                  isActive(item.href) ? "text-terracotta" : "text-espresso/80"
+                }`}
+              >
+                <span className="font-serif text-[17px]">{item.label}</span>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="opacity-25 group-hover:opacity-60 transition-opacity">
+                  <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
-    </header>
+    </>
   )
 }
