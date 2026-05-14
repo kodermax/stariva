@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "motion/react"
 import Link from "next/link"
 import Image from "next/image"
@@ -46,34 +46,49 @@ const directions = [
 
 export function Hero() {
   const [active, setActive] = useState(0)
+  const [paused, setPaused] = useState(false)
   const current = directions[active]
 
+  // Auto-advance every 5 seconds unless user interacted
+  useEffect(() => {
+    if (paused) return
+    const timer = setTimeout(() => {
+      setActive((prev) => (prev + 1) % directions.length)
+    }, 5000)
+    return () => clearTimeout(timer)
+  }, [active, paused])
+
   return (
-    <section className="relative h-[100dvh] min-h-[600px] max-h-[960px] overflow-hidden bg-espresso pt-[60px] lg:pt-[68px]">
-      {/* Background image */}
-      <AnimatePresence mode="sync">
+    <section className="relative h-[100dvh] min-h-[640px] max-h-[1080px] overflow-hidden bg-espresso">
+      {/* Background images — all preloaded, cross-fade */}
+      {directions.map((dir, i) => (
         <motion.div
-          key={current.id}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.65, ease: "easeInOut" }}
+          key={dir.id}
+          animate={{ opacity: i === active ? 1 : 0 }}
+          transition={{ duration: 0.9, ease: "easeInOut" }}
           className="absolute inset-0 z-0"
         >
           <Image
-            src={current.image}
-            alt={current.label}
+            src={dir.image}
+            alt={dir.label}
             fill
-            className="object-cover"
-            priority
+            className="object-cover object-center"
+            priority={i === 0}
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-espresso/55" />
         </motion.div>
-      </AnimatePresence>
+      ))}
+
+      {/* Overlay: only bottom gradient + subtle top vignette, no heavy dark */}
+      <div className="absolute inset-0 z-[1] pointer-events-none">
+        {/* top vignette */}
+        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-espresso/60 to-transparent" />
+        {/* bottom gradient for text legibility */}
+        <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-espresso/85 via-espresso/30 to-transparent" />
+      </div>
 
       {/* Content */}
-      <div className="relative z-10 h-full flex flex-col justify-between max-w-[1440px] mx-auto px-5 lg:px-12 pb-8 lg:pb-12">
+      <div className="relative z-10 h-full flex flex-col justify-between max-w-[1440px] mx-auto px-5 lg:px-12 pt-[60px] lg:pt-[68px] pb-10 lg:pb-16">
 
         {/* Tag */}
         <div className="pt-8 lg:pt-12">
@@ -94,19 +109,21 @@ export function Hero() {
 
         {/* Headline + CTA */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
-          <div className="max-w-2xl">
+          <div className="max-w-3xl">
             <AnimatePresence mode="wait">
               <motion.h1
                 key={current.id + "-h"}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="font-serif text-white text-[clamp(2.8rem,8vw,6.5rem)] leading-[1.0] tracking-tight text-balance"
+                initial={{ opacity: 0, y: 28, filter: "blur(4px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -20, filter: "blur(2px)" }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="font-serif text-white text-[clamp(3.2rem,9vw,7.5rem)] leading-[0.95] tracking-tight text-balance drop-shadow-[0_2px_24px_rgba(0,0,0,0.25)]"
               >
                 {current.headline.map((line, i) => (
                   <span key={i} className="block">
-                    {i === 2 ? <em className="not-italic" style={{ color: current.accent }}>{line}</em> : line}
+                    {i === 2
+                      ? <em className="not-italic" style={{ color: current.accent }}>{line}</em>
+                      : line}
                   </span>
                 ))}
               </motion.h1>
@@ -115,46 +132,73 @@ export function Hero() {
             <AnimatePresence mode="wait">
               <motion.p
                 key={current.id + "-p"}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 }}
-                className="mt-5 text-white/70 text-base lg:text-lg max-w-md leading-relaxed"
+                transition={{ duration: 0.45, delay: 0.15 }}
+                className="mt-6 text-white/80 text-base lg:text-xl max-w-lg leading-[1.7] drop-shadow-sm"
               >
                 {current.desc}
               </motion.p>
             </AnimatePresence>
 
-            <motion.div className="mt-8 flex items-center gap-4">
+            <motion.div
+              className="mt-9 flex flex-wrap items-center gap-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.25 }}
+            >
               <Link
                 href={current.href}
-                className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-full border border-white/40 text-white label-caps-md hover:bg-white hover:text-espresso transition-all duration-300"
+                className="group inline-flex items-center gap-3 px-7 py-4 rounded-full bg-white text-espresso label-caps-md hover:bg-parchment shadow-[0_4px_24px_rgba(0,0,0,0.18)] transition-all duration-300"
               >
                 Смотреть коллекцию
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform group-hover:translate-x-1">
                   <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </Link>
+              <Link
+                href="/catalog"
+                className="inline-flex items-center gap-2 text-white/70 label-caps-md hover:text-white transition-colors"
+              >
+                Весь каталог
+              </Link>
             </motion.div>
           </div>
 
           {/* Direction switcher */}
-          <div className="flex lg:flex-col gap-2 lg:gap-3 pb-1">
+          <div
+            className="flex lg:flex-col gap-1.5 lg:gap-4 pb-1"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+          >
             {directions.map((dir, i) => (
               <button
                 key={dir.id}
-                onClick={() => setActive(i)}
-                className={`group flex items-center gap-3 text-left transition-all duration-200 ${
-                  i === active ? "opacity-100" : "opacity-40 hover:opacity-70"
+                onClick={() => { setActive(i); setPaused(true) }}
+                className={`group flex items-center gap-3 text-left transition-all duration-300 ${
+                  i === active ? "opacity-100" : "opacity-35 hover:opacity-65"
                 }`}
               >
-                <span
-                  className={`flex-shrink-0 w-px h-6 transition-all duration-300 ${i === active ? "h-8" : ""}`}
-                  style={{ backgroundColor: i === active ? dir.accent : "rgba(255,255,255,0.4)" }}
-                />
+                {/* Progress bar for active */}
+                <div className="flex-shrink-0 w-px h-10 bg-white/20 relative overflow-hidden rounded-full">
+                  {i === active && (
+                    <motion.div
+                      className="absolute top-0 left-0 w-full rounded-full"
+                      style={{ backgroundColor: dir.accent }}
+                      initial={{ height: "0%" }}
+                      animate={{ height: "100%" }}
+                      transition={{ duration: paused ? 0 : 5, ease: "linear" }}
+                      key={active + "-progress"}
+                    />
+                  )}
+                  {i !== active && (
+                    <div className="absolute inset-0 bg-white/40 rounded-full" />
+                  )}
+                </div>
                 <div>
-                  <div className="label-caps text-white text-[10px] leading-none mb-0.5">{dir.index}</div>
-                  <div className="text-white font-serif text-[15px] leading-tight">{dir.label}</div>
+                  <div className="label-caps text-white/50 text-[9px] leading-none mb-0.5">{dir.index}</div>
+                  <div className="text-white font-serif text-[16px] lg:text-[18px] leading-snug">{dir.label}</div>
                   {i === active && (
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
