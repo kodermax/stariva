@@ -13,7 +13,7 @@ import { MobileStickyBar } from "@/components/stariva/mobile-sticky-bar"
 export default function Page() {
   return (
     <main className="bg-parchment text-espresso">
-      <Header />
+      <Header variant="solid" />
       <Hero />
       <Marquee />
       <FeaturedCollection />
