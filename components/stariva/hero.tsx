@@ -13,6 +13,7 @@ const directions = [
     sublabel: "Платья · Топы · Накидки",
     href: "/catalog/clothes",
     image: "/images/home/hero-clothes.jpg",
+    objectPosition: "center 20%",
     accent: "#b85c38",
     tag: "Летняя коллекция 2026",
     headline: ["Одежда,", "сотканная", "вручную"],
@@ -25,6 +26,7 @@ const directions = [
     sublabel: "Абажуры · Вигвамы · Мобили",
     href: "/catalog/interior",
     image: "/images/home/hero-interior.jpg",
+    objectPosition: "center center",
     accent: "#7a6e5f",
     tag: "Для вашего дома",
     headline: ["Свет и тепло", "в каждом", "углу"],
@@ -37,6 +39,7 @@ const directions = [
     sublabel: "Панно · Плейсменты · Кашпо",
     href: "/catalog/decor",
     image: "/images/home/hero-decor.jpg",
+    objectPosition: "center center",
     accent: "#8c7b6b",
     tag: "Детали, которые важны",
     headline: ["Декор, который", "расскажет", "вашу историю"],
@@ -72,7 +75,8 @@ export function Hero() {
             src={dir.image}
             alt={dir.label}
             fill
-            className="object-cover object-center"
+            className="object-cover"
+            style={{ objectPosition: dir.objectPosition }}
             priority={i === 0}
             sizes="100vw"
           />
