@@ -1,94 +1,187 @@
 "use client"
 
-import { motion, useScroll, useTransform } from "motion/react"
-import { useRef } from "react"
-import { LeafIcon, PercentIcon, TruckIcon, ArrowRight } from "./icons"
+import { useState } from "react"
+import { motion, AnimatePresence } from "motion/react"
+import Link from "next/link"
+import Image from "next/image"
+
+const directions = [
+  {
+    id: "clothes",
+    index: "01",
+    label: "Одежда",
+    sublabel: "Платья · Топы · Накидки",
+    href: "/catalog/clothes",
+    image: "/images/home/hero-clothes.jpg",
+    accent: "#b85c38",
+    tag: "Летняя коллекция 2026",
+    headline: ["Одежда,", "сотканная", "вручную"],
+    desc: "Платья и топы из натурального хлопка — каждое изделие уникально и создаётся под вас.",
+  },
+  {
+    id: "interior",
+    index: "02",
+    label: "Интерьер",
+    sublabel: "Абажуры · Вигвамы · Мобили",
+    href: "/catalog/interior",
+    image: "/images/home/hero-interior.jpg",
+    accent: "#7a6e5f",
+    tag: "Для вашего дома",
+    headline: ["Свет и тепло", "в каждом", "углу"],
+    desc: "Абажуры ручного плетения — превращают свет в тёплую атмосферу, а пространство — в уют.",
+  },
+  {
+    id: "decor",
+    index: "03",
+    label: "Декор",
+    sublabel: "Панно · Плейсменты · Кашпо",
+    href: "/catalog/decor",
+    image: "/images/home/hero-decor.jpg",
+    accent: "#8c7b6b",
+    tag: "Детали, которые важны",
+    headline: ["Декор, который", "расскажет", "вашу историю"],
+    desc: "Панно, плейсменты и кашпо из хлопка — детали, которые завершают образ любого интерьера.",
+  },
+]
 
 export function Hero() {
-  const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  })
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"])
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.08])
+  const [active, setActive] = useState(0)
+  const current = directions[active]
 
   return (
-    <section ref={ref} id="top" className="relative pt-20 lg:pt-24 pb-16 lg:pb-24 overflow-hidden">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
-          {/* Image — 60% on desktop */}
-          <div className="lg:col-span-7 order-2 lg:order-1">
-            <div className="relative aspect-[4/5] lg:aspect-[5/6] overflow-hidden rounded-sm">
-              <motion.img
-                src="/images/hero-interior.jpg"
-                alt="Уютный интерьер с абажуром макраме ручной работы"
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ y: imageY, scale: imageScale }}
-              />
-              {/* corner mark */}
-              <div className="absolute top-4 left-4 label-caps text-parchment/90 mix-blend-difference">
-                № 001 — лето 2026
-              </div>
-              <div className="absolute bottom-4 right-4 label-caps text-parchment/90 mix-blend-difference">
-                Москва
-              </div>
-            </div>
-          </div>
+    <section className="relative h-[100dvh] min-h-[600px] max-h-[960px] overflow-hidden bg-espresso pt-[60px] lg:pt-[68px]">
+      {/* Background image */}
+      <AnimatePresence mode="sync">
+        <motion.div
+          key={current.id}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.65, ease: "easeInOut" }}
+          className="absolute inset-0 z-0"
+        >
+          <Image
+            src={current.image}
+            alt={current.label}
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-espresso/55" />
+        </motion.div>
+      </AnimatePresence>
 
-          {/* Typography — 40% on desktop */}
-          <div className="lg:col-span-5 order-1 lg:order-2 relative lg:-ml-16 xl:-ml-24 lg:pb-12">
+      {/* Content */}
+      <div className="relative z-10 h-full flex flex-col justify-between max-w-[1440px] mx-auto px-5 lg:px-12 pb-8 lg:pb-12">
+
+        {/* Tag */}
+        <div className="pt-8 lg:pt-12">
+          <AnimatePresence mode="wait">
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
+              key={current.tag}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              className="relative z-10 lg:bg-parchment lg:pl-10 lg:pt-10 lg:pr-2"
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.35 }}
+              className="inline-flex items-center gap-2"
             >
-              <div className="label-caps text-terracotta mb-6 flex items-center gap-3">
-                <span className="w-8 h-px bg-terracotta" />
-                Ручное плетение с 2018
-              </div>
+              <span className="w-5 h-px bg-white/50" />
+              <span className="label-caps text-white/60">{current.tag}</span>
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
-              <h1 className="font-serif text-espresso text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] leading-[1.02] tracking-tight text-balance">
-                Свет,
-                <br />
-                сплетённый{" "}
-                <span className="italic font-normal text-terracotta">вручную</span>
-              </h1>
-
-              <p className="mt-8 text-base md:text-lg text-espresso/75 leading-relaxed max-w-md text-pretty">
-                Эксклюзивные абажуры из макраме ручной работы. Создаём уют в вашем доме с 2018 года —
-                из натурального хлопка, льна и тёплого света.
-              </p>
-
-              <div className="mt-10 flex flex-wrap items-center gap-4">
-                <a
-                  href="#collection"
-                  className="group inline-flex items-center gap-3 px-7 py-4 rounded-full border border-espresso text-espresso label-caps-md hover:bg-terracotta hover:border-terracotta hover:text-parchment transition-all"
-                >
-                  Смотреть коллекцию
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </a>
-              </div>
-
-              {/* Trust badges */}
-              <div className="mt-10 pt-8 border-t border-espresso/10 grid grid-cols-3 gap-4">
-                {[
-                  { icon: TruckIcon, label: "Доставка по России" },
-                  { icon: PercentIcon, label: "Рассрочка 0%" },
-                  { icon: LeafIcon, label: "Натуральные материалы" },
-                ].map((b) => (
-                  <div key={b.label} className="flex flex-col items-start gap-2">
-                    <b.icon className="w-5 h-5 text-terracotta" />
-                    <span className="text-[11px] uppercase tracking-[0.08em] text-taupe leading-snug">
-                      {b.label}
-                    </span>
-                  </div>
+        {/* Headline + CTA */}
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+          <div className="max-w-2xl">
+            <AnimatePresence mode="wait">
+              <motion.h1
+                key={current.id + "-h"}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="font-serif text-white text-[clamp(2.8rem,8vw,6.5rem)] leading-[1.0] tracking-tight text-balance"
+              >
+                {current.headline.map((line, i) => (
+                  <span key={i} className="block">
+                    {i === 2 ? <em className="not-italic" style={{ color: current.accent }}>{line}</em> : line}
+                  </span>
                 ))}
-              </div>
+              </motion.h1>
+            </AnimatePresence>
+
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={current.id + "-p"}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                className="mt-5 text-white/70 text-base lg:text-lg max-w-md leading-relaxed"
+              >
+                {current.desc}
+              </motion.p>
+            </AnimatePresence>
+
+            <motion.div className="mt-8 flex items-center gap-4">
+              <Link
+                href={current.href}
+                className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-full border border-white/40 text-white label-caps-md hover:bg-white hover:text-espresso transition-all duration-300"
+              >
+                Смотреть коллекцию
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform group-hover:translate-x-1">
+                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
             </motion.div>
           </div>
+
+          {/* Direction switcher */}
+          <div className="flex lg:flex-col gap-2 lg:gap-3 pb-1">
+            {directions.map((dir, i) => (
+              <button
+                key={dir.id}
+                onClick={() => setActive(i)}
+                className={`group flex items-center gap-3 text-left transition-all duration-200 ${
+                  i === active ? "opacity-100" : "opacity-40 hover:opacity-70"
+                }`}
+              >
+                <span
+                  className={`flex-shrink-0 w-px h-6 transition-all duration-300 ${i === active ? "h-8" : ""}`}
+                  style={{ backgroundColor: i === active ? dir.accent : "rgba(255,255,255,0.4)" }}
+                />
+                <div>
+                  <div className="label-caps text-white text-[10px] leading-none mb-0.5">{dir.index}</div>
+                  <div className="text-white font-serif text-[15px] leading-tight">{dir.label}</div>
+                  {i === active && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      className="text-white/50 text-[11px] mt-0.5"
+                    >
+                      {dir.sublabel}
+                    </motion.div>
+                  )}
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
+      </div>
+
+      {/* Scroll hint */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 opacity-40">
+        <span className="label-caps text-white text-[9px]">Скролл</span>
+        <motion.div
+          animate={{ y: [0, 5, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 4l5 5 5-5" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </motion.div>
       </div>
     </section>
   )
