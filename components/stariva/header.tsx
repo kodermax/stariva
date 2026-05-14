@@ -84,13 +84,22 @@ export function Header({ variant = "solid" }: HeaderProps) {
         <div className="max-w-[1440px] mx-auto px-5 lg:px-12 flex items-center justify-between h-[60px] lg:h-[68px]">
 
           {/* Logo */}
-          <Link
-            href="/"
-            className={`font-serif text-[22px] lg:text-[26px] tracking-[-0.01em] transition-colors flex-shrink-0 ${
-              isSolid ? "text-espresso" : "text-white"
-            }`}
-          >
-            Stariva
+          <Link href="/" className="flex-shrink-0 group" aria-label="Stariva — на главную">
+            <span className={`flex flex-col items-start leading-none transition-colors ${isSolid ? "text-espresso" : "text-white"}`}>
+              {/* Wordmark */}
+              <span
+                className="font-serif tracking-[0.12em] uppercase"
+                style={{ fontSize: "clamp(17px, 2vw, 22px)", fontWeight: 500, letterSpacing: "0.14em" }}
+              >
+                Stariva
+              </span>
+              {/* Decorative rule — macrame thread motif */}
+              <span className="flex items-center gap-[3px] mt-[3px]" aria-hidden="true">
+                <span className={`block h-px w-[38px] transition-all duration-500 group-hover:w-[52px] ${isSolid ? "bg-terracotta" : "bg-white/60"}`} />
+                <span className={`block h-px w-[6px] ${isSolid ? "bg-espresso/25" : "bg-white/30"}`} />
+                <span className={`block h-px w-[3px] ${isSolid ? "bg-espresso/15" : "bg-white/20"}`} />
+              </span>
+            </span>
           </Link>
 
           {/* Desktop Nav */}
