@@ -8,11 +8,19 @@ import { Header } from "@/components/stariva/header"
 import { Footer } from "@/components/stariva/footer"
 import { ProductDetails } from "./product-details"
 
-export const dynamic = "force-dynamic"
 export const revalidate = 3600
 
 interface ProductPageProps {
   params: Promise<{ category: string; slug: string }>
+}
+
+export async function generateStaticParams() {
+  const { getProducts } = await import("@/lib/ozon-service")
+  const products = await getProducts()
+  return products.map((p) => ({
+    category: p.category,
+    slug: p.slug,
+  }))
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {

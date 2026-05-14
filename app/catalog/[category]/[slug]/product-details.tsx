@@ -178,7 +178,7 @@ export function ProductDetails({ product, category, categorySlug, relatedProduct
                 )}
 
                 <a
-                  href={`tel:+79001234567`}
+                  href={`tel:+79778722546`}
                   className="flex items-center justify-center gap-2 w-full bg-espresso hover:bg-espresso/90 text-white py-4 rounded-full transition-colors label-caps"
                 >
                   Позвонить

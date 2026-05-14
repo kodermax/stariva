@@ -21,7 +21,7 @@ export function MobileStickyBar() {
     >
       <div className="bg-parchment/95 backdrop-blur-md border border-espresso/15 rounded-full p-1.5 shadow-[0_8px_30px_rgba(44,36,27,0.12)]">
         <a
-          href="tel:+79990000000"
+          href="tel:+79778722546"
           className="flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-terracotta text-parchment label-caps-md"
         >
           <PhoneIcon className="w-4 h-4" />

@@ -1,4 +1,4 @@
-import { VkIcon, InstagramIcon, DzenIcon, PhoneIcon } from "./icons"
+import { VkIcon, PinterestIcon, LivemasterIcon, DzenIcon, PhoneIcon } from "./icons"
 
 const catalog = [
   "Абажуры из макраме",
@@ -26,11 +26,11 @@ export function Footer() {
             <div className="label-caps text-parchment/60 mb-8">Ручное плетение с 2018</div>
 
             <a
-              href="tel:+79990000000"
+              href="tel:+79778722546"
               className="flex items-center gap-3 text-2xl font-serif text-parchment hover:text-linen transition-colors"
             >
               <PhoneIcon className="w-5 h-5 text-linen" />
-              +7 (999) 000-00-00
+              +7 977 872 25 46
             </a>
 
             <div className="mt-6 flex items-center gap-3">
@@ -90,11 +90,17 @@ export function Footer() {
                   href="#"
                   className="inline-flex items-center gap-2 text-parchment/85 hover:text-linen transition-colors"
                 >
-                  <InstagramIcon className="w-4 h-4" />
-                  Instagram
-                  <span className="text-[10px] text-parchment/40 italic ml-1 max-w-[180px] leading-tight">
-                    (Meta признана экстремистской и запрещена в РФ)
-                  </span>
+                  <PinterestIcon className="w-4 h-4" />
+                  Pinterest
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="inline-flex items-center gap-2 text-parchment/85 hover:text-linen transition-colors"
+                >
+                  <LivemasterIcon className="w-4 h-4" />
+                  Ярмарка Мастеров
                 </a>
               </li>
               <li>
@@ -114,7 +120,7 @@ export function Footer() {
         <div className="mt-16 pt-8 border-t border-parchment/15">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 text-[11px] leading-relaxed text-parchment/55">
             <div>
-              ИП Соколова А. В. · ОГРНИП: 318774600392011 · ИНН: 770301234567
+              СЗ Капычева О. А. ИНН: 502480197143
             </div>
             <div className="flex flex-wrap gap-x-5 gap-y-2">
               <a href="#" className="hover:text-linen transition-colors">

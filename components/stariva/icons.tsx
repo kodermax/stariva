@@ -49,12 +49,34 @@ export function VkIcon(props: IconProps) {
   )
 }
 
-export function InstagramIcon(props: IconProps) {
+export function PinterestIcon(props: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-      <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke="currentColor" strokeWidth="1.3" />
-      <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.3" />
-      <circle cx="17" cy="7" r="0.8" fill="currentColor" />
+      <path
+        d="M12 2.5c-5.2 0-9.5 4.3-9.5 9.5 0 4 2.5 7.4 6 8.8-.1-.7-.2-1.8 0-2.6l1.4-6s-.4-.7-.4-1.8c0-1.7 1-3 2.2-3 1 0 1.5.8 1.5 1.7 0 1-.7 2.6-1 4-.3 1.2.6 2.2 1.8 2.2 2.2 0 3.8-2.3 3.8-5.6 0-2.9-2.1-5-5.1-5-3.5 0-5.5 2.6-5.5 5.3 0 1.1.4 2.2.9 2.8.1.1.1.2.1.3l-.3 1.4c-.1.3-.2.4-.5.2-1.5-.7-2.4-2.9-2.4-4.7 0-3.8 2.8-7.3 8-7.3 4.2 0 7.5 3 7.5 7 0 4.2-2.6 7.5-6.3 7.5-1.2 0-2.4-.6-2.8-1.4l-.8 3c-.3 1.1-1 2.5-1.5 3.4 1.1.3 2.3.5 3.5.5 5.2 0 9.5-4.3 9.5-9.5S17.2 2.5 12 2.5Z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+export function LivemasterIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path
+        d="M12 3L4 7v5c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V7l-8-4Z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 8v8M8 12h8"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+      />
     </svg>
   )
 }

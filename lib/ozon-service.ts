@@ -213,33 +213,18 @@ async function fetchFromOzon(): Promise<Product[] | null> {
   }
 }
 
-// Cache for products
-let cachedProducts: Product[] | null = null
-let cacheTimestamp: number = 0
-const CACHE_TTL = 60 * 60 * 1000 // 1 hour
-
 export async function getProducts(): Promise<Product[]> {
-  const now = Date.now()
-  
-  // Return cached if valid
-  if (cachedProducts && (now - cacheTimestamp) < CACHE_TTL) {
-    console.log("[v0] 📦 Using cached products:", cachedProducts.length, "items")
-    return cachedProducts
-  }
-  
-  // Try fetching from Ozon
-  console.log("[v0] 🔄 Attempting to fetch from Ozon...")
+  // Next.js Data Cache handles caching via fetch's `next: { revalidate }` option
+  console.log("[ozon] 🔄 Fetching products...")
   const ozonProducts = await fetchFromOzon()
-  
+
   if (ozonProducts && ozonProducts.length > 0) {
-    cachedProducts = ozonProducts
-    cacheTimestamp = now
-    console.log("[v0] ✓ Using Ozon products:", ozonProducts.length, "items")
+    console.log("[ozon] ✓ Using Ozon products:", ozonProducts.length, "items")
     return ozonProducts
   }
-  
+
   // Fallback to static products
-  console.log("[v0] 📂 Using fallback static products:", fallbackProducts.length, "items")
+  console.log("[ozon] 📂 Using fallback static products:", fallbackProducts.length, "items")
   return fallbackProducts
 }
 

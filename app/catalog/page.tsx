@@ -8,8 +8,6 @@ import { Header } from "@/components/stariva/header"
 import { Footer } from "@/components/stariva/footer"
 import type { Product } from "@/lib/ozon-types"
 
-// Force dynamic rendering to get fresh data from Ozon
-export const dynamic = "force-dynamic"
 export const revalidate = 3600 // ISR: revalidate every hour
 
 async function FeaturedProducts() {
