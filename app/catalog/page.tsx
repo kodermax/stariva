@@ -90,7 +90,7 @@ function ProductsSkeleton() {
 export default async function CatalogPage() {
   return (
     <>
-      <Header />
+      <Header variant="solid" />
       <main className="min-h-screen bg-parchment">
         {/* Hero */}
         <section className="pt-32 pb-16 px-4">

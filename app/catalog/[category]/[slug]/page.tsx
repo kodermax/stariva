@@ -31,7 +31,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <>
-      <Header />
+      <Header variant="solid" />
       <ProductDetails 
         product={product} 
         category={category} 

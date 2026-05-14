@@ -13,7 +13,7 @@ export default function BlogPage() {
 
   return (
     <>
-      <Header />
+      <Header variant="solid" />
       <main className="pt-24 lg:pt-32 pb-20">
         {/* Hero Section */}
         <section className="max-w-[1400px] mx-auto px-6 lg:px-10 mb-16 lg:mb-24">

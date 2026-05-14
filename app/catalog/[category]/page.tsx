@@ -35,7 +35,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <>
-      <Header />
+      <Header variant="solid" />
       <main className="min-h-screen bg-parchment">
         {/* Hero */}
         <section className="relative pt-32 pb-16">
