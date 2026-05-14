@@ -299,19 +299,45 @@ export function ArrowRight(props: IconProps) {
 
 export function StariveLogo(props: IconProps) {
   return (
-    <svg viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg viewBox="0 0 240 80" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      {/* Decorative macrame knot pattern */}
+      <g opacity="0.6">
+        {/* Left knot cluster */}
+        <path d="M15 25 Q20 20 25 25 Q20 30 15 25" stroke="currentColor" strokeWidth="1" fill="none" />
+        <path d="M18 28 L22 28" stroke="currentColor" strokeWidth="0.8" />
+        <path d="M18 32 L22 32" stroke="currentColor" strokeWidth="0.8" />
+        <path d="M15 30 Q20 32 25 30" stroke="currentColor" strokeWidth="0.8" fill="none" />
+      </g>
+
+      {/* Main text */}
       <text
-        x="0"
-        y="42"
+        x="50"
+        y="52"
         fontFamily="var(--font-serif), Georgia, serif"
-        fontSize="36"
-        fontWeight="500"
+        fontSize="48"
+        fontWeight="400"
         fill="currentColor"
-        letterSpacing="0.02em"
+        letterSpacing="-0.5"
       >
         Stariva
       </text>
-      <path d="M0 52h140" stroke="currentColor" strokeWidth="0.8" opacity="0.3" />
+
+      {/* Decorative line under text */}
+      <path d="M50 62 Q145 62 175 62" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+
+      {/* Right decorative accent - vertical thread detail */}
+      <g opacity="0.5">
+        <path d="M195 20 L197 45 L195 65" stroke="currentColor" strokeWidth="1.2" fill="none" />
+        <circle cx="195" cy="25" r="1.5" fill="currentColor" />
+        <circle cx="195" cy="38" r="1.5" fill="currentColor" />
+        <circle cx="195" cy="52" r="1.5" fill="currentColor" />
+      </g>
+
+      {/* Subtle horizontal threads - macrame reference */}
+      <g opacity="0.3">
+        <path d="M20 38 Q70 36 120 38" stroke="currentColor" strokeWidth="0.6" strokeDasharray="3,2" />
+        <path d="M25 45 Q75 43 125 45" stroke="currentColor" strokeWidth="0.6" strokeDasharray="3,2" />
+      </g>
     </svg>
   )
 }

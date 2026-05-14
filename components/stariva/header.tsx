@@ -31,7 +31,6 @@ export function Header() {
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10 flex items-center justify-between h-16 lg:h-20">
         <Link href="/" className="flex items-baseline gap-2">
           <span className="font-serif text-2xl lg:text-3xl tracking-tight text-espresso">Stariva</span>
-          <span className="hidden md:inline label-caps text-taupe">est. 2018</span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-9">
