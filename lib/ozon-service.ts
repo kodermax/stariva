@@ -1,5 +1,6 @@
 import type { Product, ProductCategory, ProductSubcategory } from "./ozon-types"
 import { products as fallbackProducts, categories } from "./products"
+import { env } from "./env"
 
 const OZON_API_URL = "https://api-seller.ozon.ru"
 
@@ -130,22 +131,15 @@ function transformOzonProduct(ozonProduct: OzonProductInfo): Product {
 }
 
 async function fetchFromOzon(): Promise<Product[] | null> {
-  const clientId = process.env.OZON_CLIENT_ID
-  const apiKey = process.env.OZON_API_KEY
-
-  if (!clientId || !apiKey) {
-    console.log("[v0] ❌ Ozon API credentials not configured")
-    console.log("[v0] OZON_CLIENT_ID:", clientId ? "✓ set" : "✗ missing")
-    console.log("[v0] OZON_API_KEY:", apiKey ? "✓ set" : "✗ missing")
-    return null
-  }
+  const clientId = env.OZON_CLIENT_ID
+  const apiKey = env.OZON_API_KEY
 
   console.log("[v0] ✓ Ozon credentials found. Client ID starts with:", clientId?.substring(0, 5) + "...")
 
   try {
-    // Step 1: Get product list
-    console.log("[v0] 📦 Fetching Ozon product list...")
-    const listResponse = await fetch(`${OZON_API_URL}/v2/product/list`, {
+    // Use v3/product/info/stocks - single endpoint that returns products with stock info
+    console.log("[v0] 📦 Fetching Ozon products with stocks...")
+    const response = await fetch(`${OZON_API_URL}/v3/product/info/stocks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -162,48 +156,27 @@ async function fetchFromOzon(): Promise<Product[] | null> {
       next: { revalidate: 3600 },
     })
 
-    if (!listResponse.ok) {
-      const errorText = await listResponse.text()
-      console.log("[v0] ❌ Ozon list request failed:", listResponse.status, errorText)
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.log("[v0] ❌ Ozon request failed:", response.status)
+      console.log("[v0] Response body:", errorText)
+      console.log("[v0] Request URL:", `${OZON_API_URL}/v3/product/info/stocks`)
       return null
     }
 
-    const listData: OzonProductListResponse = await listResponse.json()
-    console.log("[v0] ✓ Found", listData.result.items.length, "products in Ozon")
+    const data = await response.json()
+    console.log("[v0] ✓ Received response from Ozon")
+    console.log("[v0] Response keys:", Object.keys(data))
     
-    const productIds = listData.result.items.map((item) => item.product_id)
-
-    if (productIds.length === 0) {
-      console.log("[v0] ⚠️ No products found in Ozon account")
+    if (!data.result || !data.result.items) {
+      console.log("[v0] ⚠️ Unexpected response structure:", JSON.stringify(data).substring(0, 200))
       return []
     }
 
-    // Step 2: Get detailed product info
-    console.log("[v0] 📋 Fetching product details for", productIds.length, "products...")
-    const infoResponse = await fetch(`${OZON_API_URL}/v2/product/info/list`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Client-Id": clientId,
-        "Api-Key": apiKey,
-      },
-      body: JSON.stringify({
-        product_id: productIds,
-      }),
-      next: { revalidate: 3600 },
-    })
-
-    if (!infoResponse.ok) {
-      const errorText = await infoResponse.text()
-      console.log("[v0] ❌ Ozon info request failed:", infoResponse.status, errorText)
-      return null
-    }
-
-    const infoData: OzonProductInfoResponse = await infoResponse.json()
-    console.log("[v0] ✓ Successfully fetched", infoData.result.items.length, "product details")
+    console.log("[v0] ✓ Found", data.result.items.length, "products in Ozon")
     
     // Transform Ozon products to our format
-    const transformedProducts = infoData.result.items.map(transformOzonProduct)
+    const transformedProducts = data.result.items.map((item: any) => transformOzonProduct(item))
     console.log("[v0] ✓ Transformed", transformedProducts.length, "products for display")
     return transformedProducts
     

@@ -1,16 +1,12 @@
 import { NextResponse } from "next/server"
 import type { OzonProductListResponse, OzonProductInfoResponse } from "@/lib/ozon-types"
+import { env } from "@/lib/env"
 
 const OZON_API_URL = "https://api-seller.ozon.ru"
 
 async function fetchOzonProducts(): Promise<OzonProductInfoResponse | null> {
-  const clientId = process.env.OZON_CLIENT_ID
-  const apiKey = process.env.OZON_API_KEY
-
-  if (!clientId || !apiKey) {
-    console.log("[v0] Ozon API credentials not configured")
-    return null
-  }
+  const clientId = env.OZON_CLIENT_ID
+  const apiKey = env.OZON_API_KEY
 
   try {
     // First, get product list
