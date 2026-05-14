@@ -1,4 +1,4 @@
-import { TelegramIcon, WhatsappIcon, VkIcon, InstagramIcon, DzenIcon, PhoneIcon } from "./icons"
+import { VkIcon, InstagramIcon, DzenIcon, PhoneIcon } from "./icons"
 
 const catalog = [
   "Абажуры из макраме",
@@ -34,20 +34,6 @@ export function Footer() {
             </a>
 
             <div className="mt-6 flex items-center gap-3">
-              <a
-                href="https://t.me/stariva"
-                aria-label="Telegram"
-                className="w-10 h-10 flex items-center justify-center rounded-full border border-parchment/20 hover:border-linen hover:text-linen transition-colors"
-              >
-                <TelegramIcon className="w-4 h-4" />
-              </a>
-              <a
-                href="https://wa.me/79990000000"
-                aria-label="WhatsApp"
-                className="w-10 h-10 flex items-center justify-center rounded-full border border-parchment/20 hover:border-linen hover:text-linen transition-colors"
-              >
-                <WhatsappIcon className="w-4 h-4" />
-              </a>
               <a
                 href="https://vk.com/stariva"
                 aria-label="ВКонтакте"
@@ -92,15 +78,6 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="https://t.me/stariva"
-                  className="inline-flex items-center gap-2 text-parchment/85 hover:text-linen transition-colors"
-                >
-                  <TelegramIcon className="w-4 h-4" />
-                  Telegram-канал
-                </a>
-              </li>
-              <li>
-                <a
                   href="https://vk.com/stariva"
                   className="inline-flex items-center gap-2 text-parchment/85 hover:text-linen transition-colors"
                 >
@@ -130,21 +107,6 @@ export function Footer() {
                 </a>
               </li>
             </ul>
-
-            <div className="mt-8 p-5 border border-parchment/15 rounded-sm">
-              <div className="label-caps text-linen mb-2">Telegram</div>
-              <div className="font-serif text-lg mb-3 leading-snug">
-                Подпишитесь на наш Telegram —
-                <span className="italic"> закулисье мастерской</span>
-              </div>
-              <a
-                href="https://t.me/stariva"
-                className="inline-flex items-center gap-2 label-caps-md text-linen underline underline-offset-[6px] decoration-linen/40 hover:decoration-linen"
-              >
-                <TelegramIcon className="w-4 h-4" />
-                @stariva
-              </a>
-            </div>
           </div>
         </div>
 

@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "motion/react"
 import { useRef } from "react"
-import { LeafIcon, PercentIcon, TruckIcon, TelegramIcon, ArrowRight } from "./icons"
+import { LeafIcon, PercentIcon, TruckIcon, ArrowRight } from "./icons"
 
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null)
@@ -68,13 +68,6 @@ export function Hero() {
                 >
                   Смотреть коллекцию
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </a>
-                <a
-                  href="https://t.me/stariva"
-                  className="inline-flex items-center gap-2 label-caps-md text-espresso underline underline-offset-[6px] decoration-espresso/30 hover:decoration-terracotta hover:text-terracotta transition-colors"
-                >
-                  <TelegramIcon className="w-4 h-4" />
-                  Написать мастеру
                 </a>
               </div>
 

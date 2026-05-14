@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { TelegramIcon, WhatsappIcon } from "./icons"
 
 const nav = [
   { label: "Каталог", href: "/catalog" },
@@ -96,31 +95,8 @@ export function Header({ variant = "transparent" }: HeaderProps) {
             })}
           </nav>
 
-          {/* Right side: socials + mobile toggle */}
+          {/* Right side: mobile toggle */}
           <div className="flex items-center gap-2">
-            <a
-              href="https://t.me/stariva"
-              aria-label="Telegram"
-              className={`hidden md:flex w-9 h-9 items-center justify-center rounded-full border transition-colors ${borderColor} ${textColorMuted} ${
-                isSolid
-                  ? "hover:border-terracotta hover:text-terracotta"
-                  : "hover:border-white hover:text-white"
-              }`}
-            >
-              <TelegramIcon className="w-4 h-4" />
-            </a>
-            <a
-              href="https://wa.me/79990000000"
-              aria-label="WhatsApp"
-              className={`hidden md:flex w-9 h-9 items-center justify-center rounded-full border transition-colors ${borderColor} ${textColorMuted} ${
-                isSolid
-                  ? "hover:border-terracotta hover:text-terracotta"
-                  : "hover:border-white hover:text-white"
-              }`}
-            >
-              <WhatsappIcon className="w-4 h-4" />
-            </a>
-
             {/* Mobile hamburger */}
             <button
               aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
@@ -204,23 +180,6 @@ export function Header({ variant = "transparent" }: HeaderProps) {
               )
             })}
           </nav>
-
-          <div className="px-6 pb-8 flex items-center gap-3">
-            <a
-              href="https://t.me/stariva"
-              aria-label="Telegram"
-              className="flex w-10 h-10 items-center justify-center rounded-full border border-espresso/12 text-espresso/60 hover:border-terracotta hover:text-terracotta transition-colors"
-            >
-              <TelegramIcon className="w-4 h-4" />
-            </a>
-            <a
-              href="https://wa.me/79990000000"
-              aria-label="WhatsApp"
-              className="flex w-10 h-10 items-center justify-center rounded-full border border-espresso/12 text-espresso/60 hover:border-terracotta hover:text-terracotta transition-colors"
-            >
-              <WhatsappIcon className="w-4 h-4" />
-            </a>
-          </div>
         </div>
       </div>
     </>

@@ -6,7 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import type { Product, Category } from "@/lib/ozon-types"
 import { formatPrice } from "@/lib/products"
-import { OzonIcon, TelegramIcon, WhatsappIcon, CottonIcon, HandmadeIcon, ShippingIcon } from "@/components/stariva/icons"
+import { OzonIcon, CottonIcon, HandmadeIcon, ShippingIcon } from "@/components/stariva/icons"
 
 interface ProductDetailsProps {
   product: Product
@@ -177,26 +177,12 @@ export function ProductDetails({ product, category, categorySlug, relatedProduct
                   </a>
                 )}
 
-                <div className="flex gap-3">
-                  <a
-                    href={`https://t.me/stariva_shop?text=Здравствуйте! Интересует ${encodeURIComponent(product.name)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 bg-espresso hover:bg-espresso/90 text-white py-4 rounded-full transition-colors label-caps"
-                  >
-                    <TelegramIcon className="w-5 h-5" />
-                    Telegram
-                  </a>
-                  <a
-                    href={`https://wa.me/79001234567?text=Здравствуйте! Интересует ${encodeURIComponent(product.name)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1DA851] text-white py-4 rounded-full transition-colors label-caps"
-                  >
-                    <WhatsappIcon className="w-5 h-5" />
-                    WhatsApp
-                  </a>
-                </div>
+                <a
+                  href={`tel:+79001234567`}
+                  className="flex items-center justify-center gap-2 w-full bg-espresso hover:bg-espresso/90 text-white py-4 rounded-full transition-colors label-caps"
+                >
+                  Позвонить
+                </a>
               </div>
             </motion.div>
           </div>

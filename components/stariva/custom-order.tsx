@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import { motion } from "motion/react"
-import { ArrowRight, TelegramIcon, WhatsappIcon } from "./icons"
+import { ArrowRight } from "./icons"
 
 function maskPhone(value: string) {
   const digits = value.replace(/\D/g, "").replace(/^7/, "").slice(0, 10)
@@ -99,30 +99,12 @@ export function CustomOrder() {
               Создадим ваш <span className="italic">идеальный</span> светильник
             </h2>
             <p className="text-espresso/75 leading-[1.75] text-lg max-w-xl text-pretty mb-10">
-              Расскажите о вашей задумке — мы предложим дизайн и рассчитаем стоимость. Ответим в
-              WhatsApp или Telegram в течение часа в рабочее время.
+              Расскажите о вашей задумке — мы предложим дизайн и рассчитаем стоимость. Ответим в течение часа в рабочее время.
             </p>
-
-            <div className="flex flex-col sm:flex-row gap-3">
-              <a
-                href="https://t.me/stariva"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-parchment border border-espresso/20 text-espresso label-caps-md hover:border-terracotta hover:text-terracotta transition-colors"
-              >
-                <TelegramIcon className="w-4 h-4" />
-                Написать в Telegram
-              </a>
-              <a
-                href="https://wa.me/79990000000"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-parchment border border-espresso/20 text-espresso label-caps-md hover:border-terracotta hover:text-terracotta transition-colors"
-              >
-                <WhatsappIcon className="w-4 h-4" />
-                Написать в WhatsApp
-              </a>
-            </div>
 
             <div className="mt-10 pt-8 border-t border-espresso/15 text-sm text-espresso/70 leading-relaxed">
               <span className="block mb-1 label-caps text-taupe">Рабочее время</span>
-              Пн–Сб, с 10:00 до 20:00 по Москве. Воскресенье — выходной, но мы всё равно читаем.
+              Пн–Сб, с 10:00 до 20:00 по Москве. Воскресенье — выходной.
             </div>
           </div>
 
