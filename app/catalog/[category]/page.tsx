@@ -10,7 +10,7 @@ import { formatPrice, getCategoryBySlug } from "@/lib/products"
 import type { Product, ProductSubcategory } from "@/lib/ozon-types"
 import { Header } from "@/components/stariva/header"
 import { Footer } from "@/components/stariva/footer"
-import { CategoryFilters } from "./category-filters"
+import CategoryFilters from "./category-filters"
 
 export const dynamic = "force-dynamic"
 export const revalidate = 3600

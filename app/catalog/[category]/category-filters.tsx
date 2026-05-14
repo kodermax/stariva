@@ -13,7 +13,7 @@ interface CategoryFiltersProps {
   categorySlug: string
 }
 
-export function CategoryFilters({ products, category, categorySlug }: CategoryFiltersProps) {
+export default function CategoryFilters({ products, category, categorySlug }: CategoryFiltersProps) {
   const [activeSubcategory, setActiveSubcategory] = useState<ProductSubcategory | "all">("all")
   const [sortBy, setSortBy] = useState<"default" | "price-asc" | "price-desc">("default")
 
