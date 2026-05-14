@@ -4,47 +4,49 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Stariva — Premium palette */
-  --ivory:   #F8F6F1;   /* warm pure white — primary background         */
-  --stone:   #EFEDE6;   /* subtle off-white — section separators         */
-  --ink:     #18160F;   /* deep warm near-black — primary text           */
-  --mist:    #9A9690;   /* muted neutral — secondary text, borders       */
-  --brass:   #9E7B45;   /* warm aged brass — single accent               */
-  --brass-light: #C4A06A; /* lighter brass — hover states                */
-  --chalk:   #FAFAF8;   /* near-pure white — card surfaces               */
+  /* ── Stariva · Sage & Chalk palette ─────────────────────────────── */
 
-  /* Semantic aliases — keep old names mapped to new values so all
-     existing Tailwind classes (bg-parchment, text-espresso …) keep working */
-  --parchment:      var(--ivory);
-  --sand:           var(--stone);
-  --terracotta:     var(--brass);
-  --terracotta-dark:var(--brass);
-  --espresso:       var(--ink);
-  --taupe:          var(--mist);
-  --linen:          var(--brass-light);
-  --sage:           var(--mist);
-  --birch:          var(--stone);
-  --cream:          var(--stone);
+  /* Core */
+  --chalk:       #FAFAF8;   /* near-pure warm white — primary background  */
+  --chalk-card:  #F4F3EF;   /* very subtle off-white — cards, sections    */
+  --graphite:    #1A1A16;   /* deep warm graphite — primary text          */
+  --smoke:       #6E6E68;   /* muted neutral — secondary text, borders    */
+  --sage:        #6B7D68;   /* dusty sage green — primary brand accent    */
+  --sage-light:  #8FA48C;   /* lighter sage — hover / tinted surfaces     */
+  --sage-pale:   #E8EDE7;   /* very pale sage — section backgrounds       */
+  --warm-beige:  #C4B89A;   /* warm sandstone — secondary accent          */
 
-  --background: var(--ivory);
-  --foreground: var(--ink);
-  --card: var(--chalk);
-  --card-foreground: var(--ink);
+  /* Semantic aliases — keep all existing Tailwind classes working */
+  --parchment:       var(--chalk);
+  --sand:            var(--chalk-card);
+  --cream:           var(--chalk-card);
+  --espresso:        var(--graphite);
+  --taupe:           var(--smoke);
+  --terracotta:      var(--sage);
+  --terracotta-dark: var(--sage);
+  --linen:           var(--sage-light);
+  --birch:           var(--warm-beige);
+
+  /* shadcn tokens */
+  --background: var(--chalk);
+  --foreground: var(--graphite);
+  --card: var(--chalk-card);
+  --card-foreground: var(--graphite);
   --popover: var(--chalk);
-  --popover-foreground: var(--ink);
-  --primary: var(--brass);
-  --primary-foreground: var(--ivory);
-  --secondary: var(--stone);
-  --secondary-foreground: var(--ink);
-  --muted: var(--stone);
-  --muted-foreground: var(--mist);
-  --accent: var(--brass);
-  --accent-foreground: var(--ivory);
+  --popover-foreground: var(--graphite);
+  --primary: var(--sage);
+  --primary-foreground: var(--chalk);
+  --secondary: var(--chalk-card);
+  --secondary-foreground: var(--graphite);
+  --muted: var(--chalk-card);
+  --muted-foreground: var(--smoke);
+  --accent: var(--sage);
+  --accent-foreground: var(--chalk);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: rgba(24, 22, 15, 0.10);
-  --input: rgba(24, 22, 15, 0.15);
-  --ring: var(--brass);
+  --border: rgba(26, 26, 22, 0.09);
+  --input: rgba(26, 26, 22, 0.14);
+  --ring: var(--sage);
   --radius: 0.5rem;
 }
 
@@ -53,25 +55,25 @@
   --font-serif: var(--font-serif), 'Cormorant Garamond Fallback', Georgia, serif;
   --font-mono: ui-monospace, monospace;
 
-  /* New premium tokens */
-  --color-ivory: var(--ivory);
-  --color-stone: var(--stone);
-  --color-ink: var(--ink);
-  --color-mist: var(--mist);
-  --color-brass: var(--brass);
-  --color-brass-light: var(--brass-light);
-  --color-chalk: var(--chalk);
-  /* Aliases — keep backward compat */
-  --color-parchment: var(--parchment);
-  --color-sand: var(--sand);
-  --color-terracotta: var(--terracotta);
+  /* New tokens */
+  --color-chalk:      var(--chalk);
+  --color-chalk-card: var(--chalk-card);
+  --color-graphite:   var(--graphite);
+  --color-smoke:      var(--smoke);
+  --color-sage:       var(--sage);
+  --color-sage-light: var(--sage-light);
+  --color-sage-pale:  var(--sage-pale);
+  --color-warm-beige: var(--warm-beige);
+  /* Aliases */
+  --color-parchment:       var(--parchment);
+  --color-sand:            var(--sand);
+  --color-terracotta:      var(--terracotta);
   --color-terracotta-dark: var(--terracotta-dark);
-  --color-espresso: var(--espresso);
-  --color-taupe: var(--taupe);
-  --color-linen: var(--linen);
-  --color-sage: var(--sage);
-  --color-birch: var(--birch);
-  --color-cream: var(--cream);
+  --color-espresso:        var(--espresso);
+  --color-taupe:           var(--taupe);
+  --color-linen:           var(--linen);
+  --color-birch:           var(--birch);
+  --color-cream:           var(--cream);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -107,14 +109,15 @@
     scroll-behavior: smooth;
   }
   body {
-    background-color: var(--ivory);
-    color: var(--ink);
+    background-color: var(--chalk);
+    color: var(--graphite);
     font-feature-settings: "ss01", "cv01";
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   ::selection {
-    background-color: var(--brass);
-    color: var(--ivory);
+    background-color: var(--sage-pale);
+    color: var(--sage);
   }
 }
 
@@ -160,9 +163,9 @@
   height: 4px;
 }
 .atmosphere-scroll::-webkit-scrollbar-track {
-  background: var(--sand);
+  background: var(--chalk-card);
 }
 .atmosphere-scroll::-webkit-scrollbar-thumb {
-  background: var(--linen);
+  background: var(--sage-light);
   border-radius: 2px;
 }
