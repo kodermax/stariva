@@ -4,37 +4,47 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Stariva palette */
-  --parchment: #f7f3ee;
-  --sand: #ede6dc;
-  --terracotta: #b85c38;
-  --terracotta-dark: #9a4a2c;
-  --espresso: #2c241b;
-  --taupe: #8c7b6b;
-  --linen: #d4a574;
-  --sage: #a3b18a;
-  --birch: #c9b8a7;
-  --cream: #f0ebe4;
+  /* Stariva — Premium palette */
+  --ivory:   #F8F6F1;   /* warm pure white — primary background         */
+  --stone:   #EFEDE6;   /* subtle off-white — section separators         */
+  --ink:     #18160F;   /* deep warm near-black — primary text           */
+  --mist:    #9A9690;   /* muted neutral — secondary text, borders       */
+  --brass:   #9E7B45;   /* warm aged brass — single accent               */
+  --brass-light: #C4A06A; /* lighter brass — hover states                */
+  --chalk:   #FAFAF8;   /* near-pure white — card surfaces               */
 
-  --background: var(--parchment);
-  --foreground: var(--espresso);
-  --card: var(--parchment);
-  --card-foreground: var(--espresso);
-  --popover: var(--parchment);
-  --popover-foreground: var(--espresso);
-  --primary: var(--terracotta);
-  --primary-foreground: var(--parchment);
-  --secondary: var(--sand);
-  --secondary-foreground: var(--espresso);
-  --muted: var(--sand);
-  --muted-foreground: var(--taupe);
-  --accent: var(--terracotta);
-  --accent-foreground: var(--parchment);
+  /* Semantic aliases — keep old names mapped to new values so all
+     existing Tailwind classes (bg-parchment, text-espresso …) keep working */
+  --parchment:      var(--ivory);
+  --sand:           var(--stone);
+  --terracotta:     var(--brass);
+  --terracotta-dark:var(--brass);
+  --espresso:       var(--ink);
+  --taupe:          var(--mist);
+  --linen:          var(--brass-light);
+  --sage:           var(--mist);
+  --birch:          var(--stone);
+  --cream:          var(--stone);
+
+  --background: var(--ivory);
+  --foreground: var(--ink);
+  --card: var(--chalk);
+  --card-foreground: var(--ink);
+  --popover: var(--chalk);
+  --popover-foreground: var(--ink);
+  --primary: var(--brass);
+  --primary-foreground: var(--ivory);
+  --secondary: var(--stone);
+  --secondary-foreground: var(--ink);
+  --muted: var(--stone);
+  --muted-foreground: var(--mist);
+  --accent: var(--brass);
+  --accent-foreground: var(--ivory);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: rgba(44, 36, 27, 0.12);
-  --input: rgba(44, 36, 27, 0.18);
-  --ring: var(--terracotta);
+  --border: rgba(24, 22, 15, 0.10);
+  --input: rgba(24, 22, 15, 0.15);
+  --ring: var(--brass);
   --radius: 0.5rem;
 }
 
@@ -43,6 +53,15 @@
   --font-serif: var(--font-serif), 'Cormorant Garamond Fallback', Georgia, serif;
   --font-mono: ui-monospace, monospace;
 
+  /* New premium tokens */
+  --color-ivory: var(--ivory);
+  --color-stone: var(--stone);
+  --color-ink: var(--ink);
+  --color-mist: var(--mist);
+  --color-brass: var(--brass);
+  --color-brass-light: var(--brass-light);
+  --color-chalk: var(--chalk);
+  /* Aliases — keep backward compat */
   --color-parchment: var(--parchment);
   --color-sand: var(--sand);
   --color-terracotta: var(--terracotta);
@@ -88,13 +107,14 @@
     scroll-behavior: smooth;
   }
   body {
-    background-color: var(--parchment);
-    color: var(--espresso);
+    background-color: var(--ivory);
+    color: var(--ink);
     font-feature-settings: "ss01", "cv01";
+    -webkit-font-smoothing: antialiased;
   }
   ::selection {
-    background-color: var(--terracotta);
-    color: var(--parchment);
+    background-color: var(--brass);
+    color: var(--ivory);
   }
 }
 
