@@ -14,6 +14,7 @@
   --linen: #d4a574;
   --sage: #a3b18a;
   --birch: #c9b8a7;
+  --cream: #f0ebe4;
 
   --background: var(--parchment);
   --foreground: var(--espresso);
@@ -51,6 +52,7 @@
   --color-linen: var(--linen);
   --color-sage: var(--sage);
   --color-birch: var(--birch);
+  --color-cream: var(--cream);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);

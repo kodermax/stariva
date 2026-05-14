@@ -28,8 +28,8 @@ const catalogNav = [
 const nav = [
   { label: "Каталог", href: "/catalog", hasMega: true },
   { label: "Блог", href: "/blog" },
-  { label: "О нас", href: "/#story" },
-  { label: "Заказать", href: "/#order" },
+  { label: "О бренде", href: "/#story" },
+  { label: "Доставка", href: "/#delivery" },
 ]
 
 interface HeaderProps {
@@ -188,17 +188,14 @@ export function Header({ variant = "solid" }: HeaderProps) {
           {/* Right: CTA + Burger */}
           <div className="flex items-center gap-3">
             <Link
-              href="/catalog"
-              className={`hidden lg:inline-flex items-center gap-2 label-caps-md px-4 py-2 rounded-full border transition-all ${
+              href="/#order"
+              className={`hidden lg:inline-flex items-center gap-2 label-caps-md px-5 py-2 rounded-full transition-all ${
                 isSolid
-                  ? "border-espresso/20 text-espresso hover:bg-espresso hover:text-parchment"
-                  : "border-white/40 text-white hover:bg-white hover:text-espresso"
+                  ? "bg-terracotta text-parchment hover:bg-terracotta-dark"
+                  : "bg-white/15 border border-white/40 text-white hover:bg-white hover:text-espresso"
               }`}
             >
-              Каталог
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              Заказать
             </Link>
 
             {/* Burger */}
