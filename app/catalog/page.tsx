@@ -1,15 +1,93 @@
-"use client"
-
+import { Suspense } from "react"
 import { motion } from "motion/react"
 import Image from "next/image"
 import Link from "next/link"
-import { categories, getFeaturedProducts, formatPrice } from "@/lib/products"
+import { categories, getFeaturedProducts } from "@/lib/ozon-service"
+import { formatPrice } from "@/lib/products"
 import { Header } from "@/components/stariva/header"
 import { Footer } from "@/components/stariva/footer"
+import type { Product } from "@/lib/ozon-types"
 
-export default function CatalogPage() {
-  const featuredProducts = getFeaturedProducts()
+// Force dynamic rendering to get fresh data from Ozon
+export const dynamic = "force-dynamic"
+export const revalidate = 3600 // ISR: revalidate every hour
 
+async function FeaturedProducts() {
+  const featuredProducts = await getFeaturedProducts()
+  
+  return (
+    <div className="grid md:grid-cols-3 gap-8">
+      {featuredProducts.map((product, i) => (
+        <ProductCard key={product.id} product={product} index={i} />
+      ))}
+    </div>
+  )
+}
+
+function ProductCard({ product, index }: { product: Product; index: number }) {
+  return (
+    <Link
+      href={`/catalog/${product.category}/${product.slug}`}
+      className="group block"
+    >
+      <div className="relative aspect-[4/5] rounded-xl overflow-hidden mb-4 bg-cream">
+        <Image
+          src={product.images[0]}
+          alt={product.name}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, 33vw"
+          unoptimized={product.images[0].startsWith("http")}
+        />
+        {product.oldPrice && (
+          <span className="absolute top-4 left-4 bg-terracotta text-white label-caps px-3 py-1 rounded-full">
+            Скидка
+          </span>
+        )}
+        {!product.inStock && (
+          <div className="absolute inset-0 bg-parchment/60 flex items-center justify-center">
+            <span className="label-caps text-espresso bg-parchment/90 px-4 py-2 rounded-full">
+              Нет в наличии
+            </span>
+          </div>
+        )}
+      </div>
+      <h3 className="font-serif text-xl text-espresso mb-1 group-hover:text-terracotta transition-colors">
+        {product.name}
+      </h3>
+      <p className="text-taupe text-sm mb-2 line-clamp-1">
+        {product.shortDescription}
+      </p>
+      <div className="flex items-baseline gap-2">
+        <span className="font-medium text-espresso">
+          {formatPrice(product.price)}
+        </span>
+        {product.oldPrice && (
+          <span className="text-taupe line-through text-sm">
+            {formatPrice(product.oldPrice)}
+          </span>
+        )}
+      </div>
+    </Link>
+  )
+}
+
+function ProductsSkeleton() {
+  return (
+    <div className="grid md:grid-cols-3 gap-8">
+      {[1, 2, 3].map((i) => (
+        <div key={i} className="animate-pulse">
+          <div className="aspect-[4/5] rounded-xl bg-cream mb-4" />
+          <div className="h-6 bg-cream rounded w-3/4 mb-2" />
+          <div className="h-4 bg-cream rounded w-1/2 mb-2" />
+          <div className="h-5 bg-cream rounded w-1/4" />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export default async function CatalogPage() {
   return (
     <>
       <Header />
@@ -17,31 +95,16 @@ export default function CatalogPage() {
         {/* Hero */}
         <section className="pt-32 pb-16 px-4">
           <div className="max-w-6xl mx-auto text-center">
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="label-caps text-terracotta mb-4 block"
-            >
+            <span className="label-caps text-terracotta mb-4 block">
               Каталог
-            </motion.span>
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-serif text-4xl md:text-5xl lg:text-6xl text-espresso mb-6 text-balance"
-            >
+            </span>
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-espresso mb-6 text-balance">
               Изделия ручной работы
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-taupe text-lg max-w-2xl mx-auto"
-            >
+            </h1>
+            <p className="text-taupe text-lg max-w-2xl mx-auto">
               Каждое изделие создаётся вручную из натурального хлопка. 
               Срок изготовления — от 7 до 21 дня в зависимости от сложности.
-            </motion.p>
+            </p>
           </div>
         </section>
 
@@ -50,37 +113,31 @@ export default function CatalogPage() {
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-3 gap-6">
               {categories.map((category, i) => (
-                <motion.div
+                <Link
                   key={category.slug}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1 * i }}
+                  href={`/catalog/${category.slug}`}
+                  className="group block relative aspect-[4/5] rounded-2xl overflow-hidden"
                 >
-                  <Link
-                    href={`/catalog/${category.slug}`}
-                    className="group block relative aspect-[4/5] rounded-2xl overflow-hidden"
-                  >
-                    <Image
-                      src={category.image}
-                      alt={category.name}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-espresso/70 via-espresso/20 to-transparent" />
-                    <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
-                      <h2 className="font-serif text-2xl md:text-3xl mb-2">
-                        {category.name}
-                      </h2>
-                      <p className="text-white/80 text-sm line-clamp-2">
-                        {category.description}
-                      </p>
-                      <span className="mt-4 label-caps text-white/60 group-hover:text-white transition-colors">
-                        Смотреть →
-                      </span>
-                    </div>
-                  </Link>
-                </motion.div>
+                  <Image
+                    src={category.image}
+                    alt={category.name}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-espresso/70 via-espresso/20 to-transparent" />
+                  <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
+                    <h2 className="font-serif text-2xl md:text-3xl mb-2">
+                      {category.name}
+                    </h2>
+                    <p className="text-white/80 text-sm line-clamp-2">
+                      {category.description}
+                    </p>
+                    <span className="mt-4 label-caps text-white/60 group-hover:text-white transition-colors">
+                      Смотреть →
+                    </span>
+                  </div>
+                </Link>
               ))}
             </div>
           </div>
@@ -100,52 +157,9 @@ export default function CatalogPage() {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
-              {featuredProducts.map((product, i) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1 * i }}
-                >
-                  <Link
-                    href={`/catalog/${product.category}/${product.slug}`}
-                    className="group block"
-                  >
-                    <div className="relative aspect-[4/5] rounded-xl overflow-hidden mb-4 bg-cream">
-                      <Image
-                        src={product.images[0]}
-                        alt={product.name}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                      />
-                      {product.oldPrice && (
-                        <span className="absolute top-4 left-4 bg-terracotta text-white label-caps px-3 py-1 rounded-full">
-                          Скидка
-                        </span>
-                      )}
-                    </div>
-                    <h3 className="font-serif text-xl text-espresso mb-1 group-hover:text-terracotta transition-colors">
-                      {product.name}
-                    </h3>
-                    <p className="text-taupe text-sm mb-2 line-clamp-1">
-                      {product.shortDescription}
-                    </p>
-                    <div className="flex items-baseline gap-2">
-                      <span className="font-medium text-espresso">
-                        {formatPrice(product.price)}
-                      </span>
-                      {product.oldPrice && (
-                        <span className="text-taupe line-through text-sm">
-                          {formatPrice(product.oldPrice)}
-                        </span>
-                      )}
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
+            <Suspense fallback={<ProductsSkeleton />}>
+              <FeaturedProducts />
+            </Suspense>
           </div>
         </section>
 
