@@ -198,6 +198,61 @@ export default function Page() {
         </div>
       </section>
 
+      {/* ── Workshops promo ── */}
+      <section className="py-24 lg:py-32">
+        <div className="max-w-[1440px] mx-auto px-5 lg:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden border border-espresso/8">
+            {/* Left: image */}
+            <div className="relative aspect-[4/3] lg:aspect-auto lg:min-h-[480px] overflow-hidden">
+              <Image
+                src="/images/workshops/hero-workshops.jpg"
+                alt="Мастер-классы по макраме"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-espresso/20" />
+            </div>
+
+            {/* Right: text */}
+            <div className="bg-sand flex flex-col justify-center px-8 md:px-12 lg:px-16 py-12 lg:py-16">
+              <span className="label-caps text-terracotta mb-5 block tracking-widest">Обучение</span>
+              <h2 className="font-serif text-4xl lg:text-5xl text-espresso mb-6 leading-[1.1] text-balance">
+                Научитесь плести<br />
+                <em className="not-italic text-taupe">самостоятельно</em>
+              </h2>
+              <p className="text-espresso/70 text-base leading-[1.8] mb-8 max-w-md">
+                Видео-мастер-классы с пошаговыми инструкциями: от базовых узлов до готового абажура, платья или панно. Доступ навсегда, смотрите в своём темпе.
+              </p>
+              <ul className="space-y-2.5 mb-10">
+                {[
+                  "6 курсов по трём направлениям",
+                  "HD-видео с подробными комментариями",
+                  "Список материалов для каждого курса",
+                  "Поддержка мастера",
+                ].map((item) => (
+                  <li key={item} className="flex items-center gap-3 text-espresso/80 text-sm">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-terracotta flex-shrink-0">
+                      <path d="M3 8.5l3 3 7-7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/workshops"
+                className="self-start inline-flex items-center gap-3 px-7 py-4 rounded-full bg-espresso text-parchment label-caps-md hover:bg-terracotta transition-colors"
+              >
+                Смотреть мастер-классы
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Process, Reviews, Delivery, Order ── */}
       <Process />
       <Reviews />

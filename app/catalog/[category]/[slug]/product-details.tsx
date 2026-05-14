@@ -50,7 +50,7 @@ export function ProductDetails({ product, category, categorySlug, relatedProduct
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-cream mb-4">
+              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-sand mb-4">
                 <Image
                   src={product.images[activeImage]}
                   alt={product.name}
@@ -130,24 +130,24 @@ export function ProductDetails({ product, category, categorySlug, relatedProduct
               </p>
 
               {/* Features */}
-              <div className="grid grid-cols-3 gap-4 mb-8">
-                <div className="flex flex-col items-center text-center p-4 bg-cream rounded-xl">
-                  <CottonIcon className="w-8 h-8 text-espresso mb-2" />
-                  <span className="text-xs text-taupe">{product.material}</span>
+              <div className="grid grid-cols-3 gap-3 mb-8">
+                <div className="flex flex-col items-center text-center p-4 bg-sand rounded-xl border border-espresso/6">
+                  <CottonIcon className="w-7 h-7 text-terracotta mb-2" />
+                  <span className="label-caps text-[9px] text-taupe leading-snug">{product.material}</span>
                 </div>
-                <div className="flex flex-col items-center text-center p-4 bg-cream rounded-xl">
-                  <HandmadeIcon className="w-8 h-8 text-espresso mb-2" />
-                  <span className="text-xs text-taupe">Ручная работа</span>
+                <div className="flex flex-col items-center text-center p-4 bg-sand rounded-xl border border-espresso/6">
+                  <HandmadeIcon className="w-7 h-7 text-terracotta mb-2" />
+                  <span className="label-caps text-[9px] text-taupe leading-snug">Ручная работа</span>
                 </div>
-                <div className="flex flex-col items-center text-center p-4 bg-cream rounded-xl">
-                  <ShippingIcon className="w-8 h-8 text-espresso mb-2" />
-                  <span className="text-xs text-taupe">7-21 дней</span>
+                <div className="flex flex-col items-center text-center p-4 bg-sand rounded-xl border border-espresso/6">
+                  <ShippingIcon className="w-7 h-7 text-terracotta mb-2" />
+                  <span className="label-caps text-[9px] text-taupe leading-snug">7–21 день</span>
                 </div>
               </div>
 
               {/* Dimensions & Care */}
               {(product.dimensions || product.careInstructions) && (
-                <div className="space-y-3 mb-8 p-4 bg-cream rounded-xl">
+                <div className="space-y-3 mb-8 p-5 bg-sand rounded-xl border border-espresso/6">
                   {product.dimensions && (
                     <div className="flex justify-between text-sm">
                       <span className="text-taupe">Размеры</span>
@@ -233,7 +233,7 @@ export function ProductDetails({ product, category, categorySlug, relatedProduct
                     href={`/catalog/${p.category}/${p.slug}`}
                     className="group block"
                   >
-                    <div className="relative aspect-[4/5] rounded-xl overflow-hidden mb-4 bg-cream">
+                    <div className="relative aspect-[4/5] rounded-xl overflow-hidden mb-4 bg-sand">
                       <Image
                         src={p.images[0]}
                         alt={p.name}

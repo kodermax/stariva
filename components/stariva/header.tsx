@@ -27,9 +27,10 @@ const catalogNav = [
 
 const nav = [
   { label: "Каталог", href: "/catalog", hasMega: true },
+  { label: "Мастер-классы", href: "/workshops" },
   { label: "Блог", href: "/blog" },
-  { label: "О нас", href: "/#story" },
-  { label: "Заказать", href: "/#order" },
+  { label: "О бренде", href: "/about" },
+  { label: "Доставка", href: "/#delivery" },
 ]
 
 interface HeaderProps {
@@ -83,13 +84,22 @@ export function Header({ variant = "solid" }: HeaderProps) {
         <div className="max-w-[1440px] mx-auto px-5 lg:px-12 flex items-center justify-between h-[60px] lg:h-[68px]">
 
           {/* Logo */}
-          <Link
-            href="/"
-            className={`font-serif text-[22px] lg:text-[26px] tracking-[-0.01em] transition-colors flex-shrink-0 ${
-              isSolid ? "text-espresso" : "text-white"
-            }`}
-          >
-            Stariva
+          <Link href="/" className="flex-shrink-0 group" aria-label="Stariva — на главную">
+            <span className={`flex flex-col items-start leading-none transition-colors ${isSolid ? "text-espresso" : "text-white"}`}>
+              {/* Wordmark */}
+              <span
+                className="font-serif tracking-[0.12em] uppercase"
+                style={{ fontSize: "clamp(17px, 2vw, 22px)", fontWeight: 500, letterSpacing: "0.14em" }}
+              >
+                Stariva
+              </span>
+              {/* Decorative rule — macrame thread motif */}
+              <span className="flex items-center gap-[3px] mt-[3px]" aria-hidden="true">
+                <span className={`block h-px w-[38px] transition-all duration-500 group-hover:w-[52px] ${isSolid ? "bg-terracotta" : "bg-white/60"}`} />
+                <span className={`block h-px w-[6px] ${isSolid ? "bg-espresso/25" : "bg-white/30"}`} />
+                <span className={`block h-px w-[3px] ${isSolid ? "bg-espresso/15" : "bg-white/20"}`} />
+              </span>
+            </span>
           </Link>
 
           {/* Desktop Nav */}
@@ -188,17 +198,14 @@ export function Header({ variant = "solid" }: HeaderProps) {
           {/* Right: CTA + Burger */}
           <div className="flex items-center gap-3">
             <Link
-              href="/catalog"
-              className={`hidden lg:inline-flex items-center gap-2 label-caps-md px-4 py-2 rounded-full border transition-all ${
+              href="/#order"
+              className={`hidden lg:inline-flex items-center gap-2 label-caps-md px-5 py-2 rounded-full transition-all ${
                 isSolid
-                  ? "border-espresso/20 text-espresso hover:bg-espresso hover:text-parchment"
-                  : "border-white/40 text-white hover:bg-white hover:text-espresso"
+                  ? "bg-terracotta text-parchment hover:bg-terracotta-dark"
+                  : "bg-white/15 border border-white/40 text-white hover:bg-white hover:text-espresso"
               }`}
             >
-              Каталог
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              Заказать
             </Link>
 
             {/* Burger */}
