@@ -29,7 +29,7 @@ const nav = [
   { label: "Каталог", href: "/catalog", hasMega: true },
   { label: "Мастер-классы", href: "/workshops" },
   { label: "Блог", href: "/blog" },
-  { label: "О бренде", href: "/#story" },
+  { label: "О бренде", href: "/about" },
   { label: "Доставка", href: "/#delivery" },
 ]
 
