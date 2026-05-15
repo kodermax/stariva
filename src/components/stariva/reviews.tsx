@@ -59,7 +59,7 @@ export function Reviews() {
             </h2>
           </div>
           <a
-            href="https://t.me/stariva_otzyvy"
+            href="https://t.me/Olga_Stariva"
             className="inline-flex items-center gap-2 label-caps-md text-espresso underline underline-offset-[6px] decoration-espresso/25 hover:decoration-terracotta hover:text-terracotta transition-colors"
           >
             <TelegramIcon className="w-4 h-4" />

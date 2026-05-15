@@ -82,16 +82,6 @@ export function Footer() {
               </svg>
               <span className="label-caps">info@stariva.ru</span>
             </a>
-
-            <div className="mt-6 flex items-center gap-3">
-              <a
-                href="https://vk.com/stariva"
-                aria-label="ВКонтакте"
-                className="w-10 h-10 flex items-center justify-center rounded-full border border-parchment/20 hover:border-linen hover:text-linen transition-colors"
-              >
-                <VkIcon className="w-4 h-4" />
-              </a>
-            </div>
           </div>
 
           {/* Catalog */}
@@ -136,7 +126,7 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="https://vk.com/stariva"
+                  href="https://vk.com/stariva_macrame"
                   className="inline-flex items-center gap-2 text-parchment/85 hover:text-linen transition-colors"
                 >
                   <VkIcon className="w-4 h-4" />
@@ -154,20 +144,11 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://www.livemaster.ru/stariva"
+                  href="https://www.livemaster.ru/olga-meu"
                   className="inline-flex items-center gap-2 text-parchment/85 hover:text-linen transition-colors"
                 >
                   <LivemasterIcon className="w-4 h-4" />
                   Ярмарка Мастеров
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://dzen.ru/stariva"
-                  className="inline-flex items-center gap-2 text-parchment/85 hover:text-linen transition-colors"
-                >
-                  <DzenIcon className="w-4 h-4" />
-                  Яндекс.Дзен
                 </a>
               </li>
             </ul>
