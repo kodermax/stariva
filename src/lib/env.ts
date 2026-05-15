@@ -6,8 +6,8 @@ export const env = createEnv({
    * Серверные переменные окружения (доступны только на сервере)
    */
   server: {
-    OZON_API_KEY: z.string().min(1),
-    OZON_CLIENT_ID: z.string().min(1),
+    OZON_API_KEY: z.string().min(1).optional(),
+    OZON_CLIENT_ID: z.string().min(1).optional(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
