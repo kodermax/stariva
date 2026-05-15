@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { ColorSwatches } from "@/components/stariva/color-indicator";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -12,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { parseMultipleColors } from "@/lib/colors";
 import type { Category, Product, ProductSubcategory } from "@/lib/ozon-types";
 import { formatPrice } from "@/lib/products";
 
@@ -156,6 +158,8 @@ function ProductCard({
   index: number;
   categorySlug: string;
 }) {
+  const productColors = parseMultipleColors(product.color);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -176,6 +180,12 @@ function ProductCard({
             sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
             unoptimized={product.images[0].startsWith("http")}
           />
+          {/* Color swatches overlay */}
+          {productColors.length > 0 && (
+            <div className="absolute bottom-3 left-3 bg-parchment/90 backdrop-blur-sm rounded-full px-2.5 py-1.5 shadow-sm">
+              <ColorSwatches colors={productColors} size="sm" maxDisplay={3} />
+            </div>
+          )}
         </div>
 
         {/* Info */}

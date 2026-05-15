@@ -168,17 +168,22 @@ export function transformOzonProduct(
       (plainDescription.length > 200 ? "…" : "")
     : name;
 
-  // Создаём уникальный slug
-  // Приоритет: offer_id (артикул) > название + ID
+  // Создаём уникальный slug из названия товара для SEO
+  // Приоритет: название товара > артикул > ID
   let uniqueSlug: string;
   
-  if (ozonProduct.offer_id) {
-    // Используем артикул как основу для slug (более читаемо)
+  if (name && name !== "Без названия") {
+    // Используем название товара для SEO-friendly URL
+    const baseSlug = slugify(name);
+    // Добавляем короткий ID для уникальности (последние 4 цифры)
+    const shortId = String(ozonProduct.id).slice(-4);
+    uniqueSlug = `${baseSlug}-${shortId}`;
+  } else if (ozonProduct.offer_id) {
+    // Fallback: артикул
     uniqueSlug = slugify(ozonProduct.offer_id);
   } else {
-    // Fallback: название + ID товара
-    const baseSlug = slugify(name) || `product`;
-    uniqueSlug = `${baseSlug}-${ozonProduct.id}`;
+    // Последний fallback: product + ID
+    uniqueSlug = `product-${ozonProduct.id}`;
   }
 
   return {

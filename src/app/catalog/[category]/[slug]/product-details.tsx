@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { CottonIcon, HandmadeIcon, OzonIcon } from "@/components/stariva/icons";
+import { ColorSwatches } from "@/components/stariva/color-indicator";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,6 +15,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
+import { parseMultipleColors } from "@/lib/colors";
 import type { Category, Product } from "@/lib/ozon-types";
 import { formatPrice } from "@/lib/products";
 
@@ -31,6 +33,7 @@ export function ProductDetails({
   relatedProducts,
 }: ProductDetailsProps) {
   const [activeImage, setActiveImage] = useState(0);
+  const productColors = parseMultipleColors(product.color);
 
   return (
     <main className="min-h-screen bg-parchment">
@@ -173,14 +176,17 @@ export function ProductDetails({
                 className={`grid gap-3 mb-8 ${[product.material, product.color, product.sizes?.length, product.careInstructions].filter(Boolean).length > 2 ? "grid-cols-2" : "grid-cols-2"}`}
               >
                 {/* Цвет */}
-                {product.color && (
-                  <div className="flex flex-col items-center text-center p-4 bg-sand rounded-xl border border-espresso/6 col-span-2">
-                    <span className="label-caps text-[9px] text-taupe/60 mb-1">
+                {product.color && productColors.length > 0 && (
+                  <div className="flex flex-col items-center justify-center text-center p-4 bg-sand rounded-xl border border-espresso/6 col-span-2">
+                    <span className="label-caps text-[9px] text-taupe/60 mb-3">
                       Цвет
                     </span>
-                    <span className="label-caps text-[10px] text-espresso leading-snug">
-                      {product.color}
-                    </span>
+                    <div className="flex flex-col items-center gap-2">
+                      <ColorSwatches colors={productColors} size="lg" />
+                      <span className="label-caps text-[11px] text-espresso leading-snug mt-1">
+                        {product.color}
+                      </span>
+                    </div>
                   </div>
                 )}
                 {/* Размеры */}
