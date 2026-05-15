@@ -10,23 +10,23 @@ const catalogNav = [
   {
     label: "Одежда",
     href: "/catalog/clothes",
-    desc: "Платья, топы, накидки из натурального хлопка",
+    desc: "Платья, топы и накидки из натурального хлопка ручного плетения",
     image: "/images/catalog/category-clothes.jpg",
     items: ["Платья макраме", "Топы", "Накидки"],
   },
   {
-    label: "Интерьер",
-    href: "/catalog/interior",
-    desc: "Абажуры, вигвамы и мобили ручной работы",
-    image: "/images/catalog/category-interior.jpg",
-    items: ["Абажуры", "Вигвамы", "Мобили"],
+    label: "Сумки",
+    href: "/catalog/bags",
+    desc: "Авторские сумки, клатчи и шопперы в технике макраме",
+    image: "/images/catalog/category-bags.jpg",
+    items: ["Шопперы", "Клатчи", "Кросс-боди"],
   },
   {
-    label: "Декор",
+    label: "Декор интерьера",
     href: "/catalog/decor",
-    desc: "Панно, плейсменты, кашпо для вашего дома",
+    desc: "Абажуры, панно, вигвамы и аксессуары для дома",
     image: "/images/catalog/category-decor.jpg",
-    items: ["Панно", "Плейсменты", "Кашпо"],
+    items: ["Абажуры", "Панно", "Вигвамы", "Плейсменты"],
   },
 ];
 
@@ -400,8 +400,9 @@ export function Header({ variant = "solid" }: HeaderProps) {
             </div>
             {[
               { label: "Весь каталог", href: "/catalog" },
+              { label: "Мастер-классы", href: "/workshops" },
               { label: "Блог", href: "/blog" },
-              { label: "О мастере", href: "/#story" },
+              { label: "О бренде", href: "/about" },
               { label: "Заказать", href: "/#order" },
             ].map((item) => (
               <Link
