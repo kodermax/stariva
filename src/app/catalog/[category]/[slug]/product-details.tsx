@@ -91,6 +91,7 @@ export function ProductDetails({
                   fill
                   className="object-cover"
                   priority
+                  loading="eager"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   unoptimized={product.images[activeImage].startsWith("http")}
                 />

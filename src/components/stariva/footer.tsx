@@ -10,7 +10,7 @@ import {
 const catalog = [
   { label: "Абажуры из макраме", href: "/catalog/interior" },
   { label: "Платья макраме", href: "/catalog/clothes" },
-  { label: "Декор для дома", href: "/catalog/decor" },
+  { label: "Декор для дома", href: "/catalog/interior" },
   { label: "Подарочные сертификаты", href: "/catalog" },
 ];
 

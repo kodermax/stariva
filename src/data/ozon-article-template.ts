@@ -1,6 +1,6 @@
 /**
  * Шаблон артикулов для товаров Ozon
- * 
+ *
  * Структура артикула: КАТЕГОРИЯ-ПОДКАТЕГОРИЯ-НОМЕР
  * Примеры:
  * - CLO-DRS-001 (Одежда - Платья - 001)
@@ -302,7 +302,8 @@ export function getNextArticle(
     })
     .filter((num) => num > 0);
 
-  const maxNumber = existingNumbers.length > 0 ? Math.max(...existingNumbers) : 0;
+  const maxNumber =
+    existingNumbers.length > 0 ? Math.max(...existingNumbers) : 0;
   return generateArticle(category, subcategory, maxNumber + 1);
 }
 

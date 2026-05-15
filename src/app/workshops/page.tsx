@@ -241,30 +241,31 @@ export default function WorkshopsPage() {
         )}
 
         {/* Category sections */}
-        {(
-          ["lampshades", "clothing", "interior"] as WorkshopCategory[]
-        ).map((cat) => {
-          const catWorkshops = workshops.filter((w) => w.category === cat);
-          if (catWorkshops.length === 0) return null;
-          return (
-            <section key={cat} className="mb-14">
-              <div className="flex items-baseline gap-4 mb-8">
-                <h2 className="font-serif text-2xl text-espresso">
-                  {categoryLabels[cat]}
-                </h2>
-                <div className="h-px flex-1 bg-espresso/10" />
-                <span className="text-sm text-taupe">
-                  {catWorkshops.length} курс{catWorkshops.length > 1 ? "а" : ""}
-                </span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {catWorkshops.map((w) => (
-                  <WorkshopCard key={w.slug} workshop={w} />
-                ))}
-              </div>
-            </section>
-          );
-        })}
+        {(["lampshades", "clothing", "interior"] as WorkshopCategory[]).map(
+          (cat) => {
+            const catWorkshops = workshops.filter((w) => w.category === cat);
+            if (catWorkshops.length === 0) return null;
+            return (
+              <section key={cat} className="mb-14">
+                <div className="flex items-baseline gap-4 mb-8">
+                  <h2 className="font-serif text-2xl text-espresso">
+                    {categoryLabels[cat]}
+                  </h2>
+                  <div className="h-px flex-1 bg-espresso/10" />
+                  <span className="text-sm text-taupe">
+                    {catWorkshops.length} курс
+                    {catWorkshops.length > 1 ? "а" : ""}
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {catWorkshops.map((w) => (
+                    <WorkshopCard key={w.slug} workshop={w} />
+                  ))}
+                </div>
+              </section>
+            );
+          },
+        )}
       </main>
 
       <Footer />

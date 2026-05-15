@@ -23,7 +23,7 @@ const catalogNav = [
   },
   {
     label: "Декор интерьера",
-    href: "/catalog/decor",
+    href: "/catalog/interior",
     desc: "Абажуры, панно, вигвамы и аксессуары для дома",
     image: "/images/catalog/category-decor.jpg",
     items: ["Абажуры", "Панно", "Вигвамы", "Плейсменты"],
@@ -385,9 +385,7 @@ export function Header({ variant = "solid" }: HeaderProps) {
                 onClick={() => setMenuOpen(false)}
                 className="flex items-center gap-3 py-3 px-1 border-b border-espresso/6 group"
               >
-                <span
-                  className="w-1.5 h-1.5 rounded-full flex-shrink-0 bg-espresso/40"
-                />
+                <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 bg-espresso/40" />
                 <div>
                   <div className="text-espresso text-[15px]">{cat.label}</div>
                   <div className="text-taupe text-[11px]">{cat.desc}</div>

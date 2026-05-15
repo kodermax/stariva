@@ -13,6 +13,20 @@ const nextConfig = {
       { protocol: "https", hostname: "ir.ozone.ru" },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/catalog/decor",
+        destination: "/catalog/interior",
+        permanent: true,
+      },
+      {
+        source: "/catalog/decor/:slug*",
+        destination: "/catalog/interior/:slug*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

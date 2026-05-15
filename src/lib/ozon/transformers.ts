@@ -171,7 +171,7 @@ export function transformOzonProduct(
   // Создаём уникальный slug из названия товара для SEO
   // Приоритет: название товара > артикул > ID
   let uniqueSlug: string;
-  
+
   if (name && name !== "Без названия") {
     // Используем название товара для SEO-friendly URL
     const baseSlug = slugify(name);

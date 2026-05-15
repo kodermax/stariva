@@ -37,7 +37,7 @@ const directions = [
     index: "03",
     label: "Декор",
     sublabel: "Панно · Плейсменты · Кашпо",
-    href: "/catalog/decor",
+    href: "/catalog/interior",
     image: "/images/home/hero-decor.jpg",
     objectPosition: "center center",
     accent: "#8c7b6b",

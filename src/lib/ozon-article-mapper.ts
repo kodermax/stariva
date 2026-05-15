@@ -3,7 +3,11 @@
  */
 
 import type { OzonProductInfo } from "./ozon-types";
-import type { Product, ProductCategory, ProductSubcategory } from "./ozon-types";
+import type {
+  Product,
+  ProductCategory,
+  ProductSubcategory,
+} from "./ozon-types";
 import {
   generateArticle,
   parseArticle,
@@ -50,27 +54,55 @@ export function detectCategoryFromName(name: string): {
   }
 
   // ИНТЕРЬЕР
-  if (lowerName.includes("абажур") || lowerName.includes("lampshade") || lowerName.includes("светильник")) {
+  if (
+    lowerName.includes("абажур") ||
+    lowerName.includes("lampshade") ||
+    lowerName.includes("светильник")
+  ) {
     return { category: "interior", subcategory: "lampshades" };
   }
-  if (lowerName.includes("типи") || lowerName.includes("tipi") || lowerName.includes("вигвам")) {
+  if (
+    lowerName.includes("типи") ||
+    lowerName.includes("tipi") ||
+    lowerName.includes("вигвам")
+  ) {
     return { category: "interior", subcategory: "tipis" };
   }
-  if (lowerName.includes("панно") || lowerName.includes("wall panel") || lowerName.includes("настенн")) {
+  if (
+    lowerName.includes("панно") ||
+    lowerName.includes("wall panel") ||
+    lowerName.includes("настенн")
+  ) {
     return { category: "interior", subcategory: "pannos" };
   }
-  if (lowerName.includes("салфетк") || lowerName.includes("placemat") || lowerName.includes("подставк")) {
+  if (
+    lowerName.includes("салфетк") ||
+    lowerName.includes("placemat") ||
+    lowerName.includes("подставк")
+  ) {
     return { category: "interior", subcategory: "placemats" };
   }
-  if (lowerName.includes("кашпо") || lowerName.includes("planter") || lowerName.includes("plant hanger")) {
+  if (
+    lowerName.includes("кашпо") ||
+    lowerName.includes("planter") ||
+    lowerName.includes("plant hanger")
+  ) {
     return { category: "interior", subcategory: "planters" };
   }
 
   // СУМКИ
-  if (lowerName.includes("шоппер") || lowerName.includes("tote") || lowerName.includes("сумка-шоппер")) {
+  if (
+    lowerName.includes("шоппер") ||
+    lowerName.includes("tote") ||
+    lowerName.includes("сумка-шоппер")
+  ) {
     return { category: "bags", subcategory: "totes" };
   }
-  if (lowerName.includes("через плечо") || lowerName.includes("crossbody") || lowerName.includes("кросс-боди")) {
+  if (
+    lowerName.includes("через плечо") ||
+    lowerName.includes("crossbody") ||
+    lowerName.includes("кросс-боди")
+  ) {
     return { category: "bags", subcategory: "crossbody" };
   }
   if (lowerName.includes("корзин") || lowerName.includes("basket")) {
@@ -89,7 +121,10 @@ export function detectCategoryFromOzonId(categoryId: number): {
   subcategory: ProductSubcategory;
 } | null {
   // Примеры маппинга (заполнить реальными ID):
-  const categoryMap: Record<number, { category: ProductCategory; subcategory: ProductSubcategory }> = {
+  const categoryMap: Record<
+    number,
+    { category: ProductCategory; subcategory: ProductSubcategory }
+  > = {
     // 17028922: { category: "clothes", subcategory: "dresses" },
     // 17029016: { category: "interior", subcategory: "lampshades" },
   };
@@ -120,12 +155,13 @@ export function transformOzonToProduct(
 
   // Генерация нового артикула, если не существует
   if (!article) {
-    article = getNextArticle(
-      categoryInfo.category,
-      categoryInfo.subcategory,
-      [...existingArticles, ...Object.values(OZON_TO_ARTICLE_MAP)],
+    article = getNextArticle(categoryInfo.category, categoryInfo.subcategory, [
+      ...existingArticles,
+      ...Object.values(OZON_TO_ARTICLE_MAP),
+    ]);
+    console.log(
+      `Generated new article ${article} for Ozon offer_id: ${ozonProduct.offer_id}`,
     );
-    console.log(`Generated new article ${article} for Ozon offer_id: ${ozonProduct.offer_id}`);
   }
 
   // Создание slug из артикула
@@ -133,7 +169,9 @@ export function transformOzonToProduct(
 
   // Парсинг цены
   const price = Number.parseFloat(ozonProduct.price) || 0;
-  const oldPrice = ozonProduct.old_price ? Number.parseFloat(ozonProduct.old_price) : undefined;
+  const oldPrice = ozonProduct.old_price
+    ? Number.parseFloat(ozonProduct.old_price)
+    : undefined;
 
   // Извлечение материала из описания (примерная логика)
   const material = extractMaterial(ozonProduct.description) || "100% хлопок";
@@ -152,7 +190,10 @@ export function transformOzonToProduct(
     price,
     oldPrice,
     currency: ozonProduct.currency_code || "RUB",
-    images: ozonProduct.images.length > 0 ? ozonProduct.images : [ozonProduct.primary_image],
+    images:
+      ozonProduct.images.length > 0
+        ? ozonProduct.images
+        : [ozonProduct.primary_image],
     category: categoryInfo.category,
     subcategory: categoryInfo.subcategory,
     ozonId: ozonProduct.id,
@@ -228,7 +269,9 @@ function extractDimensions(description: string): string | undefined {
 }
 
 function extractSizes(description: string): string[] | undefined {
-  const sizeMatch = description.match(/размер[ы]?[:\s]+(XS|S|M|L|XL|XXL|One Size)/gi);
+  const sizeMatch = description.match(
+    /размер[ы]?[:\s]+(XS|S|M|L|XL|XXL|One Size)/gi,
+  );
   if (sizeMatch) {
     return [...new Set(sizeMatch.map((s) => s.trim().toUpperCase()))];
   }
@@ -268,7 +311,9 @@ function generateShortDescription(description: string): string {
 /**
  * Экспорт маппинга для сохранения
  */
-export function exportArticleMapping(products: Product[]): Record<string, string> {
+export function exportArticleMapping(
+  products: Product[],
+): Record<string, string> {
   const mapping: Record<string, string> = {};
   for (const product of products) {
     if (product.ozonId) {
