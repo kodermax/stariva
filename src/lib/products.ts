@@ -27,25 +27,16 @@ export const categories: Category[] = [
   },
   {
     slug: "interior",
-    name: "Интерьер",
+    name: "Декор интерьера",
     description:
-      "Абажуры и подвесные кресла, которые создают особую атмосферу уюта в вашем доме",
+      "Абажуры, панно, плейсменты и вигвамы — изделия, которые создают уют в вашем доме",
     image: "/images/catalog/category-interior.jpg",
     subcategories: [
       { slug: "lampshades", name: "Абажуры", categorySlug: "interior" },
-      { slug: "tipis", name: "Гамаки и кресла", categorySlug: "interior" },
-    ],
-  },
-  {
-    slug: "decor",
-    name: "Декор",
-    description:
-      "Панно, плейсменты и игрушки для создания завершённого образа вашего пространства",
-    image: "/images/catalog/category-decor.jpg",
-    subcategories: [
-      { slug: "pannos", name: "Панно", categorySlug: "decor" },
-      { slug: "placemats", name: "Плейсменты", categorySlug: "decor" },
-      { slug: "planters", name: "Игрушки и прочее", categorySlug: "decor" },
+      { slug: "tipis", name: "Вигвамы и кресла", categorySlug: "interior" },
+      { slug: "pannos", name: "Панно", categorySlug: "interior" },
+      { slug: "placemats", name: "Плейсменты", categorySlug: "interior" },
+      { slug: "planters", name: "Игрушки и прочее", categorySlug: "interior" },
     ],
   },
 ];

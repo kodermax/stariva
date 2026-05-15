@@ -16,15 +16,14 @@ import {
 export const metadata = {
   title: "Мастер-классы — Stariva",
   description:
-    "Видео-мастер-классы по макраме: абажуры, одежда, декор и интерьер. Пошаговые инструкции от мастера Stariva.",
+    "Видео-мастер-классы по макраме: абажуры, одежда и декор интерьера. Пошаговые инструкции от мастера Stariva.",
 };
 
 const _categories: { value: WorkshopCategory | "all"; label: string }[] = [
   { value: "all", label: "Все направления" },
   { value: "lampshades", label: "Абажуры" },
   { value: "clothing", label: "Одежда" },
-  { value: "decor", label: "Декор" },
-  { value: "interior", label: "Интерьер" },
+  { value: "interior", label: "Декор интерьера" },
 ];
 
 function LevelBadge({ level }: { level: WorkshopLevel }) {
@@ -243,7 +242,7 @@ export default function WorkshopsPage() {
 
         {/* Category sections */}
         {(
-          ["lampshades", "clothing", "decor", "interior"] as WorkshopCategory[]
+          ["lampshades", "clothing", "interior"] as WorkshopCategory[]
         ).map((cat) => {
           const catWorkshops = workshops.filter((w) => w.category === cat);
           if (catWorkshops.length === 0) return null;

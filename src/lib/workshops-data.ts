@@ -1,5 +1,5 @@
 export type WorkshopLevel = "beginner" | "intermediate" | "advanced";
-export type WorkshopCategory = "lampshades" | "clothing" | "decor" | "interior";
+export type WorkshopCategory = "lampshades" | "clothing" | "interior";
 
 export interface WorkshopLesson {
   title: string;
@@ -28,8 +28,7 @@ export interface Workshop {
 export const categoryLabels: Record<WorkshopCategory, string> = {
   lampshades: "Абажуры",
   clothing: "Одежда",
-  decor: "Декор",
-  interior: "Интерьер",
+  interior: "Декор интерьера",
 };
 
 export const levelLabels: Record<WorkshopLevel, string> = {
@@ -130,7 +129,7 @@ export const workshops: Workshop[] = [
     slug: "wall-panel-mountain",
     title: "Панно «Горы»",
     subtitle: "Большое настенное панно с пейзажным узором",
-    category: "decor",
+    category: "interior",
     level: "beginner",
     price: 990,
     duration: "2 ч 40 мин",
@@ -205,7 +204,7 @@ export const workshops: Workshop[] = [
     slug: "placemat-set",
     title: "Плейсменты «Кружево»",
     subtitle: "Комплект плетёных подставок на стол из 4 штук",
-    category: "decor",
+    category: "interior",
     level: "beginner",
     price: 790,
     duration: "1 ч 50 мин",

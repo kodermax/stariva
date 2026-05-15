@@ -35,7 +35,7 @@ export function mapOfferIdToCategory(offerId: string): {
     return { category: "bags", subcategory: "baskets" };
   }
 
-  // ── Интерьер ──
+  // ── Интерьер и декор ──
   if (id.startsWith("lustra")) {
     return { category: "interior", subcategory: "lampshades" };
   }
@@ -45,18 +45,16 @@ export function mapOfferIdToCategory(offerId: string): {
   if (id.startsWith("toycat")) {
     return { category: "interior", subcategory: "tipis" };
   }
-
-  // ── Декор ──
   if (id.startsWith("elka")) {
-    return { category: "decor", subcategory: "pannos" };
+    return { category: "interior", subcategory: "pannos" };
   }
   if (id.startsWith("plate")) {
-    return { category: "decor", subcategory: "placemats" };
+    return { category: "interior", subcategory: "placemats" };
   }
   if (id.startsWith("toy")) {
-    return { category: "decor", subcategory: "planters" };
+    return { category: "interior", subcategory: "planters" };
   }
 
   // Дефолт
-  return { category: "decor", subcategory: "pannos" };
+  return { category: "interior", subcategory: "pannos" };
 }

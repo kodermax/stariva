@@ -79,7 +79,7 @@ export interface OzonProductInfoResponse {
 }
 
 // Internal Product Types
-export type ProductCategory = "clothes" | "interior" | "decor" | "bags";
+export type ProductCategory = "clothes" | "interior" | "bags";
 export type ProductSubcategory =
   | "dresses"
   | "tops"
@@ -92,6 +92,25 @@ export type ProductSubcategory =
   | "baskets"
   | "totes"
   | "crossbody";
+
+// Article System Types
+export type ArticleCode = string; // Format: XXX-YYY-NNN (e.g., CLO-DRS-001)
+
+export interface ArticleInfo {
+  code: ArticleCode;
+  category: ProductCategory;
+  subcategory: ProductSubcategory;
+  number: number;
+  description: string;
+}
+
+export interface ArticleMapping {
+  ozonOfferId: string;
+  article: ArticleCode;
+  productId: number;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export interface Product {
   id: string;
