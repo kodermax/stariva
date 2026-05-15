@@ -1,38 +1,54 @@
-import type { Product, Category } from "./ozon-types"
+import type { Product, Category } from "./ozon-types";
 
 export const categories: Category[] = [
   {
     slug: "clothes",
     name: "Одежда",
-    description: "Уникальные платья и топы из натурального хлопка, созданные вручную в технике макраме",
+    description:
+      "Туники, накидки, пояса и комплекты из натурального хлопка, созданные вручную в технике макраме",
     image: "/images/catalog/category-clothes.jpg",
     subcategories: [
-      { slug: "dresses", name: "Платья", categorySlug: "clothes" },
-      { slug: "tops", name: "Топы", categorySlug: "clothes" },
+      { slug: "dresses", name: "Туники и накидки", categorySlug: "clothes" },
+      { slug: "tops", name: "Топы и комплекты", categorySlug: "clothes" },
+      { slug: "belts", name: "Пояса", categorySlug: "clothes" },
+    ],
+  },
+  {
+    slug: "bags",
+    name: "Сумки",
+    description:
+      "Авоськи, сумки и корзины ручной работы из хлопкового шнура в технике макраме",
+    image: "/images/catalog/category-decor.jpg",
+    subcategories: [
+      { slug: "totes", name: "Сумки", categorySlug: "bags" },
+      { slug: "crossbody", name: "Авоськи", categorySlug: "bags" },
+      { slug: "baskets", name: "Корзины", categorySlug: "bags" },
     ],
   },
   {
     slug: "interior",
     name: "Интерьер",
-    description: "Абажуры и вигвамы, которые создают особую атмосферу уюта в вашем доме",
+    description:
+      "Абажуры и подвесные кресла, которые создают особую атмосферу уюта в вашем доме",
     image: "/images/catalog/category-interior.jpg",
     subcategories: [
       { slug: "lampshades", name: "Абажуры", categorySlug: "interior" },
-      { slug: "tipis", name: "Вигвамы", categorySlug: "interior" },
+      { slug: "tipis", name: "Гамаки и кресла", categorySlug: "interior" },
     ],
   },
   {
     slug: "decor",
     name: "Декор",
-    description: "Панно, плейсменты и кашпо для создания завершённого образа вашего пространства",
+    description:
+      "Панно, плейсменты и игрушки для создания завершённого образа вашего пространства",
     image: "/images/catalog/category-decor.jpg",
     subcategories: [
       { slug: "pannos", name: "Панно", categorySlug: "decor" },
       { slug: "placemats", name: "Плейсменты", categorySlug: "decor" },
-      { slug: "planters", name: "Кашпо", categorySlug: "decor" },
+      { slug: "planters", name: "Игрушки и прочее", categorySlug: "decor" },
     ],
   },
-]
+];
 
 export const products: Product[] = [
   // CLOTHES - Dresses
@@ -45,7 +61,8 @@ export const products: Product[] = [
 Идеально подходит для пляжного отдыха, фотосессий или особых летних мероприятий. Ажурное плетение создаёт красивую игру света и тени, подчёркивая естественную красоту.
 
 Платье имеет свободный крой, который подходит для разных типов фигуры. Длина до середины икры, есть небольшой разрез по бокам для удобства движения.`,
-    shortDescription: "Воздушное платье в стиле бохо из 100% натурального хлопка",
+    shortDescription:
+      "Воздушное платье в стиле бохо из 100% натурального хлопка",
     price: 18500,
     oldPrice: 22000,
     currency: "RUB",
@@ -263,27 +280,27 @@ export const products: Product[] = [
     careInstructions: "Ручная стирка, избегать прямых солнечных лучей",
     ozonUrl: "https://ozon.ru/product/123465",
   },
-]
+];
 
 // Helper functions
 export function getProductsByCategory(category: string): Product[] {
-  return products.filter((p) => p.category === category)
+  return products.filter((p) => p.category === category);
 }
 
 export function getProductsBySubcategory(subcategory: string): Product[] {
-  return products.filter((p) => p.subcategory === subcategory)
+  return products.filter((p) => p.subcategory === subcategory);
 }
 
 export function getProductBySlug(slug: string): Product | undefined {
-  return products.find((p) => p.slug === slug)
+  return products.find((p) => p.slug === slug);
 }
 
 export function getFeaturedProducts(): Product[] {
-  return products.filter((p) => p.featured)
+  return products.filter((p) => p.featured);
 }
 
 export function getCategoryBySlug(slug: string): Category | undefined {
-  return categories.find((c) => c.slug === slug)
+  return categories.find((c) => c.slug === slug);
 }
 
 export function formatPrice(price: number, currency: string = "RUB"): string {
@@ -292,5 +309,5 @@ export function formatPrice(price: number, currency: string = "RUB"): string {
     currency,
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(price)
+  }).format(price);
 }

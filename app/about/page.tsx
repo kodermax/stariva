@@ -1,13 +1,15 @@
-import Image from "next/image"
-import Link from "next/link"
-import { Header } from "@/components/stariva/header"
-import { Footer } from "@/components/stariva/footer"
+import Image from "next/image";
+import Link from "next/link";
+import { Header } from "@/components/stariva/header";
+import { Footer } from "@/components/stariva/footer";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 export const metadata = {
   title: "О бренде — Stariva",
   description:
     "История Stariva — московской мастерской ручного макраме. Узнайте о нашей философии, мастерицах и любви к натуральным материалам.",
-}
+};
 
 const values = [
   {
@@ -30,42 +32,47 @@ const values = [
     title: "Мастерство, а не производство",
     body: "У нас нет конвейера. Каждый узел завязывает живой человек с именем, историей и любовью к своему делу.",
   },
-]
+];
 
 const timeline = [
   {
     year: "2018",
     event: "Основание",
-    detail: "Анна Смирнова начинает плести макраме на кухне московской квартиры. Первые абажуры уходят к подругам.",
+    detail:
+      "Анна Смирнова начинает плести макраме на кухне московской квартиры. Первые абажуры уходят к подругам.",
   },
   {
     year: "2019",
     event: "Первая мастерская",
-    detail: "Переезд в арендованное ателье в Замоскворечье. Команда расширяется до трёх мастериц.",
+    detail:
+      "Переезд в арендованное ателье в Замоскворечье. Команда расширяется до трёх мастериц.",
   },
   {
     year: "2021",
     event: "Выход на Ozon",
-    detail: "Первые 100 заказов через маркетплейс. Бренд начинает получать признание по всей России.",
+    detail:
+      "Первые 100 заказов через маркетплейс. Бренд начинает получать признание по всей России.",
   },
   {
     year: "2023",
     event: "Собственное ателье",
-    detail: "Переезд в просторное ателье на Чистых прудах. Запуск линейки одежды и обучающих мастер-классов.",
+    detail:
+      "Переезд в просторное ателье на Чистых прудах. Запуск линейки одежды и обучающих мастер-классов.",
   },
   {
     year: "2025",
     event: "Сегодня",
-    detail: "Более 2 000 изделий по всей России. Команда из восьми мастериц. Три направления: одежда, интерьер, декор.",
+    detail:
+      "Более 2 000 изделий по всей России. Команда из восьми мастериц. Три направления: одежда, интерьер, декор.",
   },
-]
+];
 
 const stats = [
   { value: "2 000+", label: "изделий\nсоздано" },
   { value: "8", label: "мастериц\nв команде" },
   { value: "7", label: "лет\nопыта" },
   { value: "47", label: "регионов\nРоссии" },
-]
+];
 
 export default function AboutPage() {
   return (
@@ -93,13 +100,18 @@ export default function AboutPage() {
         {/* Content pinned to bottom */}
         <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-14 pb-16 lg:pb-24 pt-[100px]">
           <div className="max-w-3xl">
-            <p className="label-caps text-linen/70 mb-5 tracking-widest">О бренде</p>
+            <p className="label-caps text-linen/70 mb-5 tracking-widest">
+              О бренде
+            </p>
             <h1 className="font-serif text-white text-[clamp(3rem,7vw,6.5rem)] leading-[0.95] tracking-tight text-balance">
-              Сделано руками.<br />
+              Сделано руками.
+              <br />
               <em className="not-italic text-linen">Согрето душой.</em>
             </h1>
             <p className="mt-8 text-white/75 text-lg lg:text-xl max-w-xl leading-[1.75]">
-              Stariva — московская мастерская ручного макраме. Мы создаём одежду, интерьерные предметы и декор из натурального хлопка с 2018 года.
+              Stariva — московская мастерская ручного макраме. Мы создаём
+              одежду, интерьерные предметы и декор из натурального хлопка с 2018
+              года.
             </p>
           </div>
 
@@ -110,8 +122,12 @@ export default function AboutPage() {
                 key={i}
                 className="px-8 py-5 bg-white/8 backdrop-blur-sm flex flex-col gap-1 min-w-[110px]"
               >
-                <span className="font-serif text-3xl lg:text-4xl text-white leading-none">{s.value}</span>
-                <span className="label-caps text-white/50 text-[10px] leading-tight whitespace-pre">{s.label}</span>
+                <span className="font-serif text-3xl lg:text-4xl text-white leading-none">
+                  {s.value}
+                </span>
+                <span className="label-caps text-white/50 text-[10px] leading-tight whitespace-pre">
+                  {s.label}
+                </span>
               </div>
             ))}
           </div>
@@ -123,14 +139,20 @@ export default function AboutPage() {
         <div className="max-w-[1440px] mx-auto px-6 lg:px-14">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
             <div className="lg:col-span-4">
-              <p className="label-caps text-terracotta tracking-widest mb-4">Философия</p>
+              <p className="label-caps text-terracotta tracking-widest mb-4">
+                Философия
+              </p>
               <div className="h-px bg-espresso/12 w-12" />
             </div>
             <div className="lg:col-span-8">
               <blockquote className="font-serif text-[clamp(1.8rem,4vw,3.2rem)] leading-[1.15] text-espresso text-balance">
-                &ldquo;Мы верим, что вещи должны создаваться медленно — с намерением, вниманием и уважением к материалу. Каждый узел — это выбор. Каждое изделие — это история.&rdquo;
+                &ldquo;Мы верим, что вещи должны создаваться медленно — с
+                намерением, вниманием и уважением к материалу. Каждый узел — это
+                выбор. Каждое изделие — это история.&rdquo;
               </blockquote>
-              <p className="mt-8 text-taupe text-sm label-caps tracking-widest">— Анна Смирнова, основательница</p>
+              <p className="mt-8 text-taupe text-sm label-caps tracking-widest">
+                — Анна Смирнова, основательница
+              </p>
             </div>
           </div>
         </div>
@@ -147,7 +169,9 @@ export default function AboutPage() {
         />
         <div className="absolute inset-0 bg-espresso/10" />
         <div className="absolute bottom-8 right-8 lg:bottom-12 lg:right-14">
-          <span className="label-caps text-white/60 text-[10px] tracking-widest">Ателье Stariva, Чистые пруды, Москва</span>
+          <span className="label-caps text-white/60 text-[10px] tracking-widest">
+            Ателье Stariva, Чистые пруды, Москва
+          </span>
         </div>
       </section>
 
@@ -156,21 +180,33 @@ export default function AboutPage() {
         <div className="max-w-[1440px] mx-auto px-6 lg:px-14">
           <div className="mb-16 lg:mb-20 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <div>
-              <p className="label-caps text-terracotta tracking-widest mb-4">Ценности</p>
+              <p className="label-caps text-terracotta tracking-widest mb-4">
+                Ценности
+              </p>
               <h2 className="font-serif text-[clamp(2.5rem,5vw,4.5rem)] text-espresso leading-[1.05]">
-                Что нас<br />определяет
+                Что нас
+                <br />
+                определяет
               </h2>
             </div>
             <p className="text-taupe text-base leading-[1.8] max-w-sm lg:text-right">
-              Четыре принципа, которым мы не изменяем с первого дня и которые лежат в основе каждого изделия.
+              Четыре принципа, которым мы не изменяем с первого дня и которые
+              лежат в основе каждого изделия.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-espresso/8 border border-espresso/8 rounded-2xl overflow-hidden">
             {values.map((v) => (
-              <div key={v.number} className="bg-sand p-10 lg:p-14 flex flex-col gap-5">
-                <span className="font-serif text-5xl text-espresso/12 leading-none select-none">{v.number}</span>
-                <h3 className="font-serif text-2xl lg:text-3xl text-espresso leading-tight">{v.title}</h3>
+              <div
+                key={v.number}
+                className="bg-sand p-10 lg:p-14 flex flex-col gap-5"
+              >
+                <span className="font-serif text-5xl text-espresso/12 leading-none select-none">
+                  {v.number}
+                </span>
+                <h3 className="font-serif text-2xl lg:text-3xl text-espresso leading-tight">
+                  {v.title}
+                </h3>
                 <p className="text-taupe leading-[1.8] text-[15px]">{v.body}</p>
               </div>
             ))}
@@ -206,31 +242,46 @@ export default function AboutPage() {
 
             {/* Text */}
             <div>
-              <p className="label-caps text-terracotta tracking-widest mb-6">Мастерство</p>
+              <p className="label-caps text-terracotta tracking-widest mb-6">
+                Мастерство
+              </p>
               <h2 className="font-serif text-[clamp(2.2rem,4vw,3.8rem)] text-espresso leading-[1.1] mb-8">
                 Искусство узла
               </h2>
               <div className="space-y-5 text-espresso/75 text-[15px] leading-[1.85]">
                 <p>
-                  Основа макраме — квадратный узел. Из этого простого элемента, повторённого сотни и тысячи раз, вырастают сложнейшие кружева абажуров, геометрия настенных панно и лёгкость пляжного платья.
+                  Основа макраме — квадратный узел. Из этого простого элемента,
+                  повторённого сотни и тысячи раз, вырастают сложнейшие кружева
+                  абажуров, геометрия настенных панно и лёгкость пляжного
+                  платья.
                 </p>
                 <p>
-                  Мы используем только натуральный хлопковый шнур: крученый для плотных конструкций, косичный для мягких изделий с бахромой. Диаметр — от 1 до 10 мм — подбирается под каждый проект индивидуально.
+                  Мы используем только натуральный хлопковый шнур: крученый для
+                  плотных конструкций, косичный для мягких изделий с бахромой.
+                  Диаметр — от 1 до 10 мм — подбирается под каждый проект
+                  индивидуально.
                 </p>
                 <p>
-                  Один абажур диаметром 50 см требует около 40 часов работы и 300 метров верёвки. Это не быстро. Зато навсегда.
+                  Один абажур диаметром 50 см требует около 40 часов работы и
+                  300 метров верёвки. Это не быстро. Зато навсегда.
                 </p>
               </div>
 
               {/* Material badges */}
               <div className="mt-10 flex flex-wrap gap-3">
-                {["100% хлопок", "Без красителей", "Проверено временем", "Ручная работа"].map((tag) => (
-                  <span
+                {[
+                  "100% хлопок",
+                  "Без красителей",
+                  "Проверено временем",
+                  "Ручная работа",
+                ].map((tag) => (
+                  <Badge
                     key={tag}
-                    className="label-caps text-[10px] px-4 py-2 rounded-full border border-espresso/15 text-taupe tracking-widest"
+                    variant="outline"
+                    className="label-caps text-[10px] px-4 py-2 rounded-full border-espresso/15 text-taupe tracking-widest"
                   >
                     {tag}
-                  </span>
+                  </Badge>
                 ))}
               </div>
             </div>
@@ -242,7 +293,9 @@ export default function AboutPage() {
       <section className="py-28 lg:py-40 bg-espresso text-parchment">
         <div className="max-w-[1440px] mx-auto px-6 lg:px-14">
           <div className="mb-16 lg:mb-20">
-            <p className="label-caps text-linen/50 tracking-widest mb-4">История</p>
+            <p className="label-caps text-linen/50 tracking-widest mb-4">
+              История
+            </p>
             <h2 className="font-serif text-[clamp(2.5rem,5vw,4.5rem)] text-parchment leading-[1.05]">
               Как всё начиналось
             </h2>
@@ -258,8 +311,12 @@ export default function AboutPage() {
                   {item.year}
                 </div>
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-12">
-                  <h3 className="font-serif text-xl lg:text-2xl text-parchment">{item.event}</h3>
-                  <p className="text-parchment/55 text-[14px] leading-[1.8] lg:max-w-xl">{item.detail}</p>
+                  <h3 className="font-serif text-xl lg:text-2xl text-parchment">
+                    {item.event}
+                  </h3>
+                  <p className="text-parchment/55 text-[14px] leading-[1.8] lg:max-w-xl">
+                    {item.detail}
+                  </p>
                 </div>
               </div>
             ))}
@@ -283,31 +340,42 @@ export default function AboutPage() {
       {/* ── CTA ── */}
       <section className="py-28 lg:py-40">
         <div className="max-w-[1440px] mx-auto px-6 lg:px-14 text-center">
-          <p className="label-caps text-terracotta tracking-widest mb-6">Начните знакомство</p>
+          <p className="label-caps text-terracotta tracking-widest mb-6">
+            Начните знакомство
+          </p>
           <h2 className="font-serif text-[clamp(2.8rem,6vw,5.5rem)] text-espresso leading-[1.05] text-balance max-w-3xl mx-auto mb-10">
             Найдите изделие, которое станет вашим
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="/catalog"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-espresso text-parchment label-caps-md hover:bg-terracotta transition-colors duration-300"
+            <Button
+              asChild
+              className="inline-flex items-center gap-3 px-8 py-4 h-auto rounded-full bg-espresso text-parchment label-caps-md hover:bg-terracotta transition-colors duration-300"
             >
-              Смотреть каталог
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
-            <Link
-              href="/workshops"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-espresso/20 text-espresso label-caps-md hover:border-terracotta hover:text-terracotta transition-colors duration-300"
+              <Link href="/catalog">
+                Смотреть каталог
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path
+                    d="M2 7h10M8 3l4 4-4 4"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              className="inline-flex items-center gap-3 px-8 py-4 h-auto rounded-full border-espresso/20 text-espresso label-caps-md hover:border-terracotta hover:text-terracotta transition-colors duration-300"
             >
-              Мастер-классы
-            </Link>
+              <Link href="/workshops">Мастер-классы</Link>
+            </Button>
           </div>
         </div>
       </section>
 
       <Footer />
     </div>
-  )
+  );
 }
