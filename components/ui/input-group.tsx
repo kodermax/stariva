@@ -1,11 +1,10 @@
 "use client";
 
 import { cva, type VariantProps } from "class-variance-authority";
-
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
 
 function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -72,6 +71,11 @@ function InputGroupAddon({
           return;
         }
         e.currentTarget.parentElement?.querySelector("input")?.focus();
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.currentTarget.parentElement?.querySelector("input")?.focus();
+        }
       }}
       {...props}
     />
@@ -163,7 +167,7 @@ export {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
-  InputGroupText,
   InputGroupInput,
+  InputGroupText,
   InputGroupTextarea,
 };

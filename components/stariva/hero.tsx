@@ -199,6 +199,7 @@ export function Hero() {
             {directions.map((dir, i) => (
               <button
                 key={dir.id}
+                type="button"
                 onClick={() => {
                   setActive(i);
                   setPaused(true);
@@ -253,7 +254,13 @@ export function Hero() {
           animate={{ y: [0, 5, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
         >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            aria-hidden="true"
+          >
             <path
               d="M2 4l5 5 5-5"
               stroke="white"

@@ -1,10 +1,10 @@
+import { env } from "./env";
 import type {
   Product,
   ProductCategory,
   ProductSubcategory,
 } from "./ozon-types";
-import { products as fallbackProducts, categories } from "./products";
-import { env } from "./env";
+import { categories, products as fallbackProducts } from "./products";
 
 const OZON_API_URL = "https://api-seller.ozon.ru";
 
@@ -35,12 +35,6 @@ interface OzonProductListResponse {
     items: { product_id: number; offer_id: string }[];
     total: number;
     last_id: string;
-  };
-}
-
-interface OzonProductInfoResponse {
-  result: {
-    items: OzonProductInfo[];
   };
 }
 
