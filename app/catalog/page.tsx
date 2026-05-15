@@ -1,25 +1,25 @@
-import { Suspense } from "react"
-import { motion } from "motion/react"
-import Image from "next/image"
-import Link from "next/link"
-import { categories, getFeaturedProducts } from "@/lib/ozon-service"
-import { formatPrice } from "@/lib/products"
-import { Header } from "@/components/stariva/header"
-import { Footer } from "@/components/stariva/footer"
-import type { Product } from "@/lib/ozon-types"
+import { Suspense } from "react";
+import { motion } from "motion/react";
+import Image from "next/image";
+import Link from "next/link";
+import { categories, getFeaturedProducts } from "@/lib/ozon-service";
+import { formatPrice } from "@/lib/products";
+import { Header } from "@/components/stariva/header";
+import { Footer } from "@/components/stariva/footer";
+import type { Product } from "@/lib/ozon-types";
 
-export const revalidate = 3600 // ISR: revalidate every hour
+export const revalidate = 3600; // ISR: revalidate every hour
 
 async function FeaturedProducts() {
-  const featuredProducts = await getFeaturedProducts()
-  
+  const featuredProducts = await getFeaturedProducts();
+
   return (
     <div className="grid md:grid-cols-3 gap-8">
       {featuredProducts.map((product, i) => (
         <ProductCard key={product.id} product={product} index={i} />
       ))}
     </div>
-  )
+  );
 }
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
@@ -67,7 +67,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         )}
       </div>
     </Link>
-  )
+  );
 }
 
 function ProductsSkeleton() {
@@ -82,7 +82,7 @@ function ProductsSkeleton() {
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 export default async function CatalogPage() {
@@ -100,8 +100,8 @@ export default async function CatalogPage() {
               Изделия ручной работы
             </h1>
             <p className="text-taupe text-lg max-w-2xl mx-auto">
-              Каждое изделие создаётся вручную из натурального хлопка. 
-              Срок изготовления — от 7 до 21 дня в зависимости от сложности.
+              Каждое изделие создаётся вручную из натурального хлопка. Срок
+              изготовления — от 7 до 21 дня в зависимости от сложности.
             </p>
           </div>
         </section>
@@ -173,7 +173,7 @@ export default async function CatalogPage() {
                   Не нашли то, что искали?
                 </h2>
                 <p className="text-cream/80 mb-6">
-                  Мы создаём изделия по индивидуальным размерам и дизайну. 
+                  Мы создаём изделия по индивидуальным размерам и дизайну.
                   Расскажите о вашей идее, и мы воплотим её в жизнь.
                 </p>
                 <Link
@@ -185,9 +185,30 @@ export default async function CatalogPage() {
               </div>
               <div className="absolute right-0 top-0 bottom-0 w-1/3 opacity-10">
                 <svg viewBox="0 0 100 100" className="h-full w-full">
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                  <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                  <circle cx="50" cy="50" r="20" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="40"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="0.5"
+                  />
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="30"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="0.5"
+                  />
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="20"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="0.5"
+                  />
                 </svg>
               </div>
             </div>
@@ -196,5 +217,5 @@ export default async function CatalogPage() {
       </main>
       <Footer />
     </>
-  )
+  );
 }
