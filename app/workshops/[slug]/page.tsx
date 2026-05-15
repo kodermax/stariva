@@ -107,7 +107,6 @@ export default async function WorkshopDetailPage({
                 </Link>
                 <span className="text-espresso/20">·</span>
                 <span
-                <span
                   className={`px-2.5 py-0.5 rounded-full text-[11px] font-medium border-0 ${levelColors[workshop.level]}`}
                 >
                   {levelLabels[workshop.level]}
@@ -401,9 +400,9 @@ export default async function WorkshopDetailPage({
                             stroke="currentColor"
                             strokeWidth="1.5"
                           />
-                        <circle cx="12" cy="12" r="4.5" fill="currentColor" />
-                      </svg>
-                      Купить на Ozon
+                          <circle cx="12" cy="12" r="4.5" fill="currentColor" />
+                        </svg>
+                        Купить на Ozon
                       </a>
                     </Button>
                   )}
