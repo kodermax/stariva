@@ -16,7 +16,6 @@ import {
   transformOzonToProduct,
   transformOzonProducts,
   detectCategoryFromName,
-  OZON_TO_ARTICLE_MAP,
 } from "@/lib/ozon-article-mapper";
 
 import type { OzonProductInfo } from "@/lib/ozon-types";
@@ -360,7 +359,7 @@ export function runAllExamples() {
 
 // Для тестирования в консоли браузера или Node.js
 if (typeof window !== "undefined") {
-  // @ts-ignore
+  // @ts-expect-error
   window.ozonArticleExamples = {
     example1_generateArticles,
     example2_parseArticles,

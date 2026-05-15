@@ -9,10 +9,7 @@ import type {
   ProductSubcategory,
 } from "./ozon-types";
 import {
-  generateArticle,
-  parseArticle,
   getNextArticle,
-  ARTICLE_PREFIXES,
 } from "@/data/ozon-article-template";
 
 /**

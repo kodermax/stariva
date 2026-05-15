@@ -24,8 +24,9 @@ export function ColorIndicator({
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <div
-        className={`${sizeClasses[size]} rounded-full border-2 border-espresso/20 shadow-sm flex-shrink-0 transition-transform hover:scale-110`}
+      <span
+        role="img"
+        className={`${sizeClasses[size]} rounded-full border-2 border-espresso/20 shadow-sm shrink-0 transition-transform hover:scale-110 block`}
         style={{
           background: isGradient
             ? "linear-gradient(135deg, #FF6B6B 0%, #FFD93D 25%, #6BCF7F 50%, #4D96FF 75%, #9D4EDD 100%)"

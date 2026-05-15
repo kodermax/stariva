@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { CottonIcon, HandmadeIcon, OzonIcon } from "@/components/stariva/icons";
+import { OzonIcon } from "@/components/stariva/icons";
 import { ColorSwatches } from "@/components/stariva/color-indicator";
 import {
   Breadcrumb,
