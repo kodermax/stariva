@@ -164,7 +164,7 @@ export function ProductDetails({
                 )}
               </div>
 
-              <p className="text-taupe leading-relaxed mb-8">
+              <p className="text-dark-grey leading-relaxed mb-8">
                 {product.shortDescription}
               </p>
 
@@ -172,20 +172,6 @@ export function ProductDetails({
               <div
                 className={`grid gap-3 mb-8 ${[product.material, product.color, product.sizes?.length, product.careInstructions].filter(Boolean).length > 2 ? "grid-cols-2" : "grid-cols-2"}`}
               >
-                {/* Материал */}
-                <div className="flex flex-col items-center text-center p-4 bg-sand rounded-xl border border-espresso/6">
-                  <CottonIcon className="w-7 h-7 text-terracotta mb-2" />
-                  <span className="label-caps text-[9px] text-taupe leading-snug">
-                    {product.material}
-                  </span>
-                </div>
-                {/* Ручная работа */}
-                <div className="flex flex-col items-center text-center p-4 bg-sand rounded-xl border border-espresso/6">
-                  <HandmadeIcon className="w-7 h-7 text-terracotta mb-2" />
-                  <span className="label-caps text-[9px] text-taupe leading-snug">
-                    Ручная работа
-                  </span>
-                </div>
                 {/* Цвет */}
                 {product.color && (
                   <div className="flex flex-col items-center text-center p-4 bg-sand rounded-xl border border-espresso/6 col-span-2">
@@ -216,25 +202,13 @@ export function ProductDetails({
                   </div>
                 )}
               </div>
-              {/* Уход */}
-              {(product.dimensions || product.careInstructions) && (
+              {/* Размеры и характеристики */}
+              {product.dimensions && (
                 <div className="space-y-3 mb-8 p-5 bg-sand rounded-xl border border-espresso/6">
-                  {product.dimensions && (
-                    <div className="flex justify-between text-sm">
-                      <span className="text-taupe">Размеры</span>
-                      <span className="text-espresso">
-                        {product.dimensions}
-                      </span>
-                    </div>
-                  )}
-                  {product.careInstructions && (
-                    <div className="flex justify-between text-sm">
-                      <span className="text-taupe">Уход</span>
-                      <span className="text-espresso text-right max-w-[60%]">
-                        {product.careInstructions}
-                      </span>
-                    </div>
-                  )}
+                  <div className="flex justify-between text-sm">
+                    <span className="text-taupe">Размеры</span>
+                    <span className="text-espresso">{product.dimensions}</span>
+                  </div>
                 </div>
               )}
 
@@ -274,7 +248,7 @@ export function ProductDetails({
           <div className="max-w-3xl">
             <h2 className="font-serif text-2xl text-espresso mb-6">Описание</h2>
             <div
-              className="prose prose-lg text-taupe"
+              className="prose prose-lg text-dark-grey"
               // biome-ignore lint/security/noDangerouslySetInnerHtml: product description comes from Ozon API (trusted source) and is sanitized server-side
               dangerouslySetInnerHTML={{ __html: product.description }}
             />
