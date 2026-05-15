@@ -1,16 +1,15 @@
-import { NextResponse } from "next/server"
-import type { OzonProductListResponse, OzonProductInfoResponse } from "@/lib/ozon-types"
+import { NextResponse } from "next/server";
+import type {
+  OzonProductListResponse,
+  OzonProductInfoResponse,
+} from "@/lib/ozon-types";
+import { env } from "@/lib/env";
 
-const OZON_API_URL = "https://api-seller.ozon.ru"
+const OZON_API_URL = "https://api-seller.ozon.ru";
 
 async function fetchOzonProducts(): Promise<OzonProductInfoResponse | null> {
-  const clientId = process.env.OZON_CLIENT_ID
-  const apiKey = process.env.OZON_API_KEY
-
-  if (!clientId || !apiKey) {
-    console.log("[v0] Ozon API credentials not configured")
-    return null
-  }
+  const clientId = env.OZON_CLIENT_ID;
+  const apiKey = env.OZON_API_KEY;
 
   try {
     // First, get product list
@@ -29,18 +28,21 @@ async function fetchOzonProducts(): Promise<OzonProductInfoResponse | null> {
         limit: 100,
       }),
       next: { revalidate: 3600 }, // Cache for 1 hour
-    })
+    });
 
     if (!listResponse.ok) {
-      console.log("[v0] Ozon product list request failed:", listResponse.status)
-      return null
+      console.log(
+        "[v0] Ozon product list request failed:",
+        listResponse.status,
+      );
+      return null;
     }
 
-    const listData: OzonProductListResponse = await listResponse.json()
-    const productIds = listData.result.items.map((item) => item.product_id)
+    const listData: OzonProductListResponse = await listResponse.json();
+    const productIds = listData.result.items.map((item) => item.product_id);
 
     if (productIds.length === 0) {
-      return { result: { items: [] } }
+      return { result: { items: [] } };
     }
 
     // Then, get detailed info
@@ -55,29 +57,32 @@ async function fetchOzonProducts(): Promise<OzonProductInfoResponse | null> {
         product_id: productIds,
       }),
       next: { revalidate: 3600 },
-    })
+    });
 
     if (!infoResponse.ok) {
-      console.log("[v0] Ozon product info request failed:", infoResponse.status)
-      return null
+      console.log(
+        "[v0] Ozon product info request failed:",
+        infoResponse.status,
+      );
+      return null;
     }
 
-    return await infoResponse.json()
+    return await infoResponse.json();
   } catch (error) {
-    console.log("[v0] Ozon API error:", error)
-    return null
+    console.log("[v0] Ozon API error:", error);
+    return null;
   }
 }
 
 export async function GET() {
-  const data = await fetchOzonProducts()
+  const data = await fetchOzonProducts();
 
   if (!data) {
     return NextResponse.json(
       { error: "Ozon API unavailable", fallback: true },
-      { status: 503 }
-    )
+      { status: 503 },
+    );
   }
 
-  return NextResponse.json(data)
+  return NextResponse.json(data);
 }

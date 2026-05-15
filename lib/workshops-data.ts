@@ -1,28 +1,28 @@
-export type WorkshopLevel = "beginner" | "intermediate" | "advanced"
-export type WorkshopCategory = "lampshades" | "clothing" | "decor" | "interior"
+export type WorkshopLevel = "beginner" | "intermediate" | "advanced";
+export type WorkshopCategory = "lampshades" | "clothing" | "decor" | "interior";
 
 export interface WorkshopLesson {
-  title: string
-  duration: string // e.g. "12 мин"
+  title: string;
+  duration: string; // e.g. "12 мин"
 }
 
 export interface Workshop {
-  slug: string
-  title: string
-  subtitle: string
-  category: WorkshopCategory
-  level: WorkshopLevel
-  price: number
-  duration: string // total, e.g. "3 ч 20 мин"
-  lessonsCount: number
-  cover: string
-  previewImage: string
-  description: string
-  whatYouLearn: string[]
-  materials: string[]
-  lessons: WorkshopLesson[]
-  ozonUrl?: string
-  featured?: boolean
+  slug: string;
+  title: string;
+  subtitle: string;
+  category: WorkshopCategory;
+  level: WorkshopLevel;
+  price: number;
+  duration: string; // total, e.g. "3 ч 20 мин"
+  lessonsCount: number;
+  cover: string;
+  previewImage: string;
+  description: string;
+  whatYouLearn: string[];
+  materials: string[];
+  lessons: WorkshopLesson[];
+  ozonUrl?: string;
+  featured?: boolean;
 }
 
 export const categoryLabels: Record<WorkshopCategory, string> = {
@@ -30,19 +30,19 @@ export const categoryLabels: Record<WorkshopCategory, string> = {
   clothing: "Одежда",
   decor: "Декор",
   interior: "Интерьер",
-}
+};
 
 export const levelLabels: Record<WorkshopLevel, string> = {
   beginner: "Начинающий",
   intermediate: "Средний",
   advanced: "Продвинутый",
-}
+};
 
 export const levelColors: Record<WorkshopLevel, string> = {
   beginner: "bg-sage/20 text-sage",
   intermediate: "bg-linen/40 text-espresso",
   advanced: "bg-terracotta/15 text-terracotta",
-}
+};
 
 export const workshops: Workshop[] = [
   {
@@ -277,18 +277,18 @@ export const workshops: Workshop[] = [
     ],
     ozonUrl: "https://www.ozon.ru/",
   },
-]
+];
 
 export function getWorkshopBySlug(slug: string): Workshop | undefined {
-  return workshops.find((w) => w.slug === slug)
+  return workshops.find((w) => w.slug === slug);
 }
 
 export function getWorkshopsByCategory(category: WorkshopCategory): Workshop[] {
-  return workshops.filter((w) => w.category === category)
+  return workshops.filter((w) => w.category === category);
 }
 
 export function getFeaturedWorkshops(): Workshop[] {
-  return workshops.filter((w) => w.featured)
+  return workshops.filter((w) => w.featured);
 }
 
 export function formatPrice(price: number): string {
@@ -296,5 +296,5 @@ export function formatPrice(price: number): string {
     style: "currency",
     currency: "RUB",
     maximumFractionDigits: 0,
-  }).format(price)
+  }).format(price);
 }

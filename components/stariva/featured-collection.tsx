@@ -1,19 +1,21 @@
-"use client"
+"use client";
 
-import { motion } from "motion/react"
-import { ArrowRight } from "./icons"
+import { motion } from "motion/react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "./icons";
 
 function formatPrice(value: number) {
-  return value.toLocaleString("ru-RU").replace(/,/g, " ")
+  return value.toLocaleString("ru-RU").replace(/,/g, " ");
 }
 
 type Product = {
-  name: string
-  category: string
-  price: number
-  image: string
-  bestseller?: boolean
-}
+  name: string;
+  category: string;
+  price: number;
+  image: string;
+  bestseller?: boolean;
+};
 
 const stacked: Product[] = [
   {
@@ -29,7 +31,7 @@ const stacked: Product[] = [
     price: 8900,
     image: "/images/product-2.jpg",
   },
-]
+];
 
 const featured: Product = {
   name: "Абажур «Берёза»",
@@ -37,7 +39,7 @@ const featured: Product = {
   price: 18500,
   image: "/images/product-lifestyle.jpg",
   bestseller: true,
-}
+};
 
 function ProductCard({ p, large = false }: { p: Product; large?: boolean }) {
   return (
@@ -53,10 +55,12 @@ function ProductCard({ p, large = false }: { p: Product; large?: boolean }) {
           large ? "aspect-[4/5]" : "aspect-[4/5]"
         }`}
       >
-        <img
+        <Image
           src={p.image || "/placeholder.svg"}
           alt={p.name}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          fill
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          sizes="(max-width: 1024px) 100vw, (max-width: 1440px) 58vw, 840px"
         />
         {p.bestseller && (
           <span className="absolute top-4 left-4 label-caps px-3 py-1.5 rounded-full bg-terracotta text-parchment">
@@ -83,15 +87,18 @@ function ProductCard({ p, large = false }: { p: Product; large?: boolean }) {
         </div>
       </div>
 
-      <a
-        href="#"
-        className="mt-4 inline-flex items-center gap-2 label-caps-md text-espresso underline underline-offset-[6px] decoration-espresso/25 hover:decoration-terracotta hover:text-terracotta transition-colors"
+      <Button
+        asChild
+        variant="link"
+        className="mt-4 px-0 h-auto label-caps-md text-espresso underline underline-offset-[6px] decoration-espresso/25 hover:decoration-terracotta hover:text-terracotta transition-colors"
       >
-        Подробнее
-        <ArrowRight className="w-4 h-4" />
-      </a>
+        <a href="/catalog">
+          Подробнее
+          <ArrowRight className="w-4 h-4" />
+        </a>
+      </Button>
     </motion.article>
-  )
+  );
 }
 
 export function FeaturedCollection() {
@@ -105,16 +112,20 @@ export function FeaturedCollection() {
               Избранные работы
             </div>
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-espresso leading-[1.05] tracking-tight text-balance max-w-2xl">
-              Каждое изделие — <span className="italic">единственное</span> в своём роде
+              Каждое изделие — <span className="italic">единственное</span> в
+              своём роде
             </h2>
           </div>
-          <a
-            href="#"
-            className="inline-flex items-center gap-2 label-caps-md text-espresso underline underline-offset-[6px] decoration-espresso/25 hover:decoration-terracotta hover:text-terracotta transition-colors"
+          <Button
+            asChild
+            variant="link"
+            className="px-0 h-auto label-caps-md text-espresso underline underline-offset-[6px] decoration-espresso/25 hover:decoration-terracotta hover:text-terracotta transition-colors"
           >
-            Вся коллекция
-            <ArrowRight className="w-4 h-4" />
-          </a>
+            <a href="/catalog">
+              Вся коллекция
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </Button>
         </div>
 
         {/* Asymmetric grid */}
@@ -130,5 +141,5 @@ export function FeaturedCollection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

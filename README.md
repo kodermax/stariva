@@ -10,6 +10,23 @@ This repository is linked to a [v0](https://v0.app) project. You can continue de
 
 ## Getting Started
 
+### Environment Setup
+
+1. Copy the environment variables template:
+   ```bash
+   cp .env.example .env
+   ```
+
+2. Fill in your Ozon API credentials in `.env`:
+   ```
+   OZON_API_KEY=your_api_key_here
+   OZON_CLIENT_ID=your_client_id_here
+   ```
+
+For detailed information about environment variables, see [ENV_SETUP.md](./ENV_SETUP.md).
+
+### Development Server
+
 First, run the development server:
 
 ```bash

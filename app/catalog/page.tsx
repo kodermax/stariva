@@ -1,27 +1,26 @@
-import { Suspense } from "react"
-import { motion } from "motion/react"
-import Image from "next/image"
-import Link from "next/link"
-import { categories, getFeaturedProducts } from "@/lib/ozon-service"
-import { formatPrice } from "@/lib/products"
-import { Header } from "@/components/stariva/header"
-import { Footer } from "@/components/stariva/footer"
-import type { Product } from "@/lib/ozon-types"
+import Image from "next/image";
+import Link from "next/link";
+import { Suspense } from "react";
+import { Footer } from "@/components/stariva/footer";
+import { Header } from "@/components/stariva/header";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { categories, getFeaturedProducts } from "@/lib/ozon-service";
+import type { Product } from "@/lib/ozon-types";
+import { formatPrice } from "@/lib/products";
 
-// Force dynamic rendering to get fresh data from Ozon
-export const dynamic = "force-dynamic"
-export const revalidate = 3600 // ISR: revalidate every hour
+export const revalidate = 3600; // ISR: revalidate every hour
 
 async function FeaturedProducts() {
-  const featuredProducts = await getFeaturedProducts()
-  
+  const featuredProducts = await getFeaturedProducts();
+
   return (
     <div className="grid md:grid-cols-3 gap-8">
       {featuredProducts.map((product, i) => (
         <ProductCard key={product.id} product={product} index={i} />
       ))}
     </div>
-  )
+  );
 }
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
@@ -69,22 +68,22 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         )}
       </div>
     </Link>
-  )
+  );
 }
 
 function ProductsSkeleton() {
   return (
     <div className="grid md:grid-cols-3 gap-8">
       {[1, 2, 3].map((i) => (
-        <div key={i} className="animate-pulse">
-          <div className="aspect-[4/5] rounded-xl bg-cream mb-4" />
-          <div className="h-6 bg-cream rounded w-3/4 mb-2" />
-          <div className="h-4 bg-cream rounded w-1/2 mb-2" />
-          <div className="h-5 bg-cream rounded w-1/4" />
+        <div key={i} className="space-y-3">
+          <Skeleton className="aspect-[4/5] rounded-xl bg-cream" />
+          <Skeleton className="h-6 w-3/4 bg-cream" />
+          <Skeleton className="h-4 w-1/2 bg-cream" />
+          <Skeleton className="h-5 w-1/4 bg-cream" />
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 export default async function CatalogPage() {
@@ -102,8 +101,8 @@ export default async function CatalogPage() {
               Изделия ручной работы
             </h1>
             <p className="text-taupe text-lg max-w-2xl mx-auto">
-              Каждое изделие создаётся вручную из натурального хлопка. 
-              Срок изготовления — от 7 до 21 дня в зависимости от сложности.
+              Каждое изделие создаётся вручную из натурального хлопка. Срок
+              изготовления — от 7 до 21 дня в зависимости от сложности.
             </p>
           </div>
         </section>
@@ -112,7 +111,7 @@ export default async function CatalogPage() {
         <section className="pb-20 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-3 gap-6">
-              {categories.map((category, i) => (
+              {categories.map((category, _i) => (
                 <Link
                   key={category.slug}
                   href={`/catalog/${category.slug}`}
@@ -175,21 +174,46 @@ export default async function CatalogPage() {
                   Не нашли то, что искали?
                 </h2>
                 <p className="text-cream/80 mb-6">
-                  Мы создаём изделия по индивидуальным размерам и дизайну. 
-                  Расскажите о вашей идее, и мы воплотим её в жизнь.
+                  Я создаю изделия по индивидуальным размерам и дизайну.
+                  Расскажите о вашей идее, и я воплощу её в жизнь.
                 </p>
-                <Link
-                  href="/#order"
-                  className="inline-flex items-center gap-2 bg-terracotta hover:bg-terracotta/90 text-white px-6 py-3 rounded-full transition-colors label-caps"
+                <Button
+                  asChild
+                  className="inline-flex items-center gap-2 bg-terracotta hover:bg-terracotta/90 text-white px-6 py-3 h-auto rounded-full transition-colors label-caps"
                 >
-                  Оставить заявку
-                </Link>
+                  <Link href="/#order">Оставить заявку</Link>
+                </Button>
               </div>
               <div className="absolute right-0 top-0 bottom-0 w-1/3 opacity-10">
-                <svg viewBox="0 0 100 100" className="h-full w-full">
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                  <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                  <circle cx="50" cy="50" r="20" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                <svg
+                  viewBox="0 0 100 100"
+                  aria-hidden="true"
+                  className="h-full w-full"
+                >
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="40"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="0.5"
+                  />
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="30"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="0.5"
+                  />
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="20"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="0.5"
+                  />
                 </svg>
               </div>
             </div>
@@ -198,5 +222,5 @@ export default async function CatalogPage() {
       </main>
       <Footer />
     </>
-  )
+  );
 }

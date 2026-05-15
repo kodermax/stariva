@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Link from "next/link"
-import { notFound, useParams } from "next/navigation"
-import { motion } from "motion/react"
-import { getPostBySlug, formatDate, blogPosts } from "@/lib/blog-data"
-import { Header } from "@/components/stariva/header"
-import { Footer } from "@/components/stariva/footer"
+import { motion } from "motion/react";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound, useParams } from "next/navigation";
+import { Footer } from "@/components/stariva/footer";
+import { Header } from "@/components/stariva/header";
+import { blogPosts, formatDate, getPostBySlug } from "@/lib/blog-data";
 
 function ArrowLeftIcon({ className }: { className?: string }) {
   return (
@@ -17,26 +17,27 @@ function ArrowLeftIcon({ className }: { className?: string }) {
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
+      aria-hidden="true"
       className={className}
     >
       <path d="M19 12H5M12 19l-7-7 7-7" />
     </svg>
-  )
+  );
 }
 
 export default function BlogPostPage() {
-  const params = useParams()
-  const slug = params.slug as string
-  const post = getPostBySlug(slug)
+  const params = useParams();
+  const slug = params.slug as string;
+  const post = getPostBySlug(slug);
 
   if (!post) {
-    notFound()
+    notFound();
   }
 
   // Find related posts (same category, excluding current)
   const relatedPosts = blogPosts
     .filter((p) => p.slug !== post.slug)
-    .slice(0, 2)
+    .slice(0, 2);
 
   return (
     <>
@@ -68,15 +69,21 @@ export default function BlogPostPage() {
             className="max-w-3xl mx-auto text-center mb-12"
           >
             <div className="flex items-center justify-center gap-4 mb-6">
-              <span className="label-caps text-terracotta">{post.category}</span>
+              <span className="label-caps text-terracotta">
+                {post.category}
+              </span>
               <span className="w-1 h-1 rounded-full bg-taupe/50" />
               <span className="label-caps text-taupe">{post.readTime}</span>
             </div>
             <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl text-espresso mb-6 text-balance">
               {post.title}
             </h1>
-            <p className="text-taupe text-lg leading-relaxed mb-6">{post.excerpt}</p>
-            <time className="text-sm text-taupe/70">{formatDate(post.date)}</time>
+            <p className="text-taupe text-lg leading-relaxed mb-6">
+              {post.excerpt}
+            </p>
+            <time className="text-sm text-taupe/70">
+              {formatDate(post.date)}
+            </time>
           </motion.header>
 
           {/* Cover Image */}
@@ -113,7 +120,7 @@ export default function BlogPostPage() {
                     >
                       {block.text}
                     </p>
-                  )
+                  );
                 case "heading":
                   return (
                     <h2
@@ -122,14 +129,14 @@ export default function BlogPostPage() {
                     >
                       {block.text}
                     </h2>
-                  )
+                  );
                 case "image":
                   return (
                     <figure key={index} className="my-12">
                       <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
                         <Image
-                          src={block.src!}
-                          alt={block.alt!}
+                          src={block.src ?? ""}
+                          alt={block.alt ?? ""}
                           fill
                           className="object-cover"
                           sizes="(max-width: 768px) 100vw, 672px"
@@ -141,7 +148,7 @@ export default function BlogPostPage() {
                         </figcaption>
                       )}
                     </figure>
-                  )
+                  );
                 case "quote":
                   return (
                     <blockquote
@@ -152,9 +159,9 @@ export default function BlogPostPage() {
                         {block.text}
                       </p>
                     </blockquote>
-                  )
+                  );
                 default:
-                  return null
+                  return null;
               }
             })}
           </motion.div>
@@ -178,9 +185,12 @@ export default function BlogPostPage() {
               </div>
               <div className="text-center md:text-left">
                 <p className="label-caps text-terracotta mb-2">Автор</p>
-                <p className="font-serif text-xl text-espresso mb-1">Мастерская Stariva</p>
+                <p className="font-serif text-xl text-espresso mb-1">
+                  Ольга Карпычева
+                </p>
                 <p className="text-taupe text-sm">
-                  Создаём уют руками с 2018 года. Каждое изделие — с любовью и вниманием к деталям.
+                  Создаю уют руками с 2018 года. Каждое изделие — с любовью и
+                  вниманием к деталям.
                 </p>
               </div>
             </div>
@@ -217,9 +227,13 @@ export default function BlogPostPage() {
                       <div className="absolute inset-0 bg-espresso/10 group-hover:bg-espresso/0 transition-colors duration-500" />
                     </div>
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="label-caps text-terracotta">{relatedPost.category}</span>
+                      <span className="label-caps text-terracotta">
+                        {relatedPost.category}
+                      </span>
                       <span className="w-1 h-1 rounded-full bg-taupe/50" />
-                      <span className="label-caps text-taupe">{relatedPost.readTime}</span>
+                      <span className="label-caps text-taupe">
+                        {relatedPost.readTime}
+                      </span>
                     </div>
                     <h3 className="font-serif text-xl text-espresso group-hover:text-terracotta transition-colors text-balance">
                       {relatedPost.title}
@@ -244,5 +258,5 @@ export default function BlogPostPage() {
       </main>
       <Footer />
     </>
-  )
+  );
 }

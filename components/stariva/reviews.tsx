@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
-import { motion } from "motion/react"
-import { TelegramIcon } from "./icons"
+import { motion } from "motion/react";
+import Image from "next/image";
+import { TelegramIcon } from "./icons";
 
 const reviews = [
   {
@@ -28,14 +29,19 @@ const reviews = [
     quote:
       "Уже второй заказ у девочек. Первый был на свадебный подарок подруге — она до сих пор пишет «лучший подарок в жизни». Этот взяла на свою кухню. Тепло, по-домашнему, по-настоящему.",
   },
-]
+];
 
 function Star({ className = "w-3.5 h-3.5" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
       <path d="m12 2 2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L5.8 21l1.6-7L2 9.2l7.1-.6L12 2Z" />
     </svg>
-  )
+  );
 }
 
 export function Reviews() {
@@ -49,7 +55,7 @@ export function Reviews() {
               Отзывы
             </div>
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-espresso leading-[1.05] tracking-tight text-balance max-w-3xl">
-              Что говорят <span className="italic">наши покупатели</span>
+              Что говорят <span className="italic">мои покупатели</span>
             </h2>
           </div>
           <a
@@ -57,7 +63,7 @@ export function Reviews() {
             className="inline-flex items-center gap-2 label-caps-md text-espresso underline underline-offset-[6px] decoration-espresso/25 hover:decoration-terracotta hover:text-terracotta transition-colors"
           >
             <TelegramIcon className="w-4 h-4" />
-            Все отзывы — в нашем Telegram-канале
+            Все отзывы — в моём Telegram-канале
           </a>
         </div>
 
@@ -68,21 +74,28 @@ export function Reviews() {
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.7, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              transition={{
+                duration: 0.7,
+                delay: i * 0.1,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               className={`bg-parchment border border-linen/60 rounded-sm p-5 flex flex-col ${
                 i === 1 ? "md:mt-10" : ""
               }`}
             >
               <div className="relative aspect-[4/5] overflow-hidden rounded-sm mb-5">
-                <img
-                  src={r.image || "/placeholder.svg"}
+                <Image
+                  src={r.image}
                   alt={`Отзыв — ${r.name}, ${r.city}`}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
               </div>
 
               <div className="flex items-center gap-1 text-terracotta mb-3">
                 {Array.from({ length: 5 }).map((_, k) => (
+                  // biome-ignore lint/suspicious/noArrayIndexKey: static 5-star rating, never reordered
                   <Star key={k} />
                 ))}
               </div>
@@ -104,5 +117,5 @@ export function Reviews() {
         </div>
       </div>
     </section>
-  )
+  );
 }

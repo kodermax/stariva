@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { motion } from "motion/react"
+import { motion } from "motion/react";
 
 const steps = [
   {
     n: "01",
     title: "Подбор нитей",
-    text: "Вы выбираете оттенок и фактуру: молочный хлопок, льняной экрю, тёплая охра. Мы покажем образцы на видеосозвоне или вышлем Почтой.",
+    text: "Вы выбираете оттенок и фактуру: молочный хлопок, льняной экрю, тёплая охра. Я покажу образцы на видеосозвоне или вышлю Почтой.",
   },
   {
     n: "02",
@@ -18,7 +18,7 @@ const steps = [
     title: "Осмотр и упаковка",
     text: "Каждое изделие проверяет вторая пара рук. Упаковываем в крафтовую бумагу, лён и подписанную от руки открытку.",
   },
-]
+];
 
 export function Process() {
   return (
@@ -28,16 +28,17 @@ export function Process() {
           <div className="lg:col-span-5">
             <div className="label-caps text-terracotta mb-4 flex items-center gap-3">
               <span className="w-8 h-px bg-terracotta" />
-              Как мы работаем
+              Как я работаю
             </div>
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-espresso leading-[1.05] tracking-tight text-balance">
               Три шага <span className="italic">к вашему свету</span>
             </h2>
           </div>
           <p className="lg:col-span-5 lg:col-start-8 text-espresso/75 leading-[1.75] text-pretty self-end">
-            Срок изготовления — <span className="text-espresso font-medium">7–14 дней</span>.
-            Следим за каждым этапом лично и сообщаем вам обо всём, что происходит с заказом.
-            Без шаблонов и автоответов.
+            Срок изготовления —{" "}
+            <span className="text-espresso font-medium">7–14 дней</span>. Слежу
+            за каждым этапом лично и сообщаю вам обо всём, что происходит с
+            заказом. Без шаблонов и автоответов.
           </p>
         </div>
 
@@ -48,7 +49,11 @@ export function Process() {
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.7, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+              transition={{
+                duration: 0.7,
+                delay: i * 0.12,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               className="relative pt-10"
             >
               <span className="absolute top-0 left-0 right-0 h-px bg-espresso/15" />
@@ -61,11 +66,13 @@ export function Process() {
               <h3 className="font-serif text-2xl lg:text-3xl text-espresso mb-4 leading-tight">
                 {s.title}
               </h3>
-              <p className="text-espresso/75 leading-[1.75] text-pretty">{s.text}</p>
+              <p className="text-espresso/75 leading-[1.75] text-pretty">
+                {s.text}
+              </p>
             </motion.div>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }
