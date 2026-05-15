@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "env:validate": "node -e \"require('./lib/env.ts')\""
+    "env:validate": "node -e \"require('./lib/env.ts')\"",
+    "format": "biome format . --skip-parse-errors",
+    "format:fix": "biome format --write . --skip-parse-errors"
   },
   "dependencies": {
     "@hookform/resolvers": "5.2.2",
@@ -41,6 +43,7 @@
     "@t3-oss/env-nextjs": "^0.13.11",
     "@vercel/analytics": "2.0.1",
     "autoprefixer": "^10.5.0",
+    "biomejs": "^0.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.1.1",
