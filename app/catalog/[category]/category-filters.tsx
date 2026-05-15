@@ -6,6 +6,14 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Product, ProductSubcategory, Category } from "@/lib/ozon-types";
 import { formatPrice } from "@/lib/products";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface CategoryFiltersProps {
   products: Product[];
@@ -56,23 +64,29 @@ export default function CategoryFilters({
         <div className="max-w-[1440px] mx-auto px-5 lg:px-12 py-4 flex items-center justify-between gap-4 flex-wrap">
           {/* Subcategory pills */}
           <div className="flex items-center gap-2 flex-wrap">
-            <button
+            <Button
               onClick={() => setActiveSubcategory("all")}
-              className={`px-4 py-2 rounded-full label-caps text-[11px] transition-all duration-200 ${
+              variant={activeSubcategory === "all" ? "default" : "secondary"}
+              size="sm"
+              className={`rounded-full label-caps text-[11px] h-auto py-2 transition-all duration-200 ${
                 activeSubcategory === "all"
-                  ? "bg-espresso text-parchment"
+                  ? "bg-espresso text-parchment hover:bg-espresso/90"
                   : "bg-sand text-espresso hover:bg-espresso/10"
               }`}
             >
               Все ({products.length})
-            </button>
+            </Button>
             {category.subcategories.map((sub) => (
-              <button
+              <Button
                 key={sub.slug}
                 onClick={() => setActiveSubcategory(sub.slug)}
-                className={`px-4 py-2 rounded-full label-caps text-[11px] transition-all duration-200 ${
+                variant={
+                  activeSubcategory === sub.slug ? "default" : "secondary"
+                }
+                size="sm"
+                className={`rounded-full label-caps text-[11px] h-auto py-2 transition-all duration-200 ${
                   activeSubcategory === sub.slug
-                    ? "bg-espresso text-parchment"
+                    ? "bg-espresso text-parchment hover:bg-espresso/90"
                     : "bg-sand text-espresso hover:bg-espresso/10"
                 }`}
               >
@@ -82,37 +96,24 @@ export default function CategoryFilters({
                     ({subcategoryCounts[sub.slug]})
                   </span>
                 )}
-              </button>
+              </Button>
             ))}
           </div>
 
-          {/* Sort — custom-styled */}
-          <div className="relative">
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-              className="appearance-none pl-4 pr-9 py-2 rounded-full bg-sand text-espresso label-caps text-[11px] border-0 cursor-pointer focus:outline-none focus:ring-1 focus:ring-espresso/20"
-            >
-              <option value="default">По умолчанию</option>
-              <option value="price-asc">Сначала дешевле</option>
-              <option value="price-desc">Сначала дороже</option>
-            </select>
-            <svg
-              width="10"
-              height="10"
-              viewBox="0 0 10 10"
-              fill="none"
-              className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-espresso/40"
-            >
-              <path
-                d="M2 3.5l3 3 3-3"
-                stroke="currentColor"
-                strokeWidth="1.3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
+          {/* Sort */}
+          <Select
+            value={sortBy}
+            onValueChange={(v) => setSortBy(v as typeof sortBy)}
+          >
+            <SelectTrigger className="rounded-full bg-sand text-espresso label-caps text-[11px] border-0 h-auto py-2 px-4 focus:ring-1 focus:ring-espresso/20 w-auto">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="default">По умолчанию</SelectItem>
+              <SelectItem value="price-asc">Сначала дешевле</SelectItem>
+              <SelectItem value="price-desc">Сначала дороже</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </section>
 

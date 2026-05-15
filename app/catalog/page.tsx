@@ -1,11 +1,12 @@
 import { Suspense } from "react";
-import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { categories, getFeaturedProducts } from "@/lib/ozon-service";
 import { formatPrice } from "@/lib/products";
 import { Header } from "@/components/stariva/header";
 import { Footer } from "@/components/stariva/footer";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 import type { Product } from "@/lib/ozon-types";
 
 export const revalidate = 3600; // ISR: revalidate every hour
@@ -74,11 +75,11 @@ function ProductsSkeleton() {
   return (
     <div className="grid md:grid-cols-3 gap-8">
       {[1, 2, 3].map((i) => (
-        <div key={i} className="animate-pulse">
-          <div className="aspect-[4/5] rounded-xl bg-cream mb-4" />
-          <div className="h-6 bg-cream rounded w-3/4 mb-2" />
-          <div className="h-4 bg-cream rounded w-1/2 mb-2" />
-          <div className="h-5 bg-cream rounded w-1/4" />
+        <div key={i} className="space-y-3">
+          <Skeleton className="aspect-[4/5] rounded-xl bg-cream" />
+          <Skeleton className="h-6 w-3/4 bg-cream" />
+          <Skeleton className="h-4 w-1/2 bg-cream" />
+          <Skeleton className="h-5 w-1/4 bg-cream" />
         </div>
       ))}
     </div>
@@ -176,12 +177,12 @@ export default async function CatalogPage() {
                   Мы создаём изделия по индивидуальным размерам и дизайну.
                   Расскажите о вашей идее, и мы воплотим её в жизнь.
                 </p>
-                <Link
-                  href="/#order"
-                  className="inline-flex items-center gap-2 bg-terracotta hover:bg-terracotta/90 text-white px-6 py-3 rounded-full transition-colors label-caps"
+                <Button
+                  asChild
+                  className="inline-flex items-center gap-2 bg-terracotta hover:bg-terracotta/90 text-white px-6 py-3 h-auto rounded-full transition-colors label-caps"
                 >
-                  Оставить заявку
-                </Link>
+                  <Link href="/#order">Оставить заявку</Link>
+                </Button>
               </div>
               <div className="absolute right-0 top-0 bottom-0 w-1/3 opacity-10">
                 <svg viewBox="0 0 100 100" className="h-full w-full">

@@ -111,6 +111,8 @@ export interface Product {
   material: string;
   dimensions?: string;
   careInstructions?: string;
+  color?: string;
+  sizes?: string[];
   featured?: boolean;
 }
 

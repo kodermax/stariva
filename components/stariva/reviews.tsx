@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
-import { motion } from "motion/react"
-import { TelegramIcon } from "./icons"
+import Image from "next/image";
+import { motion } from "motion/react";
+import { TelegramIcon } from "./icons";
 
 const reviews = [
   {
@@ -28,14 +29,14 @@ const reviews = [
     quote:
       "Уже второй заказ у девочек. Первый был на свадебный подарок подруге — она до сих пор пишет «лучший подарок в жизни». Этот взяла на свою кухню. Тепло, по-домашнему, по-настоящему.",
   },
-]
+];
 
 function Star({ className = "w-3.5 h-3.5" }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
       <path d="m12 2 2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L5.8 21l1.6-7L2 9.2l7.1-.6L12 2Z" />
     </svg>
-  )
+  );
 }
 
 export function Reviews() {
@@ -68,16 +69,22 @@ export function Reviews() {
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.7, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              transition={{
+                duration: 0.7,
+                delay: i * 0.1,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               className={`bg-parchment border border-linen/60 rounded-sm p-5 flex flex-col ${
                 i === 1 ? "md:mt-10" : ""
               }`}
             >
               <div className="relative aspect-[4/5] overflow-hidden rounded-sm mb-5">
-                <img
-                  src={r.image || "/placeholder.svg"}
+                <Image
+                  src={r.image}
                   alt={`Отзыв — ${r.name}, ${r.city}`}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
               </div>
 
@@ -104,5 +111,5 @@ export function Reviews() {
         </div>
       </div>
     </section>
-  )
+  );
 }

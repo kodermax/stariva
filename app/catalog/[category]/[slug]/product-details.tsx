@@ -7,6 +7,15 @@ import Link from "next/link";
 import type { Product, Category } from "@/lib/ozon-types";
 import { formatPrice } from "@/lib/products";
 import { OzonIcon, CottonIcon, HandmadeIcon } from "@/components/stariva/icons";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
 
 interface ProductDetailsProps {
   product: Product;
@@ -28,23 +37,37 @@ export function ProductDetails({
       {/* Breadcrumb */}
       <section className="pt-28 pb-4 px-4">
         <div className="max-w-6xl mx-auto">
-          <nav className="flex items-center gap-2 text-sm text-taupe">
-            <Link
-              href="/catalog"
-              className="hover:text-espresso transition-colors"
-            >
-              Каталог
-            </Link>
-            <span>/</span>
-            <Link
-              href={`/catalog/${categorySlug}`}
-              className="hover:text-espresso transition-colors"
-            >
-              {category.name}
-            </Link>
-            <span>/</span>
-            <span className="text-espresso">{product.name}</span>
-          </nav>
+          <Breadcrumb>
+            <BreadcrumbList className="text-sm text-taupe">
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link
+                    href="/catalog"
+                    className="hover:text-espresso transition-colors"
+                  >
+                    Каталог
+                  </Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator>/</BreadcrumbSeparator>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link
+                    href={`/catalog/${categorySlug}`}
+                    className="hover:text-espresso transition-colors"
+                  >
+                    {category.name}
+                  </Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator>/</BreadcrumbSeparator>
+              <BreadcrumbItem>
+                <BreadcrumbPage className="text-espresso">
+                  {product.name}
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
         </div>
       </section>
 
@@ -85,10 +108,12 @@ export function ProductDetails({
               {product.images.length > 1 && (
                 <div className="flex gap-3 overflow-x-auto pb-2">
                   {product.images.map((img, i) => (
-                    <button
+                    <Button
                       key={i}
+                      variant="ghost"
+                      size="icon"
                       onClick={() => setActiveImage(i)}
-                      className={`relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 transition-all ${
+                      className={`relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 p-0 transition-all ${
                         activeImage === i
                           ? "ring-2 ring-terracotta"
                           : "opacity-60 hover:opacity-100"
@@ -102,7 +127,7 @@ export function ProductDetails({
                         sizes="80px"
                         unoptimized={img.startsWith("http")}
                       />
-                    </button>
+                    </Button>
                   ))}
                 </div>
               )}
@@ -143,20 +168,54 @@ export function ProductDetails({
               </p>
 
               {/* Features */}
-              <div className="grid grid-cols-2 gap-3 mb-8">
+              <div
+                className={`grid gap-3 mb-8 ${[product.material, product.color, product.sizes?.length, product.careInstructions].filter(Boolean).length > 2 ? "grid-cols-2" : "grid-cols-2"}`}
+              >
+                {/* Материал */}
                 <div className="flex flex-col items-center text-center p-4 bg-sand rounded-xl border border-espresso/6">
                   <CottonIcon className="w-7 h-7 text-terracotta mb-2" />
                   <span className="label-caps text-[9px] text-taupe leading-snug">
                     {product.material}
                   </span>
                 </div>
+                {/* Ручная работа */}
                 <div className="flex flex-col items-center text-center p-4 bg-sand rounded-xl border border-espresso/6">
                   <HandmadeIcon className="w-7 h-7 text-terracotta mb-2" />
                   <span className="label-caps text-[9px] text-taupe leading-snug">
                     Ручная работа
                   </span>
                 </div>
+                {/* Цвет */}
+                {product.color && (
+                  <div className="flex flex-col items-center text-center p-4 bg-sand rounded-xl border border-espresso/6 col-span-2">
+                    <span className="label-caps text-[9px] text-taupe/60 mb-1">
+                      Цвет
+                    </span>
+                    <span className="label-caps text-[10px] text-espresso leading-snug">
+                      {product.color}
+                    </span>
+                  </div>
+                )}
+                {/* Размеры */}
+                {product.sizes && product.sizes.length > 0 && (
+                  <div className="flex flex-col items-center text-center p-4 bg-sand rounded-xl border border-espresso/6 col-span-2">
+                    <span className="label-caps text-[9px] text-taupe/60 mb-2">
+                      Размеры
+                    </span>
+                    <div className="flex flex-wrap gap-1.5 justify-center">
+                      {product.sizes.map((s) => (
+                        <span
+                          key={s}
+                          className="px-2.5 py-1 rounded-full bg-espresso/8 text-espresso label-caps text-[10px]"
+                        >
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
+              {/* Уход */}
               {(product.dimensions || product.careInstructions) && (
                 <div className="space-y-3 mb-8 p-5 bg-sand rounded-xl border border-espresso/6">
                   {product.dimensions && (
@@ -170,7 +229,7 @@ export function ProductDetails({
                   {product.careInstructions && (
                     <div className="flex justify-between text-sm">
                       <span className="text-taupe">Уход</span>
-                      <span className="text-espresso">
+                      <span className="text-espresso text-right max-w-[60%]">
                         {product.careInstructions}
                       </span>
                     </div>
@@ -181,23 +240,27 @@ export function ProductDetails({
               {/* CTA Buttons */}
               <div className="space-y-3 mt-auto">
                 {product.ozonUrl && (
-                  <a
-                    href={product.ozonUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-3 w-full bg-[#005BFF] hover:bg-[#0047CC] text-white py-4 rounded-full transition-colors label-caps"
+                  <Button
+                    asChild
+                    className="flex items-center justify-center gap-3 w-full bg-[#005BFF] hover:bg-[#0047CC] text-white py-4 h-auto rounded-full transition-colors label-caps"
                   >
-                    <OzonIcon className="w-5 h-5" />
-                    Купить на Ozon
-                  </a>
+                    <a
+                      href={product.ozonUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <OzonIcon className="w-5 h-5" />
+                      Купить на Ozon
+                    </a>
+                  </Button>
                 )}
 
-                <a
-                  href={`tel:+79778722546`}
-                  className="flex items-center justify-center gap-2 w-full bg-espresso hover:bg-espresso/90 text-white py-4 rounded-full transition-colors label-caps"
+                <Button
+                  asChild
+                  className="flex items-center justify-center gap-2 w-full bg-espresso hover:bg-espresso/90 text-white py-4 h-auto rounded-full transition-colors label-caps"
                 >
-                  Позвонить
-                </a>
+                  <a href={`tel:+79778722546`}>Позвонить</a>
+                </Button>
               </div>
             </motion.div>
           </div>

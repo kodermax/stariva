@@ -1,14 +1,15 @@
-import Link from "next/link"
-import Image from "next/image"
-import { Header } from "@/components/stariva/header"
-import { Hero } from "@/components/stariva/hero"
-import { Marquee } from "@/components/stariva/marquee"
-import { Reviews } from "@/components/stariva/reviews"
-import { Process } from "@/components/stariva/process"
-import { PaymentDelivery } from "@/components/stariva/payment-delivery"
-import { CustomOrder } from "@/components/stariva/custom-order"
-import { Footer } from "@/components/stariva/footer"
-import { MobileStickyBar } from "@/components/stariva/mobile-sticky-bar"
+import Link from "next/link";
+import Image from "next/image";
+import { Header } from "@/components/stariva/header";
+import { Hero } from "@/components/stariva/hero";
+import { Marquee } from "@/components/stariva/marquee";
+import { Reviews } from "@/components/stariva/reviews";
+import { Process } from "@/components/stariva/process";
+import { PaymentDelivery } from "@/components/stariva/payment-delivery";
+import { CustomOrder } from "@/components/stariva/custom-order";
+import { Footer } from "@/components/stariva/footer";
+import { MobileStickyBar } from "@/components/stariva/mobile-sticky-bar";
+import { Button } from "@/components/ui/button";
 
 // ─── Three-direction sections ────────────────────────────────────────────────
 
@@ -22,7 +23,12 @@ const directions = [
     accent: "text-terracotta",
     accentBg: "bg-terracotta",
     image: "/images/catalog/dress-boho-1.jpg",
-    items: ["Платья макраме", "Топы и блузы", "Пляжные накидки", "Индивидуальный заказ"],
+    items: [
+      "Платья макраме",
+      "Топы и блузы",
+      "Пляжные накидки",
+      "Индивидуальный заказ",
+    ],
   },
   {
     id: "interior",
@@ -33,7 +39,12 @@ const directions = [
     accent: "text-taupe",
     accentBg: "bg-taupe",
     image: "/images/catalog/lampshade-dome.jpg",
-    items: ["Абажуры подвесные", "Детские вигвамы", "Мобили и гирлянды", "На заказ по размеру"],
+    items: [
+      "Абажуры подвесные",
+      "Детские вигвамы",
+      "Мобили и гирлянды",
+      "На заказ по размеру",
+    ],
   },
   {
     id: "decor",
@@ -44,20 +55,61 @@ const directions = [
     accent: "text-linen",
     accentBg: "bg-linen",
     image: "/images/catalog/panno-large.jpg",
-    items: ["Настенные панно", "Плейсменты", "Кашпо и подвесы", "Коллажи и арт-объекты"],
+    items: [
+      "Настенные панно",
+      "Плейсменты",
+      "Кашпо и подвесы",
+      "Коллажи и арт-объекты",
+    ],
   },
-]
+];
 
 // ─── Featured picks per category ─────────────────────────────────────────────
 
 const picks = [
-  { name: "Платье макраме «Летний бриз»", price: "8 900 ₽", category: "Одежда", image: "/images/catalog/dress-boho-2.jpg", href: "/catalog/clothes/dress-boho-2" },
-  { name: "Абажур «Купол» Ø60 см", price: "12 400 ₽", category: "Интерьер", image: "/images/catalog/lampshade-dome.jpg", href: "/catalog/interior/lampshade-dome" },
-  { name: "Панно «Горы» 80×50 см", price: "5 600 ₽", category: "Декор", image: "/images/catalog/panno-large.jpg", href: "/catalog/decor/panno-large" },
-  { name: "Детский вигвам «Лесной»", price: "18 200 ₽", category: "Интерьер", image: "/images/catalog/tipi-kids.jpg", href: "/catalog/interior/tipi-kids" },
-  { name: "Плейсменты × 4 шт.", price: "3 200 ₽", category: "Декор", image: "/images/catalog/placemat-set.jpg", href: "/catalog/decor/placemat-set" },
-  { name: "Топ макраме «Бали»", price: "4 100 ₽", category: "Одежда", image: "/images/catalog/top-macrame.jpg", href: "/catalog/clothes/top-macrame" },
-]
+  {
+    name: "Платье макраме «Летний бриз»",
+    price: "8 900 ₽",
+    category: "Одежда",
+    image: "/images/catalog/dress-boho-2.jpg",
+    href: "/catalog/clothes/dress-boho-2",
+  },
+  {
+    name: "Абажур «Купол» Ø60 см",
+    price: "12 400 ₽",
+    category: "Интерьер",
+    image: "/images/catalog/lampshade-dome.jpg",
+    href: "/catalog/interior/lampshade-dome",
+  },
+  {
+    name: "Панно «Горы» 80×50 см",
+    price: "5 600 ₽",
+    category: "Декор",
+    image: "/images/catalog/panno-large.jpg",
+    href: "/catalog/decor/panno-large",
+  },
+  {
+    name: "Детский вигвам «Лесной»",
+    price: "18 200 ₽",
+    category: "Интерьер",
+    image: "/images/catalog/tipi-kids.jpg",
+    href: "/catalog/interior/tipi-kids",
+  },
+  {
+    name: "Плейсменты × 4 шт.",
+    price: "3 200 ₽",
+    category: "Декор",
+    image: "/images/catalog/placemat-set.jpg",
+    href: "/catalog/decor/placemat-set",
+  },
+  {
+    name: "Топ макраме «Бали»",
+    price: "4 100 ₽",
+    category: "Одежда",
+    image: "/images/catalog/top-macrame.jpg",
+    href: "/catalog/clothes/top-macrame",
+  },
+];
 
 export default function Page() {
   return (
@@ -75,9 +127,13 @@ export default function Page() {
         <div className="max-w-[1440px] mx-auto px-5 lg:px-12">
           <div className="flex items-end justify-between mb-14 lg:mb-20">
             <div>
-              <span className="label-caps text-terracotta mb-3 block">Направления</span>
+              <span className="label-caps text-terracotta mb-3 block">
+                Направления
+              </span>
               <h2 className="font-serif text-4xl lg:text-6xl text-espresso leading-[1.05] text-balance">
-                Три мира<br /><em className="not-italic text-taupe">одного бренда</em>
+                Три мира
+                <br />
+                <em className="not-italic text-taupe">одного бренда</em>
               </h2>
             </div>
             <Link
@@ -86,7 +142,13 @@ export default function Page() {
             >
               Весь каталог
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M2 7h10M8 3l4 4-4 4"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </Link>
           </div>
@@ -109,7 +171,9 @@ export default function Page() {
                   />
                   {/* Index badge */}
                   <div className="absolute top-5 left-5">
-                    <span className="label-caps text-white/70 text-[10px]">{dir.index}</span>
+                    <span className="label-caps text-white/70 text-[10px]">
+                      {dir.index}
+                    </span>
                   </div>
                 </div>
 
@@ -118,19 +182,40 @@ export default function Page() {
                   <h3 className="font-serif text-3xl lg:text-4xl text-espresso mb-3 group-hover:text-terracotta transition-colors">
                     {dir.label}
                   </h3>
-                  <p className="text-taupe text-sm leading-relaxed mb-6 flex-1">{dir.desc}</p>
+                  <p className="text-taupe text-sm leading-relaxed mb-6 flex-1">
+                    {dir.desc}
+                  </p>
                   <ul className="space-y-1.5 mb-6">
                     {dir.items.map((item) => (
-                      <li key={item} className="flex items-center gap-2 text-espresso/60 text-[12px]">
-                        <span className={`w-1 h-1 rounded-full flex-shrink-0 ${dir.accentBg}`} />
+                      <li
+                        key={item}
+                        className="flex items-center gap-2 text-espresso/60 text-[12px]"
+                      >
+                        <span
+                          className={`w-1 h-1 rounded-full flex-shrink-0 ${dir.accentBg}`}
+                        />
                         {item}
                       </li>
                     ))}
                   </ul>
-                  <div className={`inline-flex items-center gap-2 label-caps-md ${dir.accent} transition-all`}>
+                  <div
+                    className={`inline-flex items-center gap-2 label-caps-md ${dir.accent} transition-all`}
+                  >
                     Смотреть
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="transition-transform group-hover:translate-x-1">
-                      <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      className="transition-transform group-hover:translate-x-1"
+                    >
+                      <path
+                        d="M2 6h8M7 3l3 3-3 3"
+                        stroke="currentColor"
+                        strokeWidth="1.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </div>
                 </div>
@@ -145,7 +230,9 @@ export default function Page() {
         <div className="max-w-[1440px] mx-auto px-5 lg:px-12 pt-16 lg:pt-24">
           <div className="flex items-end justify-between mb-12">
             <div>
-              <span className="label-caps text-terracotta mb-3 block">Выбор редакции</span>
+              <span className="label-caps text-terracotta mb-3 block">
+                Выбор редакции
+              </span>
               <h2 className="font-serif text-4xl lg:text-5xl text-espresso leading-[1.05]">
                 Хиты сезона
               </h2>
@@ -156,7 +243,13 @@ export default function Page() {
             >
               Все товары
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M2 7h10M8 3l4 4-4 4"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </Link>
           </div>
@@ -188,12 +281,13 @@ export default function Page() {
           </div>
 
           <div className="mt-10 text-center lg:hidden">
-            <Link
-              href="/catalog"
-              className="inline-flex items-center gap-2 label-caps-md text-espresso border border-espresso/20 px-6 py-3 rounded-full hover:bg-espresso hover:text-parchment transition-colors"
+            <Button
+              asChild
+              variant="outline"
+              className="inline-flex items-center gap-2 label-caps-md text-espresso border-espresso/20 px-6 py-3 h-auto rounded-full hover:bg-espresso hover:text-parchment transition-colors"
             >
-              Все товары
-            </Link>
+              <Link href="/catalog">Все товары</Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -216,13 +310,18 @@ export default function Page() {
 
             {/* Right: text */}
             <div className="bg-sand flex flex-col justify-center px-8 md:px-12 lg:px-16 py-12 lg:py-16">
-              <span className="label-caps text-terracotta mb-5 block tracking-widest">Обучение</span>
+              <span className="label-caps text-terracotta mb-5 block tracking-widest">
+                Обучение
+              </span>
               <h2 className="font-serif text-4xl lg:text-5xl text-espresso mb-6 leading-[1.1] text-balance">
-                Научитесь плести<br />
+                Научитесь плести
+                <br />
                 <em className="not-italic text-taupe">самостоятельно</em>
               </h2>
               <p className="text-espresso/70 text-base leading-[1.8] mb-8 max-w-md">
-                Видео-мастер-классы с пошаговыми инструкциями: от базовых узлов до готового абажура, платья или панно. Доступ навсегда, смотрите в своём темпе.
+                Видео-мастер-классы с пошаговыми инструкциями: от базовых узлов
+                до готового абажура, платья или панно. Доступ навсегда, смотрите
+                в своём темпе.
               </p>
               <ul className="space-y-2.5 mb-10">
                 {[
@@ -231,23 +330,46 @@ export default function Page() {
                   "Список материалов для каждого курса",
                   "Поддержка мастера",
                 ].map((item) => (
-                  <li key={item} className="flex items-center gap-3 text-espresso/80 text-sm">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-terracotta flex-shrink-0">
-                      <path d="M3 8.5l3 3 7-7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                  <li
+                    key={item}
+                    className="flex items-center gap-3 text-espresso/80 text-sm"
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      className="text-terracotta flex-shrink-0"
+                    >
+                      <path
+                        d="M3 8.5l3 3 7-7"
+                        stroke="currentColor"
+                        strokeWidth="1.4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                     {item}
                   </li>
                 ))}
               </ul>
-              <Link
-                href="/workshops"
-                className="self-start inline-flex items-center gap-3 px-7 py-4 rounded-full bg-espresso text-parchment label-caps-md hover:bg-terracotta transition-colors"
+              <Button
+                asChild
+                className="self-start inline-flex items-center gap-3 px-7 py-4 h-auto rounded-full bg-espresso text-parchment label-caps-md hover:bg-terracotta transition-colors"
               >
-                Смотреть мастер-классы
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </Link>
+                <Link href="/workshops">
+                  Смотреть мастер-классы
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path
+                      d="M2 7h10M8 3l4 4-4 4"
+                      stroke="currentColor"
+                      strokeWidth="1.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -261,5 +383,5 @@ export default function Page() {
       <Footer />
       <MobileStickyBar />
     </main>
-  )
+  );
 }

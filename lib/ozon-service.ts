@@ -164,7 +164,10 @@ function slugify(text: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-function transformOzonProduct(ozonProduct: any): Product {
+function transformOzonProduct(
+  ozonProduct: any,
+  attrs?: ReturnType<typeof extractAttributes>,
+): Product {
   const { category, subcategory } = mapOfferIdToCategory(
     ozonProduct.offer_id || "",
   );
@@ -235,32 +238,99 @@ function transformOzonProduct(ozonProduct: any): Product {
     ozonId: ozonProduct.id,
     ozonUrl: `https://www.ozon.ru/product/${ozonProduct.sku || ozonProduct.id}`,
     inStock,
-    material: "100% хлопок",
+    material: attrs?.material || "100% хлопок",
+    careInstructions: attrs?.careInstructions,
+    color: attrs?.color,
+    sizes: attrs?.sizes,
     featured: false,
   };
 }
 
-async function fetchProductDescription(
-  productId: number,
+// Извлекаем нужные атрибуты из ответа v4/product/info/attributes
+// API не возвращает attribute_id, поэтому ищем по ключевым словам в значениях
+function extractAttributes(attrs: any[]): {
+  material?: string;
+  careInstructions?: string;
+  color?: string;
+  sizes?: string[];
+} {
+  if (!attrs?.length) return {};
+
+  const values = attrs.map((a: any) =>
+    (a.values ?? []).map((v: any) => (v.value ?? "").trim()).filter(Boolean),
+  );
+
+  // Материал — ищем атрибут со значением содержащим "хлопок", "полиэфир", "шнур" и т.п.
+  const materialKeywords =
+    /хлопок|полиэфир|шнур|лён|шерсть|акрил|cotton|polyester/i;
+  const materialAttr = values.find((vals) =>
+    vals.some((v: string) => materialKeywords.test(v)),
+  );
+  const material = materialAttr?.find((v: string) => materialKeywords.test(v));
+
+  // Уход — ищем атрибут со значением содержащим "стирк", "уход", "чистк"
+  const careKeywords = /стирк|уход|чистк|wash|care/i;
+  const careAttr = values.find((vals) =>
+    vals.some((v: string) => careKeywords.test(v)),
+  );
+  const careInstructions = careAttr?.find((v: string) => careKeywords.test(v));
+
+  // Цвет — ищем атрибут с несколькими значениями цветов или ключевыми словами
+  const colorKeywords =
+    /бежев|молочн|белый|чёрн|черн|коричнев|серый|айвори|экрю|капучино|натуральн|слоновая/i;
+  const colorAttr = values.find((vals) =>
+    vals.some((v: string) => colorKeywords.test(v)),
+  );
+  const color = colorAttr
+    ?.filter((v: string) => colorKeywords.test(v))
+    .join(", ");
+
+  // Размеры — ищем атрибут со значениями типа "42", "44", "S", "M", "L", "XS"
+  const sizePattern = /^(XS|S|M|L|XL|XXL|\d{2})$/i;
+  const sizeAttr = values.find(
+    (vals) => vals.length > 0 && vals.every((v: string) => sizePattern.test(v)),
+  );
+  const sizes = sizeAttr?.length ? sizeAttr : undefined;
+
+  return {
+    material: material || undefined,
+    careInstructions: careInstructions || undefined,
+    color: color || undefined,
+    sizes,
+  };
+}
+
+async function fetchAttributes(
+  productIds: number[],
   clientId: string,
   apiKey: string,
-): Promise<string> {
+): Promise<Map<number, ReturnType<typeof extractAttributes>>> {
   try {
-    const res = await fetch(`${OZON_API_URL}/v1/product/info/description`, {
+    const res = await fetch(`${OZON_API_URL}/v4/product/info/attributes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Client-Id": clientId,
         "Api-Key": apiKey,
       },
-      body: JSON.stringify({ product_id: productId }),
+      body: JSON.stringify({
+        filter: { product_id: productIds, visibility: "ALL" },
+        last_id: "",
+        limit: 100,
+        sort_by: "",
+        sort_dir: "",
+      }),
       next: { revalidate: 3600 },
     });
-    if (!res.ok) return "";
+    if (!res.ok) return new Map();
     const data = await res.json();
-    return data.result?.description || "";
+    const result = new Map<number, ReturnType<typeof extractAttributes>>();
+    for (const item of data.result ?? []) {
+      result.set(item.id, extractAttributes(item.attributes ?? []));
+    }
+    return result;
   } catch {
-    return "";
+    return new Map();
   }
 }
 
@@ -361,21 +431,14 @@ async function fetchFromOzon(): Promise<Product[] | null> {
 
     console.log("[v0] ✓ Successfully fetched", items.length, "product details");
 
-    // Step 3: Fetch full descriptions in parallel via /v1/product/info/description
-    console.log("[v0] 📝 Fetching full descriptions...");
-    const descriptions = await Promise.all(
-      items.map((item: any) =>
-        fetchProductDescription(item.id, clientId, apiKey),
-      ),
-    );
-    console.log("[v0] ✓ Descriptions fetched");
+    // Step 3: Fetch attributes (material, care, color, sizes) in parallel
+    console.log("[v0] 🏷️ Fetching product attributes...");
+    const attrsMap = await fetchAttributes(productIds, clientId, apiKey);
+    console.log("[v0] ✓ Attributes fetched for", attrsMap.size, "products");
 
-    // Transform Ozon products to our format, injecting full descriptions
-    const transformedProducts = items.map((item: any, i: number) =>
-      transformOzonProduct({
-        ...item,
-        description: descriptions[i] || item.description,
-      }),
+    // Transform Ozon products to our format
+    const transformedProducts = items.map((item: any) =>
+      transformOzonProduct(item, attrsMap.get(item.id)),
     );
     console.log(
       "[v0] ✓ Transformed",
