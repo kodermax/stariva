@@ -1,12 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Product, Category } from "@/lib/ozon-types";
-import { formatPrice } from "@/lib/products";
-import { OzonIcon, CottonIcon, HandmadeIcon } from "@/components/stariva/icons";
+import { useState } from "react";
+import { CottonIcon, HandmadeIcon, OzonIcon } from "@/components/stariva/icons";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -16,6 +14,8 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
+import type { Category, Product } from "@/lib/ozon-types";
+import { formatPrice } from "@/lib/products";
 
 interface ProductDetailsProps {
   product: Product;
@@ -109,6 +109,7 @@ export function ProductDetails({
                 <div className="flex gap-3 overflow-x-auto pb-2">
                   {product.images.map((img, i) => (
                     <Button
+                      // biome-ignore lint/suspicious/noArrayIndexKey: image thumbnails are positional, index is the correct key
                       key={i}
                       variant="ghost"
                       size="icon"
@@ -274,6 +275,7 @@ export function ProductDetails({
             <h2 className="font-serif text-2xl text-espresso mb-6">Описание</h2>
             <div
               className="prose prose-lg text-taupe"
+              // biome-ignore lint/security/noDangerouslySetInnerHtml: product description comes from Ozon API (trusted source) and is sanitized server-side
               dangerouslySetInnerHTML={{ __html: product.description }}
             />
           </div>

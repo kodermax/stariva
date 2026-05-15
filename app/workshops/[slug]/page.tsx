@@ -1,16 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Header } from "@/components/stariva/header";
 import { Footer } from "@/components/stariva/footer";
-import {
-  workshops,
-  getWorkshopBySlug,
-  categoryLabels,
-  levelLabels,
-  levelColors,
-  formatPrice,
-} from "@/lib/workshops-data";
+import { Header } from "@/components/stariva/header";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -20,6 +12,14 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
+import {
+  categoryLabels,
+  formatPrice,
+  getWorkshopBySlug,
+  levelColors,
+  levelLabels,
+  workshops,
+} from "@/lib/workshops-data";
 
 export async function generateStaticParams() {
   return workshops.map((w) => ({ slug: w.slug }));
@@ -132,7 +132,13 @@ export default async function WorkshopDetailPage({
               {/* Locked overlay */}
               <div className="absolute inset-0 bg-espresso/50 backdrop-blur-[2px] flex flex-col items-center justify-center gap-4">
                 <div className="w-16 h-16 rounded-full bg-parchment/95 flex items-center justify-center shadow-lg">
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <svg
+                    width="28"
+                    height="28"
+                    viewBox="0 0 28 28"
+                    fill="none"
+                    aria-hidden="true"
+                  >
                     <rect
                       x="5"
                       y="13"
@@ -176,6 +182,7 @@ export default async function WorkshopDetailPage({
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {workshop.whatYouLearn.map((item, i) => (
                   <li
+                    // biome-ignore lint/suspicious/noArrayIndexKey: static list, never reordered
                     key={i}
                     className="flex items-start gap-3 p-4 bg-sand rounded-xl border border-espresso/6"
                   >
@@ -184,6 +191,7 @@ export default async function WorkshopDetailPage({
                       height="18"
                       viewBox="0 0 18 18"
                       fill="none"
+                      aria-hidden="true"
                       className="flex-shrink-0 mt-0.5 text-terracotta"
                     >
                       <path
@@ -216,6 +224,7 @@ export default async function WorkshopDetailPage({
               <div className="border border-espresso/10 rounded-2xl overflow-hidden">
                 {workshop.lessons.map((lesson, i) => (
                   <div
+                    // biome-ignore lint/suspicious/noArrayIndexKey: lessons are positional, index is used for styling
                     key={i}
                     className={`flex items-center gap-4 px-5 py-4 ${
                       i < workshop.lessons.length - 1
@@ -231,6 +240,7 @@ export default async function WorkshopDetailPage({
                           height="14"
                           viewBox="0 0 14 14"
                           fill="none"
+                          aria-hidden="true"
                         >
                           <path
                             d="M5 3.5l5.5 3.5-5.5 3.5V3.5z"
@@ -243,6 +253,7 @@ export default async function WorkshopDetailPage({
                           height="14"
                           viewBox="0 0 14 14"
                           fill="none"
+                          aria-hidden="true"
                         >
                           <rect
                             x="2"
@@ -289,6 +300,7 @@ export default async function WorkshopDetailPage({
               <ul className="space-y-2">
                 {workshop.materials.map((mat, i) => (
                   <li
+                    // biome-ignore lint/suspicious/noArrayIndexKey: static list, never reordered
                     key={i}
                     className="flex items-center gap-3 text-espresso/80 text-sm"
                   >
@@ -320,6 +332,7 @@ export default async function WorkshopDetailPage({
                         height="22"
                         viewBox="0 0 22 22"
                         fill="none"
+                        aria-hidden="true"
                       >
                         <rect
                           x="3"
@@ -391,6 +404,7 @@ export default async function WorkshopDetailPage({
                           height="20"
                           viewBox="0 0 24 24"
                           fill="none"
+                          aria-hidden="true"
                         >
                           <circle
                             cx="12"

@@ -123,6 +123,7 @@ export function Hero() {
                 className="font-serif text-white text-[clamp(3.2rem,9vw,7.5rem)] leading-[0.95] tracking-tight text-balance drop-shadow-[0_2px_24px_rgba(0,0,0,0.25)]"
               >
                 {current.headline.map((line, i) => (
+                  // biome-ignore lint/suspicious/noArrayIndexKey: headline lines are static and positional
                   <span key={i} className="block">
                     {i === 2 ? (
                       <em
@@ -248,7 +249,7 @@ export function Hero() {
       </div>
 
       {/* Scroll hint */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 opacity-40">
+      <div className="hidden lg:flex absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex-col items-center gap-1.5 opacity-40">
         <span className="label-caps text-white text-[9px]">Скролл</span>
         <motion.div
           animate={{ y: [0, 5, 0] }}

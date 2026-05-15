@@ -118,6 +118,7 @@ export default function AboutPage() {
           <div className="mt-14 flex flex-wrap gap-px border border-white/10 rounded-xl overflow-hidden w-fit">
             {stats.map((s, i) => (
               <div
+                // biome-ignore lint/suspicious/noArrayIndexKey: stats are static and never reordered
                 key={i}
                 className="px-8 py-5 bg-white/8 backdrop-blur-sm flex flex-col gap-1 min-w-[110px]"
               >
