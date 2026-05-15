@@ -307,7 +307,7 @@ export default function AboutPage() {
                 key={item.year}
                 className="grid grid-cols-[64px_1fr] lg:grid-cols-[120px_1fr] gap-6 lg:gap-12 py-9 border-t border-parchment/8 group"
               >
-                <div className="font-serif text-4xl lg:text-5xl text-parchment/20 group-hover:text-terracotta transition-colors duration-300 leading-none pt-1">
+                <div className="font-serif text-4xl lg:text-5xl text-parchment/20 group-hover:text-parchment transition-colors duration-300 leading-none pt-1">
                   {item.year}
                 </div>
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-12">
