@@ -11,6 +11,6 @@ const nextConfig = {
       { protocol: "https", hostname: "ir.ozone.ru" },
     ],
   },
-}
+};
 
-export default nextConfig
+export default nextConfig;

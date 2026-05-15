@@ -1,20 +1,20 @@
 export interface BlogPost {
-  slug: string
-  title: string
-  excerpt: string
-  date: string
-  readTime: string
-  category: string
-  coverImage: string
-  content: BlogContent[]
+  slug: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  readTime: string;
+  category: string;
+  coverImage: string;
+  content: BlogContent[];
 }
 
 export interface BlogContent {
-  type: "paragraph" | "heading" | "image" | "quote"
-  text?: string
-  src?: string
-  alt?: string
-  caption?: string
+  type: "paragraph" | "heading" | "image" | "quote";
+  text?: string;
+  src?: string;
+  alt?: string;
+  caption?: string;
 }
 
 export const blogPosts: BlogPost[] = [
@@ -44,7 +44,8 @@ export const blogPosts: BlogPost[] = [
         type: "image",
         src: "/images/blog/macrame-detail.jpg",
         alt: "Детали макраме плетения",
-        caption: "Традиционные узлы макраме требуют терпения и внимания к деталям",
+        caption:
+          "Традиционные узлы макраме требуют терпения и внимания к деталям",
       },
       {
         type: "heading",
@@ -160,7 +161,8 @@ export const blogPosts: BlogPost[] = [
         type: "image",
         src: "/images/blog/cotton-materials.jpg",
         alt: "Натуральные материалы для макраме",
-        caption: "Натуральный хлопок — живой материал, требующий бережного отношения",
+        caption:
+          "Натуральный хлопок — живой материал, требующий бережного отношения",
       },
       {
         type: "heading",
@@ -206,7 +208,8 @@ export const blogPosts: BlogPost[] = [
         type: "image",
         src: "/images/blog/atelier-workspace.jpg",
         alt: "Мастерская Stariva",
-        caption: "В мастерской время течёт иначе — здесь важен процесс, а не только результат",
+        caption:
+          "В мастерской время течёт иначе — здесь важен процесс, а не только результат",
       },
       {
         type: "heading",
@@ -234,17 +237,17 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
-]
+];
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
-  return blogPosts.find((post) => post.slug === slug)
+  return blogPosts.find((post) => post.slug === slug);
 }
 
 export function formatDate(dateString: string): string {
-  const date = new Date(dateString)
+  const date = new Date(dateString);
   return date.toLocaleDateString("ru-RU", {
     day: "numeric",
     month: "long",
     year: "numeric",
-  })
+  });
 }

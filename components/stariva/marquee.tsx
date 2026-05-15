@@ -6,10 +6,10 @@ const items = [
   "Экологичные материалы",
   "Москва — вся Россия",
   "Срок изготовления 7–14 дней",
-]
+];
 
 export function Marquee() {
-  const row = [...items, ...items]
+  const row = [...items, ...items];
   return (
     <div className="border-y border-espresso/10 bg-parchment overflow-hidden">
       <div className="marquee-track flex whitespace-nowrap py-4">
@@ -21,5 +21,5 @@ export function Marquee() {
         ))}
       </div>
     </div>
-  )
+  );
 }

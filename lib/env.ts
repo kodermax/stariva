@@ -1,5 +1,5 @@
-import { createEnv } from "@t3-oss/env-nextjs"
-import { z } from "zod"
+import { createEnv } from "@t3-oss/env-nextjs";
+import { z } from "zod";
 
 export const env = createEnv({
   /**
@@ -8,7 +8,9 @@ export const env = createEnv({
   server: {
     OZON_API_KEY: z.string().min(1),
     OZON_CLIENT_ID: z.string().min(1),
-    NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+    NODE_ENV: z
+      .enum(["development", "test", "production"])
+      .default("development"),
   },
 
   /**
@@ -38,4 +40,4 @@ export const env = createEnv({
    * Делает так, что пустые строки считаются undefined
    */
   emptyStringAsUndefined: true,
-})
+});

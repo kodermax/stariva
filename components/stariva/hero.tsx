@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "motion/react"
-import Link from "next/link"
-import Image from "next/image"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import Link from "next/link";
+import Image from "next/image";
 
 const directions = [
   {
@@ -45,21 +45,21 @@ const directions = [
     headline: ["Декор, который", "расскажет", "вашу историю"],
     desc: "Панно, плейсменты и кашпо из хлопка — детали, которые завершают образ любого интерьера.",
   },
-]
+];
 
 export function Hero() {
-  const [active, setActive] = useState(0)
-  const [paused, setPaused] = useState(false)
-  const current = directions[active]
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const current = directions[active];
 
   // Auto-advance every 5 seconds unless user interacted
   useEffect(() => {
-    if (paused) return
+    if (paused) return;
     const timer = setTimeout(() => {
-      setActive((prev) => (prev + 1) % directions.length)
-    }, 5000)
-    return () => clearTimeout(timer)
-  }, [active, paused])
+      setActive((prev) => (prev + 1) % directions.length);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [active, paused]);
 
   return (
     <section className="relative h-[100dvh] min-h-[640px] max-h-[1080px] overflow-hidden bg-espresso">
@@ -93,7 +93,6 @@ export function Hero() {
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col justify-between max-w-[1440px] mx-auto px-5 lg:px-12 pt-[60px] lg:pt-[68px] pb-10 lg:pb-16">
-
         {/* Tag */}
         <div className="pt-8 lg:pt-12">
           <AnimatePresence mode="wait">
@@ -125,9 +124,16 @@ export function Hero() {
               >
                 {current.headline.map((line, i) => (
                   <span key={i} className="block">
-                    {i === 2
-                      ? <em className="not-italic" style={{ color: current.accent }}>{line}</em>
-                      : line}
+                    {i === 2 ? (
+                      <em
+                        className="not-italic"
+                        style={{ color: current.accent }}
+                      >
+                        {line}
+                      </em>
+                    ) : (
+                      line
+                    )}
                   </span>
                 ))}
               </motion.h1>
@@ -157,8 +163,20 @@ export function Hero() {
                 className="group inline-flex items-center gap-3 px-7 py-4 rounded-full bg-white text-espresso label-caps-md hover:bg-parchment shadow-[0_4px_24px_rgba(0,0,0,0.18)] transition-all duration-300"
               >
                 Смотреть коллекцию
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform group-hover:translate-x-1">
-                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  className="transition-transform group-hover:translate-x-1"
+                >
+                  <path
+                    d="M2 7h10M8 3l4 4-4 4"
+                    stroke="currentColor"
+                    strokeWidth="1.3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </Link>
               <Link
@@ -179,7 +197,10 @@ export function Hero() {
             {directions.map((dir, i) => (
               <button
                 key={dir.id}
-                onClick={() => { setActive(i); setPaused(true) }}
+                onClick={() => {
+                  setActive(i);
+                  setPaused(true);
+                }}
                 className={`group flex items-center gap-3 text-left transition-all duration-300 ${
                   i === active ? "opacity-100" : "opacity-35 hover:opacity-65"
                 }`}
@@ -201,8 +222,12 @@ export function Hero() {
                   )}
                 </div>
                 <div>
-                  <div className="label-caps text-white/50 text-[9px] leading-none mb-0.5">{dir.index}</div>
-                  <div className="text-white font-serif text-[16px] lg:text-[18px] leading-snug">{dir.label}</div>
+                  <div className="label-caps text-white/50 text-[9px] leading-none mb-0.5">
+                    {dir.index}
+                  </div>
+                  <div className="text-white font-serif text-[16px] lg:text-[18px] leading-snug">
+                    {dir.label}
+                  </div>
                   {i === active && (
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
@@ -227,10 +252,16 @@ export function Hero() {
           transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M2 4l5 5 5-5" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+            <path
+              d="M2 4l5 5 5-5"
+              stroke="white"
+              strokeWidth="1.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

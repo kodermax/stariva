@@ -1,37 +1,36 @@
-import Image from "next/image"
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { categories, getProductsByCategory } from "@/lib/ozon-service"
-import { formatPrice, getCategoryBySlug } from "@/lib/products"
-import { Header } from "@/components/stariva/header"
-import { Footer } from "@/components/stariva/footer"
-import CategoryFilters from "./category-filters"
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { categories, getProductsByCategory } from "@/lib/ozon-service";
+import { formatPrice, getCategoryBySlug } from "@/lib/products";
+import { Header } from "@/components/stariva/header";
+import { Footer } from "@/components/stariva/footer";
+import CategoryFilters from "./category-filters";
 
-export const revalidate = 3600
+export const revalidate = 3600;
 
 interface CategoryPageProps {
-  params: Promise<{ category: string }>
+  params: Promise<{ category: string }>;
 }
 
 export async function generateStaticParams() {
-  return categories.map((cat) => ({ category: cat.slug }))
+  return categories.map((cat) => ({ category: cat.slug }));
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const { category: categorySlug } = await params
-  const category = getCategoryBySlug(categorySlug)
+  const { category: categorySlug } = await params;
+  const category = getCategoryBySlug(categorySlug);
 
   if (!category) {
-    notFound()
+    notFound();
   }
 
-  const products = await getProductsByCategory(categorySlug)
+  const products = await getProductsByCategory(categorySlug);
 
   return (
     <>
       <Header variant="solid" />
       <main className="min-h-screen bg-parchment">
-
         {/* ── Category Hero ── */}
         <section className="relative overflow-hidden bg-espresso">
           <div className="absolute inset-0">
@@ -46,16 +45,28 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           </div>
           <div className="relative z-10 max-w-[1440px] mx-auto px-5 lg:px-12 pt-32 pb-16 lg:pt-40 lg:pb-20">
             {/* Breadcrumb */}
-            <nav className="flex items-center gap-2 text-sm text-white/50 mb-8" aria-label="Breadcrumb">
-              <Link href="/" className="hover:text-white/80 transition-colors">Главная</Link>
+            <nav
+              className="flex items-center gap-2 text-sm text-white/50 mb-8"
+              aria-label="Breadcrumb"
+            >
+              <Link href="/" className="hover:text-white/80 transition-colors">
+                Главная
+              </Link>
               <span>/</span>
-              <Link href="/catalog" className="hover:text-white/80 transition-colors">Каталог</Link>
+              <Link
+                href="/catalog"
+                className="hover:text-white/80 transition-colors"
+              >
+                Каталог
+              </Link>
               <span>/</span>
               <span className="text-white/80">{category.name}</span>
             </nav>
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
               <div>
-                <span className="label-caps text-linen/70 mb-3 block">{products.length} товаров</span>
+                <span className="label-caps text-linen/70 mb-3 block">
+                  {products.length} товаров
+                </span>
                 <h1 className="font-serif text-5xl lg:text-7xl text-white leading-[1.0] tracking-tight">
                   {category.name}
                 </h1>
@@ -88,7 +99,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         {/* ── Other Categories ── */}
         <section className="pb-24 px-5 lg:px-12">
           <div className="max-w-[1440px] mx-auto">
-            <h2 className="font-serif text-2xl lg:text-3xl text-espresso mb-8">Другие направления</h2>
+            <h2 className="font-serif text-2xl lg:text-3xl text-espresso mb-8">
+              Другие направления
+            </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-4">
               {categories
                 .filter((c) => c.slug !== categorySlug)
@@ -117,10 +130,19 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                         </p>
                       </div>
                       <svg
-                        width="16" height="16" viewBox="0 0 16 16" fill="none"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        fill="none"
                         className="ml-auto flex-shrink-0 text-espresso/20 group-hover:text-parchment/40 transition-colors"
                       >
-                        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                        <path
+                          d="M3 8h10M9 4l4 4-4 4"
+                          stroke="currentColor"
+                          strokeWidth="1.3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                     </div>
                   </Link>
@@ -131,5 +153,5 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       </main>
       <Footer />
     </>
-  )
+  );
 }
