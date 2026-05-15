@@ -35,7 +35,6 @@ const nav = [
   { label: "Мастер-классы", href: "/workshops" },
   { label: "Блог", href: "/blog" },
   { label: "О бренде", href: "/about" },
-  { label: "Доставка", href: "/#delivery" },
 ];
 
 interface HeaderProps {

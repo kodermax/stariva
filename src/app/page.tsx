@@ -6,7 +6,7 @@ import { Header } from "@/components/stariva/header";
 import { Hero } from "@/components/stariva/hero";
 import { Marquee } from "@/components/stariva/marquee";
 import { MobileStickyBar } from "@/components/stariva/mobile-sticky-bar";
-import { PaymentDelivery } from "@/components/stariva/payment-delivery";
+
 import { Process } from "@/components/stariva/process";
 import { Reviews } from "@/components/stariva/reviews";
 import { Button } from "@/components/ui/button";
@@ -395,10 +395,9 @@ export default function Page() {
         </div>
       </section>
 
-      {/* ── Process, Reviews, Delivery, Order ── */}
+      {/* ── Process, Reviews, Order ── */}
       <Process />
       <Reviews />
-      <PaymentDelivery />
       <CustomOrder />
       <Footer />
       <MobileStickyBar />
