@@ -1,11 +1,9 @@
 "use client";
 
-import { useState, useMemo } from "react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Product, ProductSubcategory, Category } from "@/lib/ozon-types";
-import { formatPrice } from "@/lib/products";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -14,6 +12,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type { Category, Product, ProductSubcategory } from "@/lib/ozon-types";
+import { formatPrice } from "@/lib/products";
 
 interface CategoryFiltersProps {
   products: Product[];
@@ -176,19 +176,6 @@ function ProductCard({
             sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
             unoptimized={product.images[0].startsWith("http")}
           />
-          {/* Badges */}
-          {product.oldPrice && (
-            <span className="absolute top-3 left-3 bg-terracotta text-parchment label-caps px-2.5 py-1 rounded-full text-[10px]">
-              −{Math.round((1 - product.price / product.oldPrice) * 100)}%
-            </span>
-          )}
-          {!product.inStock && (
-            <div className="absolute inset-0 bg-parchment/50 flex items-end justify-center pb-5">
-              <span className="bg-parchment/90 text-espresso label-caps px-4 py-2 rounded-full text-[11px]">
-                Нет в наличии
-              </span>
-            </div>
-          )}
         </div>
 
         {/* Info */}
@@ -196,7 +183,7 @@ function ProductCard({
           {product.name}
         </h3>
         {product.shortDescription && (
-          <p className="text-taupe text-[12px] mt-1 line-clamp-1">
+          <p className="text-taupe text-[12px] mt-1 line-clamp-3 leading-relaxed">
             {product.shortDescription}
           </p>
         )}

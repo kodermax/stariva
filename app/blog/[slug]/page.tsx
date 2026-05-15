@@ -115,6 +115,7 @@ export default function BlogPostPage() {
                 case "paragraph":
                   return (
                     <p
+                      // biome-ignore lint/suspicious/noArrayIndexKey: blog content blocks are static and never reordered
                       key={index}
                       className="text-espresso/90 leading-relaxed text-lg mb-6"
                     >
@@ -124,6 +125,7 @@ export default function BlogPostPage() {
                 case "heading":
                   return (
                     <h2
+                      // biome-ignore lint/suspicious/noArrayIndexKey: blog content blocks are static and never reordered
                       key={index}
                       className="font-serif text-2xl lg:text-3xl text-espresso mt-12 mb-6"
                     >
@@ -132,6 +134,7 @@ export default function BlogPostPage() {
                   );
                 case "image":
                   return (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: blog content blocks are static and never reordered
                     <figure key={index} className="my-12">
                       <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
                         <Image
@@ -152,6 +155,7 @@ export default function BlogPostPage() {
                 case "quote":
                   return (
                     <blockquote
+                      // biome-ignore lint/suspicious/noArrayIndexKey: blog content blocks are static and never reordered
                       key={index}
                       className="my-12 pl-6 border-l-2 border-terracotta"
                     >

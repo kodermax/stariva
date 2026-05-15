@@ -23,7 +23,7 @@ async function FeaturedProducts() {
   );
 }
 
-function ProductCard({ product, index }: { product: Product; index: number }) {
+function ProductCard({ product }: { product: Product; index?: number }) {
   return (
     <Link
       href={`/catalog/${product.category}/${product.slug}`}
