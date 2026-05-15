@@ -8,6 +8,7 @@ export function TelegramIcon(props: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <path
@@ -33,6 +34,7 @@ export function WhatsappIcon(props: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <path
@@ -56,6 +58,7 @@ export function VkIcon(props: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <path
@@ -75,6 +78,7 @@ export function PinterestIcon(props: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <path
@@ -93,6 +97,7 @@ export function LivemasterIcon(props: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <path
@@ -117,6 +122,7 @@ export function DzenIcon(props: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <path
@@ -135,6 +141,7 @@ export function MirIcon(props: IconProps) {
       viewBox="0 0 40 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <rect
@@ -167,6 +174,7 @@ export function SbpIcon(props: IconProps) {
       viewBox="0 0 40 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <rect
@@ -199,6 +207,7 @@ export function VisaIcon(props: IconProps) {
       viewBox="0 0 40 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <rect
@@ -231,6 +240,7 @@ export function CdekIcon(props: IconProps) {
       viewBox="0 0 60 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <rect
@@ -263,6 +273,7 @@ export function BoxberryIcon(props: IconProps) {
       viewBox="0 0 70 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <rect
@@ -295,6 +306,7 @@ export function PochtaIcon(props: IconProps) {
       viewBox="0 0 90 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <rect
@@ -327,6 +339,7 @@ export function TinkoffIcon(props: IconProps) {
       viewBox="0 0 60 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <rect
@@ -359,6 +372,7 @@ export function SberIcon(props: IconProps) {
       viewBox="0 0 50 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <rect
@@ -391,6 +405,7 @@ export function LeafIcon(props: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <path
@@ -415,6 +430,7 @@ export function TruckIcon(props: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <path
@@ -435,6 +451,7 @@ export function PercentIcon(props: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <circle cx="8" cy="8" r="2.5" stroke="currentColor" strokeWidth="1.3" />
@@ -455,6 +472,7 @@ export function CardIcon(props: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <rect
@@ -483,6 +501,7 @@ export function PhoneIcon(props: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <path
@@ -501,6 +520,7 @@ export function ArrowRight(props: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <path
@@ -519,6 +539,7 @@ export function StariveLogo(props: IconProps) {
       viewBox="0 0 240 80"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       {/* Decorative macrame knot pattern */}
@@ -599,6 +620,7 @@ export function OzonIcon(props: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <path
@@ -620,6 +642,7 @@ export function CottonIcon(props: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <path
@@ -657,6 +680,7 @@ export function HandmadeIcon(props: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <path
@@ -687,6 +711,7 @@ export function ShippingIcon(props: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
       {...props}
     >
       <rect

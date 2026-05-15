@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import Link from "next/link";
+import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const directions = [
   {
@@ -168,6 +168,7 @@ export function Hero() {
                   height="14"
                   viewBox="0 0 14 14"
                   fill="none"
+                  aria-hidden="true"
                   className="transition-transform group-hover:translate-x-1"
                 >
                   <path
@@ -189,6 +190,7 @@ export function Hero() {
           </div>
 
           {/* Direction switcher */}
+          {/* biome-ignore lint/a11y/noStaticElementInteractions: wrapper pauses auto-advance on hover, not interactive itself */}
           <div
             className="flex lg:flex-col gap-1.5 lg:gap-4 pb-1"
             onMouseEnter={() => setPaused(true)}

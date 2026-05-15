@@ -39,7 +39,7 @@ const timeline = [
     year: "2018",
     event: "Основание",
     detail:
-      "Анна Смирнова начинает плести макраме на кухне московской квартиры. Первые абажуры уходят к подругам.",
+      "Ольга Карпычева начинает плести макраме на кухне. Первые абажуры уходят к подругам.",
   },
   {
     year: "2019",
@@ -68,7 +68,7 @@ const timeline = [
 ];
 
 const stats = [
-  { value: "2 000+", label: "изделий\nсоздано" },
+  { value: "500+", label: "изделий\nсоздано" },
   { value: "1", label: "мастер\nодного" },
   { value: "7", label: "лет\nопыта" },
   { value: "47", label: "регионов\nРоссии" },
@@ -85,7 +85,7 @@ export default function AboutPage() {
         <div className="absolute inset-0">
           <Image
             src="/images/about/hero-founder.jpg"
-            alt="Основательница бренда Stariva в мастерской"
+            alt="Ольга Карпычева в мастерской"
             fill
             priority
             className="object-cover object-center"

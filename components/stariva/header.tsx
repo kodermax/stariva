@@ -126,6 +126,7 @@ export function Header({ variant = "solid" }: HeaderProps) {
           <nav className="hidden lg:flex items-center gap-1">
             {nav.map((item) =>
               item.hasMega ? (
+                // biome-ignore lint/a11y/noStaticElementInteractions: wrapper div needs mouse events for mega menu hover
                 <div
                   key={item.href}
                   className="relative"
@@ -148,6 +149,7 @@ export function Header({ variant = "solid" }: HeaderProps) {
                       height="10"
                       viewBox="0 0 10 10"
                       fill="none"
+                      aria-hidden="true"
                       className={`transition-transform duration-200 ${megaOpen ? "rotate-180" : ""}`}
                     >
                       <path
@@ -161,6 +163,7 @@ export function Header({ variant = "solid" }: HeaderProps) {
                   </Link>
 
                   {/* Mega dropdown — padding-top создаёт невидимый мост между кнопкой и панелью */}
+                  {/* biome-ignore lint/a11y/noStaticElementInteractions: dropdown bridge div needs mouse events for hover persistence */}
                   <div
                     onMouseEnter={openMega}
                     onMouseLeave={closeMega}
@@ -205,6 +208,7 @@ export function Header({ variant = "solid" }: HeaderProps) {
                             height="12"
                             viewBox="0 0 12 12"
                             fill="none"
+                            aria-hidden="true"
                           >
                             <path
                               d="M2 6h8M7 3l3 3-3 3"
@@ -280,6 +284,8 @@ export function Header({ variant = "solid" }: HeaderProps) {
       <div
         className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ${menuOpen ? "visible" : "invisible"}`}
       >
+        {/* biome-ignore lint/a11y/noStaticElementInteractions: backdrop overlay closes menu on click, keyboard handled by Escape key on parent */}
+        {/* biome-ignore lint/a11y/useKeyWithClickEvents: backdrop overlay closes menu on click, keyboard handled by Escape key on parent */}
         <div
           className={`absolute inset-0 bg-espresso/40 backdrop-blur-sm transition-opacity duration-300 ${menuOpen ? "opacity-100" : "opacity-0"}`}
           onClick={() => setMenuOpen(false)}
@@ -296,7 +302,13 @@ export function Header({ variant = "solid" }: HeaderProps) {
               className="text-espresso/50 hover:text-espresso"
               aria-label="Закрыть меню"
             >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                aria-hidden="true"
+              >
                 <path
                   d="M2 2l12 12M14 2L2 14"
                   stroke="currentColor"
@@ -353,6 +365,7 @@ export function Header({ variant = "solid" }: HeaderProps) {
                   height="14"
                   viewBox="0 0 14 14"
                   fill="none"
+                  aria-hidden="true"
                   className="opacity-25 group-hover:opacity-60 transition-opacity"
                 >
                   <path

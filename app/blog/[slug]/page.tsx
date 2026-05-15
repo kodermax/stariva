@@ -186,10 +186,10 @@ export default function BlogPostPage() {
               <div className="text-center md:text-left">
                 <p className="label-caps text-terracotta mb-2">Автор</p>
                 <p className="font-serif text-xl text-espresso mb-1">
-                  Мастерская Stariva
+                  Ольга Карпычева
                 </p>
                 <p className="text-taupe text-sm">
-                  Создаём уют руками с 2018 года. Каждое изделие — с любовью и
+                  Создаю уют руками с 2018 года. Каждое изделие — с любовью и
                   вниманием к деталям.
                 </p>
               </div>
