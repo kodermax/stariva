@@ -1,8 +1,9 @@
-import type { Metadata } from "next"
-import { Cormorant_Garamond, Inter } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
-import { env } from "@/lib/env"
-import "./globals.css"
+import type { Metadata } from "next";
+import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import Script from "next/script";
+import { env } from "@/lib/env";
+import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin", "cyrillic"],
@@ -10,14 +11,14 @@ const cormorant = Cormorant_Garamond({
   style: ["normal", "italic"],
   variable: "--font-serif",
   display: "swap",
-})
+});
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
   weight: ["300", "400", "500", "600"],
   variable: "--font-sans",
   display: "swap",
-})
+});
 
 export const metadata: Metadata = {
   title: "Stariva — Абажуры из макраме ручной работы",
@@ -41,19 +42,38 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-icon.png",
   },
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={`${cormorant.variable} ${inter.variable} bg-white`}>
+    <html
+      lang="ru"
+      className={`${cormorant.variable} ${inter.variable} bg-white`}
+    >
       <body className="font-sans antialiased bg-white text-near-black">
         {children}
         {env.NODE_ENV === "production" && <Analytics />}
+        {env.NODE_ENV === "production" && (
+          <>
+            <Script id="yandex-metrika" strategy="afterInteractive">
+              {`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js', 'ym');ym(96190087, 'init', {clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});`}
+            </Script>
+            <noscript>
+              <div>
+                <img
+                  src="https://mc.yandex.ru/watch/96190087"
+                  style={{ position: "absolute", left: "-9999px" }}
+                  alt=""
+                />
+              </div>
+            </noscript>
+          </>
+        )}
       </body>
     </html>
-  )
+  );
 }
