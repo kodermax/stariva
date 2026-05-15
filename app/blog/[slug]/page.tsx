@@ -1,12 +1,12 @@
 "use client";
 
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, useParams } from "next/navigation";
-import { motion } from "motion/react";
-import { getPostBySlug, formatDate, blogPosts } from "@/lib/blog-data";
-import { Header } from "@/components/stariva/header";
 import { Footer } from "@/components/stariva/footer";
+import { Header } from "@/components/stariva/header";
+import { blogPosts, formatDate, getPostBySlug } from "@/lib/blog-data";
 
 function ArrowLeftIcon({ className }: { className?: string }) {
   return (
@@ -17,6 +17,7 @@ function ArrowLeftIcon({ className }: { className?: string }) {
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
+      aria-hidden="true"
       className={className}
     >
       <path d="M19 12H5M12 19l-7-7 7-7" />
@@ -134,8 +135,8 @@ export default function BlogPostPage() {
                     <figure key={index} className="my-12">
                       <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
                         <Image
-                          src={block.src!}
-                          alt={block.alt!}
+                          src={block.src ?? ""}
+                          alt={block.alt ?? ""}
                           fill
                           className="object-cover"
                           sizes="(max-width: 768px) 100vw, 672px"

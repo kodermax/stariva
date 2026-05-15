@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "motion/react";
-import { ArrowRight } from "./icons";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { ArrowRight } from "./icons";
 
 function formatPrice(value: number) {
   return value.toLocaleString("ru-RU").replace(/,/g, " ");
@@ -92,7 +92,7 @@ function ProductCard({ p, large = false }: { p: Product; large?: boolean }) {
         variant="link"
         className="mt-4 px-0 h-auto label-caps-md text-espresso underline underline-offset-[6px] decoration-espresso/25 hover:decoration-terracotta hover:text-terracotta transition-colors"
       >
-        <a href="#">
+        <a href="/catalog">
           Подробнее
           <ArrowRight className="w-4 h-4" />
         </a>
@@ -121,7 +121,7 @@ export function FeaturedCollection() {
             variant="link"
             className="px-0 h-auto label-caps-md text-espresso underline underline-offset-[6px] decoration-espresso/25 hover:decoration-terracotta hover:text-terracotta transition-colors"
           >
-            <a href="#">
+            <a href="/catalog">
               Вся коллекция
               <ArrowRight className="w-4 h-4" />
             </a>

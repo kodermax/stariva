@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { categories, getProductsByCategory } from "@/lib/ozon-service";
-import { formatPrice, getCategoryBySlug } from "@/lib/products";
-import { Header } from "@/components/stariva/header";
 import { Footer } from "@/components/stariva/footer";
+import { Header } from "@/components/stariva/header";
+import { categories, getProductsByCategory } from "@/lib/ozon-service";
+import { getCategoryBySlug } from "@/lib/products";
 import CategoryFilters from "./category-filters";
 
 export const revalidate = 3600;
@@ -134,6 +134,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                         height="16"
                         viewBox="0 0 16 16"
                         fill="none"
+                        aria-hidden="true"
                         className="ml-auto flex-shrink-0 text-espresso/20 group-hover:text-parchment/40 transition-colors"
                       >
                         <path

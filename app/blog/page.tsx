@@ -1,13 +1,13 @@
 "use client";
 
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "motion/react";
-import { blogPosts, formatDate } from "@/lib/blog-data";
-import { Header } from "@/components/stariva/header";
 import { Footer } from "@/components/stariva/footer";
-import { Input } from "@/components/ui/input";
+import { Header } from "@/components/stariva/header";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { blogPosts, formatDate } from "@/lib/blog-data";
 
 export default function BlogPage() {
   const featuredPost = blogPosts[0];
@@ -32,7 +32,7 @@ export default function BlogPage() {
               Истории о ремесле, уюте и осознанной жизни
             </h1>
             <p className="text-taupe max-w-2xl mx-auto text-lg leading-relaxed">
-              Делимся вдохновением, советами по уходу за изделиями и историями о
+              Делюсь вдохновением, советами по уходу за изделиями и историями о
               том, как ручная работа меняет пространство вокруг нас.
             </p>
           </motion.div>
@@ -154,10 +154,10 @@ export default function BlogPage() {
             className="bg-sand rounded-2xl p-8 lg:p-12 text-center"
           >
             <h2 className="font-serif text-2xl lg:text-3xl text-espresso mb-4">
-              Подпишитесь на наши истории
+              Подпишитесь на мои истории
             </h2>
             <p className="text-taupe max-w-lg mx-auto mb-8">
-              Раз в месяц присылаем новые статьи, вдохновение и закулисье
+              Раз в месяц присылаю новые статьи, вдохновение и закулисье
               мастерской. Без спама, только тёплые письма.
             </p>
             <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">

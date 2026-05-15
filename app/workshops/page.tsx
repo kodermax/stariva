@@ -1,17 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Header } from "@/components/stariva/header";
 import { Footer } from "@/components/stariva/footer";
+import { Header } from "@/components/stariva/header";
+import { Badge } from "@/components/ui/badge";
 import {
-  workshops,
   categoryLabels,
-  levelLabels,
-  levelColors,
   formatPrice,
+  levelColors,
+  levelLabels,
   type WorkshopCategory,
   type WorkshopLevel,
+  workshops,
 } from "@/lib/workshops-data";
-import { Badge } from "@/components/ui/badge";
 
 export const metadata = {
   title: "Мастер-классы — Stariva",
@@ -19,7 +19,7 @@ export const metadata = {
     "Видео-мастер-классы по макраме: абажуры, одежда, декор и интерьер. Пошаговые инструкции от мастера Stariva.",
 };
 
-const categories: { value: WorkshopCategory | "all"; label: string }[] = [
+const _categories: { value: WorkshopCategory | "all"; label: string }[] = [
   { value: "all", label: "Все направления" },
   { value: "lampshades", label: "Абажуры" },
   { value: "clothing", label: "Одежда" },
@@ -55,7 +55,13 @@ function WorkshopCard({ workshop }: { workshop: (typeof workshops)[0] }) {
         {/* Locked overlay */}
         <div className="absolute inset-0 bg-espresso/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="w-12 h-12 rounded-full bg-parchment/90 flex items-center justify-center">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              aria-hidden="true"
+            >
               <rect
                 x="4"
                 y="9"
@@ -88,7 +94,13 @@ function WorkshopCard({ workshop }: { workshop: (typeof workshops)[0] }) {
         <div className="flex items-center justify-between mb-3">
           <LevelBadge level={workshop.level} />
           <div className="flex items-center gap-1 text-taupe text-xs">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
               <circle
                 cx="7"
                 cy="7"
@@ -129,7 +141,7 @@ function WorkshopCard({ workshop }: { workshop: (typeof workshops)[0] }) {
 
 export default function WorkshopsPage() {
   const featured = workshops.filter((w) => w.featured);
-  const rest = workshops.filter((w) => !w.featured);
+  const _rest = workshops.filter((w) => !w.featured);
 
   return (
     <div className="min-h-screen bg-parchment text-espresso">
@@ -192,6 +204,7 @@ export default function WorkshopsPage() {
                 height="18"
                 viewBox="0 0 24 24"
                 fill="none"
+                aria-hidden="true"
                 className="text-terracotta flex-shrink-0"
               >
                 <path

@@ -59,7 +59,7 @@ export function Hero() {
       setActive((prev) => (prev + 1) % directions.length);
     }, 5000);
     return () => clearTimeout(timer);
-  }, [active, paused]);
+  }, [paused]);
 
   return (
     <section className="relative h-[100dvh] min-h-[640px] max-h-[1080px] overflow-hidden bg-espresso">
@@ -115,7 +115,7 @@ export function Hero() {
           <div className="max-w-3xl">
             <AnimatePresence mode="wait">
               <motion.h1
-                key={current.id + "-h"}
+                key={`${current.id}-h`}
                 initial={{ opacity: 0, y: 28, filter: "blur(4px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 exit={{ opacity: 0, y: -20, filter: "blur(2px)" }}
@@ -141,7 +141,7 @@ export function Hero() {
 
             <AnimatePresence mode="wait">
               <motion.p
-                key={current.id + "-p"}
+                key={`${current.id}-p`}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
@@ -214,7 +214,7 @@ export function Hero() {
                       initial={{ height: "0%" }}
                       animate={{ height: "100%" }}
                       transition={{ duration: paused ? 0 : 5, ease: "linear" }}
-                      key={active + "-progress"}
+                      key={`${active}-progress`}
                     />
                   )}
                   {i !== active && (

@@ -6,7 +6,7 @@ const steps = [
   {
     n: "01",
     title: "Подбор нитей",
-    text: "Вы выбираете оттенок и фактуру: молочный хлопок, льняной экрю, тёплая охра. Мы покажем образцы на видеосозвоне или вышлем Почтой.",
+    text: "Вы выбираете оттенок и фактуру: молочный хлопок, льняной экрю, тёплая охра. Я покажу образцы на видеосозвоне или вышлю Почтой.",
   },
   {
     n: "02",
@@ -28,7 +28,7 @@ export function Process() {
           <div className="lg:col-span-5">
             <div className="label-caps text-terracotta mb-4 flex items-center gap-3">
               <span className="w-8 h-px bg-terracotta" />
-              Как мы работаем
+              Как я работаю
             </div>
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-espresso leading-[1.05] tracking-tight text-balance">
               Три шага <span className="italic">к вашему свету</span>
@@ -36,8 +36,8 @@ export function Process() {
           </div>
           <p className="lg:col-span-5 lg:col-start-8 text-espresso/75 leading-[1.75] text-pretty self-end">
             Срок изготовления —{" "}
-            <span className="text-espresso font-medium">7–14 дней</span>. Следим
-            за каждым этапом лично и сообщаем вам обо всём, что происходит с
+            <span className="text-espresso font-medium">7–14 дней</span>. Слежу
+            за каждым этапом лично и сообщаю вам обо всём, что происходит с
             заказом. Без шаблонов и автоответов.
           </p>
         </div>

@@ -1,14 +1,14 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { CustomOrder } from "@/components/stariva/custom-order";
+import { Footer } from "@/components/stariva/footer";
 import { Header } from "@/components/stariva/header";
 import { Hero } from "@/components/stariva/hero";
 import { Marquee } from "@/components/stariva/marquee";
-import { Reviews } from "@/components/stariva/reviews";
-import { Process } from "@/components/stariva/process";
-import { PaymentDelivery } from "@/components/stariva/payment-delivery";
-import { CustomOrder } from "@/components/stariva/custom-order";
-import { Footer } from "@/components/stariva/footer";
 import { MobileStickyBar } from "@/components/stariva/mobile-sticky-bar";
+import { PaymentDelivery } from "@/components/stariva/payment-delivery";
+import { Process } from "@/components/stariva/process";
+import { Reviews } from "@/components/stariva/reviews";
 import { Button } from "@/components/ui/button";
 
 // ─── Three-direction sections ────────────────────────────────────────────────
@@ -141,7 +141,18 @@ export default function Page() {
               className="hidden lg:inline-flex items-center gap-2 label-caps-md text-espresso/60 hover:text-terracotta transition-colors"
             >
               Весь каталог
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+              >
                 <path
                   d="M2 7h10M8 3l4 4-4 4"
                   stroke="currentColor"
@@ -207,6 +218,7 @@ export default function Page() {
                       height="12"
                       viewBox="0 0 12 12"
                       fill="none"
+                      aria-hidden="true"
                       className="transition-transform group-hover:translate-x-1"
                     >
                       <path
@@ -242,7 +254,13 @@ export default function Page() {
               className="hidden lg:inline-flex items-center gap-2 label-caps-md text-espresso/60 hover:text-terracotta transition-colors"
             >
               Все товары
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+              >
                 <path
                   d="M2 7h10M8 3l4 4-4 4"
                   stroke="currentColor"
@@ -339,6 +357,7 @@ export default function Page() {
                       height="16"
                       viewBox="0 0 16 16"
                       fill="none"
+                      aria-hidden="true"
                       className="text-terracotta flex-shrink-0"
                     >
                       <path
@@ -359,7 +378,13 @@ export default function Page() {
               >
                 <Link href="/workshops">
                   Смотреть мастер-классы
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    aria-hidden="true"
+                  >
                     <path
                       d="M2 7h10M8 3l4 4-4 4"
                       stroke="currentColor"

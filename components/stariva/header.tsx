@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const catalogNav = [
@@ -58,11 +58,11 @@ export function Header({ variant = "solid" }: HeaderProps) {
   useEffect(() => {
     setMenuOpen(false);
     setMegaOpen(false);
-  }, [pathname]);
+  }, []);
 
   const isActive = (href: string) => {
     if (href.startsWith("/#")) return false;
-    return pathname === href || pathname.startsWith(href + "/");
+    return pathname === href || pathname.startsWith(`${href}/`);
   };
 
   const openMega = () => {
@@ -336,7 +336,7 @@ export function Header({ variant = "solid" }: HeaderProps) {
             {[
               { label: "Весь каталог", href: "/catalog" },
               { label: "Блог", href: "/blog" },
-              { label: "О нас", href: "/#story" },
+              { label: "О мастере", href: "/#story" },
               { label: "Заказать", href: "/#order" },
             ].map((item) => (
               <Link

@@ -1,6 +1,6 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
 import { env } from "@/lib/env";
 import "./globals.css";
@@ -69,6 +69,7 @@ export default function RootLayout({
             </Script>
             <noscript>
               <div>
+                {/* biome-ignore lint/performance/noImgElement: Yandex Metrika noscript pixel, next/image cannot be used inside noscript */}
                 <img
                   src="https://mc.yandex.ru/watch/96190087"
                   style={{ position: "absolute", left: "-9999px" }}

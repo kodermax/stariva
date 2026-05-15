@@ -1,13 +1,13 @@
-import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { categories, getFeaturedProducts } from "@/lib/ozon-service";
-import { formatPrice } from "@/lib/products";
-import { Header } from "@/components/stariva/header";
+import { Suspense } from "react";
 import { Footer } from "@/components/stariva/footer";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Header } from "@/components/stariva/header";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { categories, getFeaturedProducts } from "@/lib/ozon-service";
 import type { Product } from "@/lib/ozon-types";
+import { formatPrice } from "@/lib/products";
 
 export const revalidate = 3600; // ISR: revalidate every hour
 
@@ -111,7 +111,7 @@ export default async function CatalogPage() {
         <section className="pb-20 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-3 gap-6">
-              {categories.map((category, i) => (
+              {categories.map((category, _i) => (
                 <Link
                   key={category.slug}
                   href={`/catalog/${category.slug}`}
@@ -174,8 +174,8 @@ export default async function CatalogPage() {
                   Не нашли то, что искали?
                 </h2>
                 <p className="text-cream/80 mb-6">
-                  Мы создаём изделия по индивидуальным размерам и дизайну.
-                  Расскажите о вашей идее, и мы воплотим её в жизнь.
+                  Я создаю изделия по индивидуальным размерам и дизайну.
+                  Расскажите о вашей идее, и я воплощу её в жизнь.
                 </p>
                 <Button
                   asChild
@@ -185,7 +185,11 @@ export default async function CatalogPage() {
                 </Button>
               </div>
               <div className="absolute right-0 top-0 bottom-0 w-1/3 opacity-10">
-                <svg viewBox="0 0 100 100" className="h-full w-full">
+                <svg
+                  viewBox="0 0 100 100"
+                  aria-hidden="true"
+                  className="h-full w-full"
+                >
                   <circle
                     cx="50"
                     cy="50"

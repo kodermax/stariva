@@ -1,21 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Header } from "@/components/stariva/header";
 import { Footer } from "@/components/stariva/footer";
-import { Button } from "@/components/ui/button";
+import { Header } from "@/components/stariva/header";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 export const metadata = {
   title: "О бренде — Stariva",
   description:
-    "История Stariva — московской мастерской ручного макраме. Узнайте о нашей философии, мастерицах и любви к натуральным материалам.",
+    "История Stariva — московской мастерской ручного макраме. Узнайте о моей философии, мастерстве и любви к натуральным материалам.",
 };
 
 const values = [
   {
     number: "01",
     title: "Медленная мода",
-    body: "Мы против быстрой моды. Каждое изделие создаётся неделями — и служит годами. Покупать меньше, но лучше.",
+    body: "Я против быстрой моды. Каждое изделие создаётся неделями — и служит годами. Покупать меньше, но лучше.",
   },
   {
     number: "02",
@@ -30,7 +30,7 @@ const values = [
   {
     number: "04",
     title: "Мастерство, а не производство",
-    body: "У нас нет конвейера. Каждый узел завязывает живой человек с именем, историей и любовью к своему делу.",
+    body: "У меня нет конвейера. Каждый узел завязываю я сама — с именем, историей и любовью к своему делу.",
   },
 ];
 
@@ -45,7 +45,7 @@ const timeline = [
     year: "2019",
     event: "Первая мастерская",
     detail:
-      "Переезд в арендованное ателье в Замоскворечье. Команда расширяется до трёх мастериц.",
+      "Первые заказы через соцсети. Обустраиваю домашнюю мастерскую и начинаю работать на постоянной основе.",
   },
   {
     year: "2021",
@@ -57,19 +57,19 @@ const timeline = [
     year: "2023",
     event: "Собственное ателье",
     detail:
-      "Переезд в просторное ателье на Чистых прудах. Запуск линейки одежды и обучающих мастер-классов.",
+      "Расширение ассортимента: запуск линейки одежды и обучающих мастер-классов.",
   },
   {
     year: "2025",
     event: "Сегодня",
     detail:
-      "Более 2 000 изделий по всей России. Команда из восьми мастериц. Три направления: одежда, интерьер, декор.",
+      "Более 500 изделий по всей России. Три направления: одежда, интерьер, декор. Каждое изделие — ручная работа одного мастера.",
   },
 ];
 
 const stats = [
   { value: "2 000+", label: "изделий\nсоздано" },
-  { value: "8", label: "мастериц\nв команде" },
+  { value: "1", label: "мастер\nодного" },
   { value: "7", label: "лет\nопыта" },
   { value: "47", label: "регионов\nРоссии" },
 ];
@@ -109,9 +109,8 @@ export default function AboutPage() {
               <em className="not-italic text-linen">Согрето душой.</em>
             </h1>
             <p className="mt-8 text-white/75 text-lg lg:text-xl max-w-xl leading-[1.75]">
-              Stariva — московская мастерская ручного макраме. Мы создаём
-              одежду, интерьерные предметы и декор из натурального хлопка с 2018
-              года.
+              Stariva — мастер ручного макраме из Подмосковья. Я создаю одежду,
+              интерьерные предметы и декор из натурального хлопка с 2018 года.
             </p>
           </div>
 
@@ -146,12 +145,12 @@ export default function AboutPage() {
             </div>
             <div className="lg:col-span-8">
               <blockquote className="font-serif text-[clamp(1.8rem,4vw,3.2rem)] leading-[1.15] text-espresso text-balance">
-                &ldquo;Мы верим, что вещи должны создаваться медленно — с
+                &ldquo;Я верю, что вещи должны создаваться медленно — с
                 намерением, вниманием и уважением к материалу. Каждый узел — это
                 выбор. Каждое изделие — это история.&rdquo;
               </blockquote>
               <p className="mt-8 text-taupe text-sm label-caps tracking-widest">
-                — Анна Смирнова, основательница
+                — Ольга Карпычева, мастер
               </p>
             </div>
           </div>
@@ -162,7 +161,7 @@ export default function AboutPage() {
       <section className="relative aspect-[16/7] overflow-hidden">
         <Image
           src="/images/about/atelier-wide.jpg"
-          alt="Ателье Stariva в Москве"
+          alt="Мастерская Stariva в Подмосковье"
           fill
           className="object-cover object-center"
           sizes="100vw"
@@ -170,7 +169,7 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-espresso/10" />
         <div className="absolute bottom-8 right-8 lg:bottom-12 lg:right-14">
           <span className="label-caps text-white/60 text-[10px] tracking-widest">
-            Ателье Stariva, Чистые пруды, Москва
+            Мастерская Stariva, Подмосковье
           </span>
         </div>
       </section>
@@ -184,13 +183,13 @@ export default function AboutPage() {
                 Ценности
               </p>
               <h2 className="font-serif text-[clamp(2.5rem,5vw,4.5rem)] text-espresso leading-[1.05]">
-                Что нас
+                Что меня
                 <br />
                 определяет
               </h2>
             </div>
             <p className="text-taupe text-base leading-[1.8] max-w-sm lg:text-right">
-              Четыре принципа, которым мы не изменяем с первого дня и которые
+              Четыре принципа, которым я не изменяю с первого дня и которые
               лежат в основе каждого изделия.
             </p>
           </div>
@@ -256,7 +255,7 @@ export default function AboutPage() {
                   платья.
                 </p>
                 <p>
-                  Мы используем только натуральный хлопковый шнур: крученый для
+                  Я использую только натуральный хлопковый шнур: крученый для
                   плотных конструкций, косичный для мягких изделий с бахромой.
                   Диаметр — от 1 до 10 мм — подбирается под каждый проект
                   индивидуально.
@@ -302,7 +301,7 @@ export default function AboutPage() {
           </div>
 
           <div className="space-y-0">
-            {timeline.map((item, i) => (
+            {timeline.map((item, _i) => (
               <div
                 key={item.year}
                 className="grid grid-cols-[64px_1fr] lg:grid-cols-[120px_1fr] gap-6 lg:gap-12 py-9 border-t border-parchment/8 group"

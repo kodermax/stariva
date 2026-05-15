@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getProductBySlug, getProductsByCategory } from "@/lib/ozon-service";
-import { formatPrice, getCategoryBySlug } from "@/lib/products";
+import { getCategoryBySlug } from "@/lib/products";
 import { Header } from "@/components/stariva/header";
 import { Footer } from "@/components/stariva/footer";
 import { ProductDetails } from "./product-details";

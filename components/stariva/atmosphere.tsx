@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "motion/react";
+import Image from "next/image";
 
 const gallery = [
   { src: "/images/atmosphere-1.jpg", caption: "Спальня — закатный свет" },
@@ -74,7 +74,7 @@ export function Atmosphere() {
               />
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
                 <span className="label-caps text-parchment/95 mix-blend-difference">
-                  Мастерская — Москва
+                  Мастерская — Подмосковье
                 </span>
                 <span className="label-caps text-parchment/95 mix-blend-difference">
                   Зима 2026
@@ -88,21 +88,20 @@ export function Atmosphere() {
               <span className="w-8 h-px bg-terracotta" />О бренде
             </div>
             <h3 className="font-serif text-3xl md:text-4xl lg:text-5xl text-espresso leading-[1.1] tracking-tight text-balance mb-8">
-              Маленькая мастерская{" "}
-              <span className="italic">в сердце Москвы</span>
+              Мастер одного — <span className="italic">из Подмосковья</span>
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-espresso/80 leading-[1.75]">
               <p className="text-pretty">
                 Stariva начиналась в 2018 году с одной деревянной рамы и желания
-                плести узлы по старым русским образцам. Сегодня у нас своя
-                мастерская на Таганке, где работают три мастера и где пахнет
-                хлопком, пчелиным воском и свежим чаем.
+                плести узлы по старым русским образцам. Сегодня у меня своя
+                мастерская на Таганке, где пахнет хлопком, пчелиным воском и
+                свежим чаем.
               </p>
               <p className="text-pretty">
                 Каждый абажур — это{" "}
                 <span className="text-espresso font-medium">12+ часов</span>{" "}
-                ручного труда. Мы используем только натуральный хлопок и льняные
+                ручного труда. Я использую только натуральный хлопок и льняные
                 нити российских и португальских производителей — никакого
                 синтетического волокна, никаких покрытий и пропиток.
               </p>

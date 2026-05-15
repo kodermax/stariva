@@ -1,10 +1,10 @@
-import { Header } from "@/components/stariva/header";
 import { Footer } from "@/components/stariva/footer";
+import { Header } from "@/components/stariva/header";
 
 export const metadata = {
   title: "Политика конфиденциальности — Stariva",
   description:
-    "Политика конфиденциальности интернет-магазина Stariva. Как мы собираем, используем и защищаем ваши персональные данные.",
+    "Политика конфиденциальности интернет-магазина Stariva. Как я собираю, использую и защищаю ваши персональные данные.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -41,7 +41,7 @@ export default function PrivacyPolicyPage() {
 
           <section>
             <h2 className="font-serif text-2xl text-espresso mb-4">
-              2. Какие данные мы собираем
+              2. Какие данные я собираю
             </h2>
             <p>
               Оператор может собирать следующие категории персональных данных:
@@ -152,7 +152,7 @@ export default function PrivacyPolicyPage() {
               ))}
             </ul>
             <p className="mt-4">
-              Для реализации своих прав обратитесь к нам по адресу:{" "}
+              Для реализации своих прав обратитесь ко мне по адресу:{" "}
               <a
                 href="mailto:hello@stariva.ru"
                 className="text-terracotta hover:underline"

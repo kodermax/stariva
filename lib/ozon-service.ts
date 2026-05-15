@@ -340,7 +340,7 @@ async function fetchFromOzon(): Promise<Product[] | null> {
 
   console.log(
     "[v0] ✓ Ozon credentials found. Client ID starts with:",
-    clientId?.substring(0, 5) + "...",
+    `${clientId?.substring(0, 5)}...`,
   );
 
   try {

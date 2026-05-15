@@ -1,20 +1,24 @@
 import {
-  VkIcon,
-  PinterestIcon,
-  LivemasterIcon,
   DzenIcon,
+  LivemasterIcon,
   PhoneIcon,
+  PinterestIcon,
   TelegramIcon,
+  VkIcon,
 } from "./icons";
 
 const catalog = [
-  "Абажуры из макраме",
-  "Платья макраме",
-  "Декор для дома",
-  "Подарочные сертификаты",
+  { label: "Абажуры из макраме", href: "/catalog/interior" },
+  { label: "Платья макраме", href: "/catalog/clothes" },
+  { label: "Декор для дома", href: "/catalog/decor" },
+  { label: "Подарочные сертификаты", href: "/catalog" },
 ];
 
-const info = ["Уход за изделиями", "О бренде", "Контакты"];
+const info = [
+  { label: "Уход за изделиями", href: "/blog" },
+  { label: "О бренде", href: "/about" },
+  { label: "Контакты", href: "/#order" },
+];
 
 export function Footer() {
   return (
@@ -57,6 +61,7 @@ export function Footer() {
                 height="20"
                 viewBox="0 0 24 24"
                 fill="none"
+                aria-hidden="true"
                 className="text-linen shrink-0"
               >
                 <rect
@@ -94,12 +99,12 @@ export function Footer() {
             <div className="label-caps text-parchment/50 mb-5">Каталог</div>
             <ul className="space-y-3">
               {catalog.map((c) => (
-                <li key={c}>
+                <li key={c.label}>
                   <a
-                    href="#"
+                    href={c.href}
                     className="text-parchment/85 hover:text-linen transition-colors"
                   >
-                    {c}
+                    {c.label}
                   </a>
                 </li>
               ))}
@@ -111,12 +116,12 @@ export function Footer() {
             <div className="label-caps text-parchment/50 mb-5">Информация</div>
             <ul className="space-y-3">
               {info.map((c) => (
-                <li key={c}>
+                <li key={c.label}>
                   <a
-                    href="#"
+                    href={c.href}
                     className="text-parchment/85 hover:text-linen transition-colors"
                   >
-                    {c}
+                    {c.label}
                   </a>
                 </li>
               ))}
@@ -126,7 +131,7 @@ export function Footer() {
           {/* Socials */}
           <div className="lg:col-span-3">
             <div className="label-caps text-parchment/50 mb-5">
-              Мы в соцсетях
+              Я в соцсетях
             </div>
             <ul className="space-y-3">
               <li>
@@ -140,7 +145,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="https://pinterest.com/stariva"
                   className="inline-flex items-center gap-2 text-parchment/85 hover:text-linen transition-colors"
                 >
                   <PinterestIcon className="w-4 h-4" />
@@ -149,7 +154,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="https://www.livemaster.ru/stariva"
                   className="inline-flex items-center gap-2 text-parchment/85 hover:text-linen transition-colors"
                 >
                   <LivemasterIcon className="w-4 h-4" />
@@ -158,7 +163,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="https://dzen.ru/stariva"
                   className="inline-flex items-center gap-2 text-parchment/85 hover:text-linen transition-colors"
                 >
                   <DzenIcon className="w-4 h-4" />

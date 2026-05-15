@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { TelegramIcon, PhoneIcon } from "./icons";
+import { PhoneIcon, TelegramIcon } from "./icons";
 
 export function CustomOrder() {
   return (
@@ -18,8 +18,8 @@ export function CustomOrder() {
               Создадим ваш <span className="italic">идеальный</span> светильник
             </h2>
             <p className="text-espresso/75 leading-[1.75] text-lg max-w-xl text-pretty mb-10">
-              Расскажите о вашей задумке — мы предложим дизайн и рассчитаем
-              стоимость. Ответим в течение часа в рабочее время.
+              Расскажите о вашей задумке — я предложу дизайн и рассчитаю
+              стоимость. Отвечу в течение часа в рабочее время.
             </p>
 
             <div className="mt-10 pt-8 border-t border-espresso/15 text-sm text-espresso/70 leading-relaxed">
@@ -39,7 +39,7 @@ export function CustomOrder() {
             className="lg:col-span-6 bg-parchment border border-espresso/10 p-8 lg:p-10 rounded-sm flex flex-col justify-center gap-5"
           >
             <p className="text-espresso/70 leading-[1.75] text-base">
-              Напишите нам в Telegram или позвоните — обсудим детали и подберём
+              Напишите мне в Telegram или позвоните — обсудим детали и подберём
               решение под ваш интерьер.
             </p>
 
