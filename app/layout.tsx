@@ -25,6 +25,11 @@ export const metadata: Metadata = {
   description:
     "Эксклюзивные абажуры, платья и декор из макраме. Ручное плетение из натурального хлопка с 2018 года. Москва. Доставка по всей России.",
   generator: "v0.app",
+  verification: {
+    other: {
+      "yandex-verification": "e889c7fefe9519f3",
+    },
+  },
   icons: {
     icon: [
       {

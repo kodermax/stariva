@@ -4,6 +4,7 @@ import {
   LivemasterIcon,
   DzenIcon,
   PhoneIcon,
+  TelegramIcon,
 } from "./icons";
 
 const catalog = [
@@ -35,6 +36,46 @@ export function Footer() {
             >
               <PhoneIcon className="w-5 h-5 text-linen" />
               +7 977 872 25 46
+            </a>
+
+            <a
+              href="https://t.me/Olga_Stariva"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 flex items-center gap-3 text-parchment/80 hover:text-linen transition-colors"
+            >
+              <TelegramIcon className="w-5 h-5 text-linen" />
+              <span className="label-caps">Telegram</span>
+            </a>
+
+            <a
+              href="mailto:info@stariva.ru"
+              className="mt-3 flex items-center gap-3 text-parchment/80 hover:text-linen transition-colors"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                className="text-linen shrink-0"
+              >
+                <rect
+                  x="3"
+                  y="5"
+                  width="18"
+                  height="14"
+                  rx="2"
+                  stroke="currentColor"
+                  strokeWidth="1.3"
+                />
+                <path
+                  d="M3 8l9 6 9-6"
+                  stroke="currentColor"
+                  strokeWidth="1.3"
+                  strokeLinecap="round"
+                />
+              </svg>
+              <span className="label-caps">info@stariva.ru</span>
             </a>
 
             <div className="mt-6 flex items-center gap-3">
