@@ -1,8 +1,5 @@
 import { notFound } from "next/navigation";
-import {
-  getProductBySlug,
-  getProductsByCategory,
-footer";
+import { Footer } from "@/src/components/stariva/footer";
 import { Header } from "@/src/components/stariva/header";
 import {
   getProductBySlug,
