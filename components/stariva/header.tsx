@@ -250,15 +250,27 @@ export function Header({ variant = "solid" }: HeaderProps) {
                         {/* Footer row */}
                         <div className="mt-5 pt-4 border-t border-espresso/8 flex items-center justify-between">
                           <span className="text-mid-grey text-[12px]">
-                            Все изделия создаются вручную в Москве из натурального хлопка
+                            Все изделия создаются вручную из натурального хлопка
                           </span>
                           <Link
                             href="/catalog"
                             className="inline-flex items-center gap-2 label-caps text-[10px] text-dark-grey hover:text-near-black transition-colors"
                           >
                             Смотреть весь каталог
-                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                              <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                            <svg
+                              width="12"
+                              height="12"
+                              viewBox="0 0 12 12"
+                              fill="none"
+                              aria-hidden="true"
+                            >
+                              <path
+                                d="M2 6h8M7 3l3 3-3 3"
+                                stroke="currentColor"
+                                strokeWidth="1.2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
                             </svg>
                           </Link>
                         </div>

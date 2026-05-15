@@ -15,7 +15,7 @@ const reviews = [
   },
   {
     name: "Мария",
-    city: "Москва",
+    city: "Россия",
     product: "Панно «Лён»",
     image: "/images/review-2.jpg",
     quote:

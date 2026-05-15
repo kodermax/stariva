@@ -26,7 +26,7 @@ export function CustomOrder() {
               <span className="block mb-1 label-caps text-taupe">
                 Рабочее время
               </span>
-              Пн–Сб, с 10:00 до 20:00 по Москве. Воскресенье — выходной.
+              Пн–Сб, с 10:00 до 20:00. Воскресенье — выходной.
             </div>
           </div>
 
