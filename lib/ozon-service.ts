@@ -1,6 +1,6 @@
 import { fetchFromOzon } from "./ozon/api-client";
 import type { Product } from "./ozon-types";
-import { categories, products as fallbackProducts } from "./products";
+import { categories } from "./products";
 
 export async function getProducts(): Promise<Product[]> {
   console.log("[ozon] 🔄 Fetching products...");
@@ -11,12 +11,8 @@ export async function getProducts(): Promise<Product[]> {
     return ozonProducts;
   }
 
-  console.log(
-    "[ozon] 📂 Using fallback static products:",
-    fallbackProducts.length,
-    "items",
-  );
-  return fallbackProducts;
+  console.log("[ozon] ⚠️ No products available from Ozon");
+  return [];
 }
 
 export async function getProductsByCategory(

@@ -387,8 +387,7 @@ export function Header({ variant = "solid" }: HeaderProps) {
                 className="flex items-center gap-3 py-3 px-1 border-b border-espresso/6 group"
               >
                 <span
-                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: cat.accent }}
+                  className="w-1.5 h-1.5 rounded-full flex-shrink-0 bg-espresso/40"
                 />
                 <div>
                   <div className="text-espresso text-[15px]">{cat.label}</div>

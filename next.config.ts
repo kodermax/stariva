@@ -1,4 +1,4 @@
-import "./src/lib/env";
+import "./lib/env";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
