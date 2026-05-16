@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { OzonIcon } from "@/components/stariva/icons";
 import { ColorSwatches } from "@/components/stariva/color-indicator";
+import { trackOzonClick } from "@/lib/analytics";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -230,6 +231,13 @@ export function ProductDetails({
                       href={product.ozonUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() =>
+                        trackOzonClick(
+                          "product",
+                          product.name,
+                          product.ozonUrl!,
+                        )
+                      }
                     >
                       <OzonIcon className="w-5 h-5" />
                       Купить на Ozon
@@ -316,4 +324,5 @@ export function ProductDetails({
       )}
     </main>
   );
+} );
 }

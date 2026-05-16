@@ -11,7 +11,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
+import { OzonButton } from "./ozon-button";
 import {
   categoryLabels,
   formatPrice,
@@ -390,34 +390,10 @@ export default async function WorkshopDetailPage({
                   </div>
 
                   {workshop.ozonUrl && (
-                    <Button
-                      asChild
-                      className="flex items-center justify-center gap-3 w-full bg-[#005BFF] hover:bg-[#0047CC] text-white py-4 h-auto rounded-full transition-colors label-caps mb-3"
-                    >
-                      <a
-                        href={workshop.ozonUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          aria-hidden="true"
-                        >
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="9"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                          />
-                          <circle cx="12" cy="12" r="4.5" fill="currentColor" />
-                        </svg>
-                        Купить на Ozon
-                      </a>
-                    </Button>
+                    <OzonButton
+                      url={workshop.ozonUrl}
+                      workshopTitle={workshop.title}
+                    />
                   )}
 
                   <p className="text-center text-xs text-taupe leading-relaxed">
