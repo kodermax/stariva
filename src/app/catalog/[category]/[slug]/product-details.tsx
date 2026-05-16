@@ -324,5 +324,4 @@ export function ProductDetails({
       )}
     </main>
   );
-} );
 }
