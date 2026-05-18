@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { Footer } from "@/components/stariva/footer";
 import { Header } from "@/components/stariva/header";
 import { Button } from "@/components/ui/button";
@@ -8,8 +9,34 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { categories, getFeaturedProducts } from "@/lib/ozon-service";
 import type { Product } from "@/lib/ozon-types";
 import { formatPrice } from "@/lib/products";
+import { BreadcrumbJsonLd, ItemListJsonLd } from "@/components/stariva/json-ld";
 
 export const revalidate = 3600; // ISR: revalidate every hour
+
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://stariva.ru";
+
+export const metadata: Metadata = {
+  title: "Каталог изделий из макраме — купить ручной работы",
+  description:
+    "Каталог изделий ручного макраме: абажуры, платья, сумки и декор интерьера из натурального хлопка. Купить на Ozon с доставкой по России.",
+  alternates: { canonical: `${BASE_URL}/catalog` },
+  openGraph: {
+    type: "website",
+    title: "Каталог Stariva — изделия из макраме ручной работы",
+    description:
+      "Абажуры, платья, сумки и декор интерьера из натурального хлопка. Купить на Ozon.",
+    url: `${BASE_URL}/catalog`,
+    images: [
+      {
+        url: `${BASE_URL}/images/catalog/category-interior.jpg`,
+        width: 1200,
+        height: 800,
+        alt: "Каталог Stariva",
+      },
+    ],
+  },
+};
 
 async function FeaturedProducts() {
   const featuredProducts = await getFeaturedProducts();
@@ -90,6 +117,21 @@ export default async function CatalogPage() {
   return (
     <>
       <Header variant="solid" />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Главная", href: "/" },
+          { name: "Каталог", href: "/catalog" },
+        ]}
+      />
+      <ItemListJsonLd
+        name="Каталог Stariva — изделия из макраме"
+        url="/catalog"
+        items={categories.map((cat) => ({
+          name: cat.name,
+          url: `/catalog/${cat.slug}`,
+          image: `${BASE_URL}${cat.image}`,
+        }))}
+      />
       <main className="min-h-screen bg-parchment">
         {/* Hero */}
         <section className="pt-32 pb-16 px-4">

@@ -3,6 +3,10 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import Script from "next/script";
 import { env } from "@/lib/env";
+import {
+  OrganizationJsonLd,
+  WebSiteJsonLd,
+} from "@/components/stariva/json-ld";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -20,14 +24,61 @@ const inter = Inter({
   display: "swap",
 });
 
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://stariva.ru";
+
 export const metadata: Metadata = {
-  title: "Stariva — Абажуры из макраме ручной работы",
+  metadataBase: new URL(BASE_URL),
+  title: {
+    default: "Stariva — Абажуры и декор из макраме ручной работы",
+    template: "%s — Stariva",
+  },
   description:
-    "Эксклюзивные абажуры, платья и декор из макраме. Ручное плетение из натурального хлопка с 2018 года. Подмосковье.",
+    "Эксклюзивные абажуры, платья и декор из макраме. Ручное плетение из натурального хлопка с 2018 года. Подмосковье. Купить на Ozon.",
+  keywords: [
+    "макраме",
+    "абажур из макраме",
+    "макраме ручная работа",
+    "купить макраме",
+    "декор интерьера макраме",
+    "платье макраме",
+    "мастер-класс макраме",
+    "Stariva",
+  ],
+  authors: [{ name: "Ольга Карпычева", url: `${BASE_URL}/about` }],
+  creator: "Ольга Карпычева",
+  publisher: "Stariva",
+  openGraph: {
+    type: "website",
+    locale: "ru_RU",
+    url: BASE_URL,
+    siteName: "Stariva",
+    title: "Stariva — Абажуры и декор из макраме ручной работы",
+    description:
+      "Эксклюзивные абажуры, платья и декор из макраме. Ручное плетение из натурального хлопка с 2018 года.",
+    images: [
+      {
+        url: "/images/about/hero-founder.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Stariva — мастерская ручного макраме",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Stariva — Абажуры и декор из макраме ручной работы",
+    description:
+      "Эксклюзивные абажуры, платья и декор из макраме. Ручное плетение из натурального хлопка с 2018 года.",
+    images: ["/images/about/hero-founder.jpg"],
+  },
   verification: {
     other: {
       "yandex-verification": "e889c7fefe9519f3",
     },
+  },
+  alternates: {
+    canonical: BASE_URL,
   },
   icons: {
     icon: [
@@ -60,6 +111,8 @@ export default function RootLayout({
       className={`${cormorant.variable} ${inter.variable} bg-white`}
     >
       <body className="font-sans antialiased bg-white text-near-black">
+        <OrganizationJsonLd />
+        <WebSiteJsonLd />
         {children}
         {env.NODE_ENV === "production" && <Analytics />}
         {env.NODE_ENV === "production" && (

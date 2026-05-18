@@ -1,15 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { CustomOrder } from "@/components/stariva/custom-order";
 import { Footer } from "@/components/stariva/footer";
 import { Header } from "@/components/stariva/header";
 import { Hero } from "@/components/stariva/hero";
 import { Marquee } from "@/components/stariva/marquee";
 import { MobileStickyBar } from "@/components/stariva/mobile-sticky-bar";
-
+import { BreadcrumbJsonLd } from "@/components/stariva/json-ld";
 import { Process } from "@/components/stariva/process";
 import { Reviews } from "@/components/stariva/reviews";
 import { Button } from "@/components/ui/button";
+
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://stariva.ru";
+
+export const metadata: Metadata = {
+  alternates: { canonical: BASE_URL },
+};
 
 // ─── Three-direction sections ────────────────────────────────────────────────
 
@@ -114,6 +122,7 @@ const picks = [
 export default function Page() {
   return (
     <main className="bg-parchment text-espresso">
+      <BreadcrumbJsonLd items={[{ name: "Главная", href: "/" }]} />
       <Header variant="transparent" />
 
       {/* ── Hero: three-direction switcher ── */}

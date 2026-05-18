@@ -1,13 +1,36 @@
-"use client";
-
-import { motion } from "motion/react";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Footer } from "@/components/stariva/footer";
 import { Header } from "@/components/stariva/header";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { ItemListJsonLd } from "@/components/stariva/json-ld";
 import { blogPosts, formatDate } from "@/lib/blog-data";
+import { NewsletterForm } from "./newsletter-form";
+
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://stariva.ru";
+
+export const metadata: Metadata = {
+  title: "Блог о макраме — советы, история, вдохновение",
+  description:
+    "Статьи о технике макраме, уходе за изделиями, истории ремесла и философии осознанного потребления. Блог мастерской Stariva.",
+  alternates: { canonical: `${BASE_URL}/blog` },
+  openGraph: {
+    type: "website",
+    title: "Блог Stariva — о макраме, уюте и осознанной жизни",
+    description:
+      "Статьи о технике макраме, уходе за изделиями, истории ремесла и философии осознанного потребления.",
+    url: `${BASE_URL}/blog`,
+    images: [
+      {
+        url: `${BASE_URL}${blogPosts[0].coverImage}`,
+        width: 1200,
+        height: 630,
+        alt: "Блог Stariva",
+      },
+    ],
+  },
+};
 
 export default function BlogPage() {
   const featuredPost = blogPosts[0];
@@ -16,15 +39,19 @@ export default function BlogPage() {
   return (
     <>
       <Header variant="solid" />
+      <ItemListJsonLd
+        name="Блог Stariva — статьи о макраме"
+        url="/blog"
+        items={blogPosts.map((post) => ({
+          name: post.title,
+          url: `/blog/${post.slug}`,
+          image: `${BASE_URL}${post.coverImage}`,
+        }))}
+      />
       <main className="pt-24 lg:pt-32 pb-20">
         {/* Hero Section */}
         <section className="max-w-[1400px] mx-auto px-6 lg:px-10 mb-16 lg:mb-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
+          <div className="text-center mb-12">
             <span className="label-caps text-terracotta mb-4 block">
               Блог Stariva
             </span>
@@ -35,14 +62,10 @@ export default function BlogPage() {
               Делюсь вдохновением, советами по уходу за изделиями и историями о
               том, как ручная работа меняет пространство вокруг нас.
             </p>
-          </motion.div>
+          </div>
 
           {/* Featured Post */}
-          <motion.article
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
+          <article>
             <Link href={`/blog/${featuredPost.slug}`} className="group block">
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 <div className="relative aspect-[4/3] lg:aspect-[3/2] overflow-hidden rounded-lg">
@@ -73,7 +96,10 @@ export default function BlogPage() {
                     {featuredPost.excerpt}
                   </p>
                   <div className="flex items-center gap-4">
-                    <time className="text-sm text-taupe">
+                    <time
+                      dateTime={featuredPost.date}
+                      className="text-sm text-taupe"
+                    >
                       {formatDate(featuredPost.date)}
                     </time>
                     <span className="label-caps-md text-terracotta group-hover:underline underline-offset-4">
@@ -83,7 +109,7 @@ export default function BlogPage() {
                 </div>
               </div>
             </Link>
-          </motion.article>
+          </article>
         </section>
 
         {/* Divider */}
@@ -93,22 +119,12 @@ export default function BlogPage() {
 
         {/* Posts Grid */}
         <section className="max-w-[1400px] mx-auto px-6 lg:px-10">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="font-serif text-2xl lg:text-3xl text-espresso mb-10"
-          >
+          <h2 className="font-serif text-2xl lg:text-3xl text-espresso mb-10">
             Все статьи
-          </motion.h2>
+          </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-            {otherPosts.map((post, index) => (
-              <motion.article
-                key={post.slug}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-              >
+            {otherPosts.map((post) => (
+              <article key={post.slug}>
                 <Link href={`/blog/${post.slug}`} className="group block">
                   <div className="relative aspect-[4/3] overflow-hidden rounded-lg mb-5">
                     <Image
@@ -135,24 +151,18 @@ export default function BlogPage() {
                   <p className="text-taupe text-sm leading-relaxed mb-4 line-clamp-2">
                     {post.excerpt}
                   </p>
-                  <time className="text-sm text-taupe/70">
+                  <time dateTime={post.date} className="text-sm text-taupe/70">
                     {formatDate(post.date)}
                   </time>
                 </Link>
-              </motion.article>
+              </article>
             ))}
           </div>
         </section>
 
         {/* Newsletter CTA */}
         <section className="max-w-[1400px] mx-auto px-6 lg:px-10 mt-20 lg:mt-32">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="bg-sand rounded-2xl p-8 lg:p-12 text-center"
-          >
+          <div className="bg-sand rounded-2xl p-8 lg:p-12 text-center">
             <h2 className="font-serif text-2xl lg:text-3xl text-espresso mb-4">
               Подпишитесь на мои истории
             </h2>
@@ -160,20 +170,8 @@ export default function BlogPage() {
               Раз в месяц присылаю новые статьи, вдохновение и закулисье
               мастерской. Без спама, только тёплые письма.
             </p>
-            <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <Input
-                type="email"
-                placeholder="Ваш email"
-                className="flex-1 rounded-full border-espresso/15 bg-parchment text-espresso placeholder:text-taupe/60 focus-visible:border-terracotta"
-              />
-              <Button
-                type="submit"
-                className="label-caps-md px-6 py-3 h-auto rounded-full bg-espresso text-parchment hover:bg-terracotta transition-colors"
-              >
-                Подписаться
-              </Button>
-            </form>
-          </motion.div>
+            <NewsletterForm />
+          </div>
         </section>
       </main>
       <Footer />

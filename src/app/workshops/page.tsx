@@ -1,8 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { Footer } from "@/components/stariva/footer";
 import { Header } from "@/components/stariva/header";
 import { Badge } from "@/components/ui/badge";
+import {
+  BreadcrumbJsonLd,
+  ItemListJsonLd,
+} from "@/components/stariva/json-ld";
 import {
   categoryLabels,
   formatPrice,
@@ -13,10 +18,29 @@ import {
   workshops,
 } from "@/lib/workshops-data";
 
-export const metadata = {
-  title: "Мастер-классы — Stariva",
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://stariva.ru";
+
+export const metadata: Metadata = {
+  title: "Мастер-классы по макраме онлайн — видеокурсы Stariva",
   description:
-    "Видео-мастер-классы по макраме: абажуры, одежда и декор интерьера. Пошаговые инструкции от мастера Stariva.",
+    "Видео-мастер-классы по макраме: абажуры, одежда и декор интерьера. Пошаговые инструкции от мастера Stariva. Доступ навсегда, HD-видео.",
+  alternates: { canonical: `${BASE_URL}/workshops` },
+  openGraph: {
+    type: "website",
+    title: "Мастер-классы по макраме онлайн — Stariva",
+    description:
+      "Видео-мастер-классы по макраме: абажуры, одежда и декор интерьера. Пошаговые инструкции от мастера Stariva.",
+    url: `${BASE_URL}/workshops`,
+    images: [
+      {
+        url: `${BASE_URL}/images/workshops/hero-workshops.jpg`,
+        width: 1200,
+        height: 630,
+        alt: "Мастер-классы по макраме Stariva",
+      },
+    ],
+  },
 };
 
 const _categories: { value: WorkshopCategory | "all"; label: string }[] = [
@@ -145,6 +169,21 @@ export default function WorkshopsPage() {
   return (
     <div className="min-h-screen bg-parchment text-espresso">
       <Header variant="solid" />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Главная", href: "/" },
+          { name: "Мастер-классы", href: "/workshops" },
+        ]}
+      />
+      <ItemListJsonLd
+        name="Мастер-классы по макраме — Stariva"
+        url="/workshops"
+        items={workshops.map((w) => ({
+          name: w.title,
+          url: `/workshops/${w.slug}`,
+          image: `${BASE_URL}${w.cover}`,
+        }))}
+      />
 
       {/* Hero */}
       <section className="relative h-[420px] md:h-[500px] overflow-hidden">

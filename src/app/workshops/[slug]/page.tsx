@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { Footer } from "@/components/stariva/footer";
 import { Header } from "@/components/stariva/header";
 import {
@@ -13,6 +14,11 @@ import {
 } from "@/components/ui/breadcrumb";
 import { OzonButton } from "./ozon-button";
 import {
+  BreadcrumbJsonLd,
+  CourseJsonLd,
+  FAQJsonLd,
+} from "@/components/stariva/json-ld";
+import {
   categoryLabels,
   formatPrice,
   getWorkshopBySlug,
@@ -20,6 +26,9 @@ import {
   levelLabels,
   workshops,
 } from "@/lib/workshops-data";
+
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://stariva.ru";
 
 export async function generateStaticParams() {
   return workshops.map((w) => ({ slug: w.slug }));
@@ -29,13 +38,33 @@ export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
-}) {
+}): Promise<Metadata> {
   const { slug } = await params;
   const workshop = getWorkshopBySlug(slug);
   if (!workshop) return {};
+
+  const title = `${workshop.title} — мастер-класс по макраме`;
+  const description = `${workshop.description} Уровень: ${levelLabels[workshop.level]}. ${workshop.lessonsCount} уроков, ${workshop.duration}. Купить на Ozon.`;
+  const url = `/workshops/${slug}`;
+  const image = `${BASE_URL}${workshop.cover}`;
+
   return {
-    title: `${workshop.title} — Мастер-классы Stariva`,
-    description: workshop.description,
+    title,
+    description,
+    alternates: { canonical: `${BASE_URL}${url}` },
+    openGraph: {
+      type: "website",
+      title,
+      description,
+      url: `${BASE_URL}${url}`,
+      images: [{ url: image, width: 1200, height: 675, alt: workshop.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [image],
+    },
   };
 }
 
@@ -52,9 +81,51 @@ export default async function WorkshopDetailPage({
     .filter((w) => w.slug !== workshop.slug && w.category === workshop.category)
     .slice(0, 3);
 
+  const url = `/workshops/${slug}`;
+
+  const faqItems = [
+    {
+      question: "Как долго у меня будет доступ к курсу?",
+      answer:
+        "Доступ к курсу предоставляется навсегда. После покупки вы можете смотреть уроки в любое время с любого устройства.",
+    },
+    {
+      question: "Нужен ли опыт для прохождения курса?",
+      answer: `Курс рассчитан на уровень «${levelLabels[workshop.level]}». ${workshop.level === "beginner" ? "Никакого предварительного опыта не требуется — всё объясняется с нуля." : workshop.level === "intermediate" ? "Желательно знание базовых узлов макраме." : "Требуется уверенное владение базовыми техниками макраме."}`,
+    },
+    {
+      question: "Какие материалы нужны для курса?",
+      answer: `Для курса понадобятся: ${workshop.materials.join(", ")}. Полный список с рекомендациями по покупке есть в первом уроке.`,
+    },
+    {
+      question: "Где купить курс?",
+      answer:
+        "Курс продаётся на Ozon. После покупки вы получите доступ к видеоурокам.",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-parchment text-espresso">
       <Header variant="solid" />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Главная", href: "/" },
+          { name: "Мастер-классы", href: "/workshops" },
+          { name: workshop.title, href: url },
+        ]}
+      />
+      <CourseJsonLd
+        name={workshop.title}
+        description={workshop.description}
+        image={workshop.cover}
+        price={workshop.price}
+        url={url}
+        duration={workshop.duration}
+        level={workshop.level}
+        lessonsCount={workshop.lessonsCount}
+        ozonUrl={workshop.ozonUrl}
+      />
+      <FAQJsonLd items={faqItems} />
 
       {/* Breadcrumb */}
       <div className="max-w-6xl mx-auto px-6 md:px-10 pt-8 pb-2">
@@ -309,6 +380,42 @@ export default async function WorkshopDetailPage({
                   </li>
                 ))}
               </ul>
+            </section>
+
+            {/* FAQ */}
+            <section className="mt-12">
+              <h2 className="font-serif text-2xl mb-6">Частые вопросы</h2>
+              <div className="space-y-4">
+                {faqItems.map((item) => (
+                  <details
+                    key={item.question}
+                    className="group border border-espresso/10 rounded-xl overflow-hidden"
+                  >
+                    <summary className="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer list-none text-espresso font-medium hover:bg-sand transition-colors">
+                      <span className="text-sm leading-snug">{item.question}</span>
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        aria-hidden="true"
+                        className="flex-shrink-0 transition-transform duration-200 group-open:rotate-180"
+                      >
+                        <path
+                          d="M3 6l5 5 5-5"
+                          stroke="currentColor"
+                          strokeWidth="1.3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </summary>
+                    <div className="px-5 pb-4 pt-1 text-taupe text-sm leading-relaxed border-t border-espresso/8">
+                      {item.answer}
+                    </div>
+                  </details>
+                ))}
+              </div>
             </section>
           </div>
 

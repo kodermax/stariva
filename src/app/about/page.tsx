@@ -1,14 +1,35 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { Footer } from "@/components/stariva/footer";
 import { Header } from "@/components/stariva/header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { BreadcrumbJsonLd } from "@/components/stariva/json-ld";
 
-export const metadata = {
-  title: "О бренде — Stariva",
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://stariva.ru";
+
+export const metadata: Metadata = {
+  title: "О бренде Stariva — мастерская ручного макраме",
   description:
-    "История Stariva — московской мастерской ручного макраме. Узнайте о моей философии, мастерстве и любви к натуральным материалам.",
+    "История Stariva — московской мастерской ручного макраме. Ольга Карпычева создаёт абажуры, одежду и декор из натурального хлопка с 2018 года.",
+  alternates: { canonical: `${BASE_URL}/about` },
+  openGraph: {
+    type: "profile",
+    title: "О бренде Stariva — мастерская ручного макраме",
+    description:
+      "История Stariva — московской мастерской ручного макраме. Ольга Карпычева создаёт абажуры, одежду и декор из натурального хлопка с 2018 года.",
+    url: `${BASE_URL}/about`,
+    images: [
+      {
+        url: `${BASE_URL}/images/about/hero-founder.jpg`,
+        width: 1200,
+        height: 800,
+        alt: "Ольга Карпычева — мастер Stariva",
+      },
+    ],
+  },
 };
 
 const values = [
@@ -78,6 +99,12 @@ export default function AboutPage() {
   return (
     <div className="bg-parchment text-espresso">
       <Header variant="solid" />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Главная", href: "/" },
+          { name: "О бренде", href: "/about" },
+        ]}
+      />
 
       {/* ── Hero ── */}
       <section className="relative min-h-[90vh] flex items-end overflow-hidden">
