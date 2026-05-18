@@ -203,7 +203,7 @@ export default function PrivacyPolicyPage() {
               обращайтесь:
             </p>
             <div className="mt-4 space-y-1">
-              <p>СЗ Капычева О. А., ИНН: 502480197143</p>
+              <p>СЗ Карпычева О. А., ИНН: 502480197143</p>
               <p>
                 Email:{" "}
                 <a

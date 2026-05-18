@@ -110,6 +110,7 @@ export default function RootLayout({
   return (
     <html
       lang="ru"
+      data-scroll-behavior="smooth"
       className={`${cormorant.variable} ${inter.variable} bg-white`}
     >
       <body className="font-sans antialiased bg-white text-near-black">

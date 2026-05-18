@@ -193,7 +193,7 @@ export default function PersonalDataConsentPage() {
               9. Контакты Оператора
             </h2>
             <div className="space-y-1">
-              <p>СЗ Капычева О. А.</p>
+              <p>СЗ Карпычева О. А.</p>
               <p>ИНН: 502480197143</p>
               <p>
                 Email:{" "}

@@ -91,7 +91,6 @@ export function OrganizationJsonLd() {
       "https://pinterest.com/stariva",
       "https://www.livemaster.ru/olga-meu",
       "https://t.me/Olga_Stariva",
-      "https://dzen.ru/stariva",
     ],
   };
 

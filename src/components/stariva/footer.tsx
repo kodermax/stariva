@@ -1,6 +1,6 @@
 import {
-  DzenIcon,
   LivemasterIcon,
+  OzonIcon,
   PhoneIcon,
   PinterestIcon,
   TelegramIcon,
@@ -148,17 +148,6 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://dzen.ru/stariva"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-parchment/85 hover:text-linen transition-colors"
-                >
-                  <DzenIcon className="w-4 h-4" />
-                  Дзен
-                </a>
-              </li>
-              <li>
-                <a
                   href="https://www.livemaster.ru/olga-meu"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -168,6 +157,17 @@ export function Footer() {
                   Ярмарка Мастеров
                 </a>
               </li>
+              <li>
+                <a
+                  href="https://www.ozon.ru/seller/stariva-makrame-odezhda-dekor-vyazanye-sumki-izdeliya-iz-shnura/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-parchment/85 hover:text-linen transition-colors"
+                >
+                  <OzonIcon className="w-4 h-4" />
+                  Ozon
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -175,7 +175,7 @@ export function Footer() {
         {/* Legal */}
         <div className="mt-16 pt-8 border-t border-parchment/15">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 text-[11px] leading-relaxed text-parchment/55">
-            <div>СЗ Капычева О. А. ИНН: 502480197143</div>
+            <div>СЗ Карпычева О. А. ИНН: 502480197143</div>
             <div className="flex flex-wrap gap-x-5 gap-y-2">
               <a
                 href="/privacy-policy"

@@ -307,7 +307,10 @@ export default async function Page() {
               <p className="font-serif text-xl mb-4">Товары загружаются…</p>
               <p className="text-sm">
                 Загляните в{" "}
-                <Link href="/catalog" className="underline hover:text-terracotta">
+                <Link
+                  href="/catalog"
+                  className="underline hover:text-terracotta"
+                >
                   каталог
                 </Link>{" "}
                 или зайдите позже.
