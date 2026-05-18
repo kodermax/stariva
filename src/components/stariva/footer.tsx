@@ -127,6 +127,8 @@ export function Footer() {
               <li>
                 <a
                   href="https://vk.com/stariva_macrame"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-parchment/85 hover:text-linen transition-colors"
                 >
                   <VkIcon className="w-4 h-4" />
@@ -136,6 +138,8 @@ export function Footer() {
               <li>
                 <a
                   href="https://pinterest.com/stariva"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-parchment/85 hover:text-linen transition-colors"
                 >
                   <PinterestIcon className="w-4 h-4" />
@@ -144,7 +148,20 @@ export function Footer() {
               </li>
               <li>
                 <a
+                  href="https://dzen.ru/stariva"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-parchment/85 hover:text-linen transition-colors"
+                >
+                  <DzenIcon className="w-4 h-4" />
+                  Дзен
+                </a>
+              </li>
+              <li>
+                <a
                   href="https://www.livemaster.ru/olga-meu"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-parchment/85 hover:text-linen transition-colors"
                 >
                   <LivemasterIcon className="w-4 h-4" />

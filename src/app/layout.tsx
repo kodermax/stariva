@@ -75,6 +75,8 @@ export const metadata: Metadata = {
   verification: {
     other: {
       "yandex-verification": "e889c7fefe9519f3",
+      // Pinterest Rich Pins verification — подтвердить на pinterest.com/website/verify/
+      "p:domain_verify": "stariva",
     },
   },
   alternates: {

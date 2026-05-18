@@ -7,7 +7,7 @@ import { Header } from "@/components/stariva/header";
 import { Hero } from "@/components/stariva/hero";
 import { Marquee } from "@/components/stariva/marquee";
 import { MobileStickyBar } from "@/components/stariva/mobile-sticky-bar";
-import { BreadcrumbJsonLd } from "@/components/stariva/json-ld";
+import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/stariva/json-ld";
 import { Process } from "@/components/stariva/process";
 import { Reviews } from "@/components/stariva/reviews";
 import { Button } from "@/components/ui/button";
@@ -18,6 +18,40 @@ const BASE_URL =
 export const metadata: Metadata = {
   alternates: { canonical: BASE_URL },
 };
+
+// ─── Homepage FAQ ─────────────────────────────────────────────────────────────
+const homeFaq = [
+  {
+    question: "Где купить изделия Stariva?",
+    answer:
+      "Все изделия Stariva продаются на маркетплейсе Ozon с доставкой по всей России. Также можно оформить индивидуальный заказ напрямую через Telegram или по телефону.",
+  },
+  {
+    question: "Из чего сделаны изделия Stariva?",
+    answer:
+      "Все изделия создаются из натурального хлопкового шнура без синтетических добавок и химических красителей. Хлопок экологичен, безопасен для дома и приятен на ощупь.",
+  },
+  {
+    question: "Можно ли заказать изделие по индивидуальным размерам?",
+    answer:
+      "Да, мы принимаем индивидуальные заказы. Напишите в Telegram @Olga_Stariva или позвоните по номеру +7 977 872 25 46 — обсудим ваши пожелания и рассчитаем стоимость.",
+  },
+  {
+    question: "Сколько времени занимает изготовление?",
+    answer:
+      "Готовые изделия отправляем в течение 1–3 дней. Изделия на индивидуальный заказ изготавливаются 7–21 день в зависимости от сложности и размера.",
+  },
+  {
+    question: "Как ухаживать за изделиями из макраме?",
+    answer:
+      "Раз в неделю удаляйте пыль мягкой щёткой или феном на холодном режиме. При необходимости замочите в тёплой воде с мягким мылом на 15–20 минут, прополощите и сушите горизонтально. Не выжимайте.",
+  },
+  {
+    question: "Есть ли мастер-классы по макраме?",
+    answer:
+      "Да! Мы предлагаем видео-мастер-классы по созданию абажуров, одежды и декора интерьера. Доступ навсегда, HD-видео, смотрите в своём темпе. Купить на Ozon.",
+  },
+];
 
 // ─── Three-direction sections ────────────────────────────────────────────────
 
@@ -408,6 +442,47 @@ export default function Page() {
       <Process />
       <Reviews />
       <CustomOrder />
+
+      {/* ── FAQ ── */}
+      <FAQJsonLd items={homeFaq} />
+      <section className="py-20 lg:py-28 bg-parchment">
+        <div className="max-w-[1440px] mx-auto px-5 lg:px-12">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-12">
+              <span className="label-caps text-terracotta mb-3 block">Вопросы и ответы</span>
+              <h2 className="font-serif text-3xl lg:text-4xl text-espresso">
+                Часто спрашивают
+              </h2>
+            </div>
+            <div className="space-y-3">
+              {homeFaq.map((item) => (
+                <details
+                  key={item.question}
+                  className="group border border-espresso/10 rounded-xl overflow-hidden"
+                >
+                  <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none text-espresso hover:bg-sand transition-colors">
+                    <span className="font-serif text-[17px] leading-snug">{item.question}</span>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      aria-hidden="true"
+                      className="flex-shrink-0 transition-transform duration-200 group-open:rotate-180 text-terracotta"
+                    >
+                      <path d="M3 6l5 5 5-5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </summary>
+                  <div className="px-6 pb-5 pt-2 text-taupe text-[15px] leading-[1.8] border-t border-espresso/8">
+                    {item.answer}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Footer />
       <MobileStickyBar />
     </main>
