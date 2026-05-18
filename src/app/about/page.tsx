@@ -5,7 +5,7 @@ import { Footer } from "@/components/stariva/footer";
 import { Header } from "@/components/stariva/header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { BreadcrumbJsonLd } from "@/components/stariva/json-ld";
+import { BreadcrumbJsonLd, PersonJsonLd } from "@/components/stariva/json-ld";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://stariva.ru";
@@ -105,6 +105,7 @@ export default function AboutPage() {
           { name: "О бренде", href: "/about" },
         ]}
       />
+      <PersonJsonLd />
 
       {/* ── Hero ── */}
       <section className="relative min-h-[90vh] flex items-end overflow-hidden">

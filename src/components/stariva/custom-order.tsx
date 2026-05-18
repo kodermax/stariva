@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import { PhoneIcon, TelegramIcon } from "./icons";
+import Link from "next/link";
+import { OzonIcon, PhoneIcon, TelegramIcon } from "./icons";
 
 export function CustomOrder() {
   return (
@@ -60,6 +61,22 @@ export function CustomOrder() {
               <PhoneIcon className="w-5 h-5 shrink-0" />
               <span className="font-serif text-xl">+7 977 872 25 46</span>
             </a>
+
+            <div className="pt-2 border-t border-espresso/10">
+              <p className="text-espresso/50 text-[12px] label-caps mb-3">
+                Или купите готовое изделие прямо сейчас
+              </p>
+              <Link
+                href="/catalog"
+                className="group flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#005BFF]/8 hover:bg-[#005BFF]/15 text-[#005BFF] transition-colors duration-200"
+              >
+                <OzonIcon className="w-4 h-4 shrink-0" />
+                <span className="label-caps text-[12px]">Смотреть каталог на Ozon</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" className="ml-auto transition-transform group-hover:translate-x-0.5">
+                  <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                </svg>
+              </Link>
+            </div>
           </motion.div>
         </div>
       </div>

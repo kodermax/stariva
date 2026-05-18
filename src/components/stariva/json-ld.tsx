@@ -21,8 +21,14 @@ export function OrganizationJsonLd() {
     logo: {
       "@type": "ImageObject",
       url: `${BASE_URL}/favicon.svg`,
+      width: 512,
+      height: 512,
     },
-    image: `${BASE_URL}/images/about/hero-founder.jpg`,
+    image: [
+      `${BASE_URL}/images/about/hero-founder.jpg`,
+      `${BASE_URL}/images/about/atelier-wide.jpg`,
+      `${BASE_URL}/images/catalog/lampshade-dome.jpg`,
+    ],
     telephone: "+79778722546",
     email: "info@stariva.ru",
     address: {
@@ -30,17 +36,55 @@ export function OrganizationJsonLd() {
       addressRegion: "Московская область",
       addressCountry: "RU",
     },
+    geo: {
+      "@type": "GeoCoordinates",
+      addressCountry: "RU",
+    },
     foundingDate: "2018",
     founder: {
       "@type": "Person",
       name: "Ольга Карпычева",
+      jobTitle: "Мастер макраме",
+      url: `${BASE_URL}/about`,
+    },
+    priceRange: "₽₽",
+    currenciesAccepted: "RUB",
+    paymentAccepted: "Cash, Credit Card, Online Payment",
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        opens: "10:00",
+        closes: "20:00",
+      },
+    ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Изделия из макраме",
+      itemListElement: [
+        {
+          "@type": "OfferCatalog",
+          name: "Абажуры из макраме",
+          url: `${BASE_URL}/catalog/interior`,
+        },
+        {
+          "@type": "OfferCatalog",
+          name: "Одежда из макраме",
+          url: `${BASE_URL}/catalog/clothes`,
+        },
+        {
+          "@type": "OfferCatalog",
+          name: "Сумки из макраме",
+          url: `${BASE_URL}/catalog/bags`,
+        },
+      ],
     },
     sameAs: [
       "https://vk.com/stariva_macrame",
       "https://pinterest.com/stariva",
       "https://www.livemaster.ru/olga-meu",
       "https://t.me/Olga_Stariva",
-      "https://www.ozon.ru/seller/stariva",
+      "https://dzen.ru/stariva",
     ],
   };
 
@@ -67,6 +111,14 @@ export function WebSiteJsonLd() {
     inLanguage: "ru-RU",
     publisher: {
       "@id": `${BASE_URL}/#organization`,
+    },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${BASE_URL}/catalog?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
     },
   };
 
@@ -357,6 +409,38 @@ export function FAQJsonLd({ items }: { items: FAQItem[] }) {
     <script
       type="application/ld+json"
       // biome-ignore lint/security/noDangerouslySetInnerHtml: trusted static FAQ data
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+// ─── Person (Founder) ─────────────────────────────────────────────────────────
+
+export function PersonJsonLd() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": `${BASE_URL}/#founder`,
+    name: "Ольга Карпычева",
+    alternateName: "Olga Kapycheva",
+    jobTitle: "Мастер макраме",
+    description:
+      "Мастер ручного макраме из Подмосковья. Создаёт абажуры, одежду и декор из натурального хлопка с 2018 года.",
+    url: `${BASE_URL}/about`,
+    image: `${BASE_URL}/images/about/hero-founder.jpg`,
+    worksFor: {
+      "@id": `${BASE_URL}/#organization`,
+    },
+    sameAs: [
+      "https://t.me/Olga_Stariva",
+      "https://vk.com/stariva_macrame",
+    ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: trusted static person data
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />
   );
