@@ -131,7 +131,11 @@ export function Hero() {
                     {i === 2 ? (
                       <em
                         className="not-italic"
-                        style={{ color: current.accent }}
+                        style={{
+                          color: current.accent,
+                          textShadow:
+                            "0 2px 16px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.7)",
+                        }}
                       >
                         {line}
                       </em>

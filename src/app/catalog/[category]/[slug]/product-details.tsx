@@ -324,16 +324,6 @@ export function ProductDetails({
                     </div>
                   </div>
                 )}
-                {product.material && (
-                  <div className="flex flex-col items-center text-center p-4 bg-sand rounded-xl border border-espresso/6">
-                    <span className="label-caps text-[9px] text-taupe/60 mb-1">
-                      Материал
-                    </span>
-                    <span className="text-espresso text-[12px] leading-snug">
-                      {product.material}
-                    </span>
-                  </div>
-                )}
                 {product.dimensions && (
                   <div className="flex flex-col items-center text-center p-4 bg-sand rounded-xl border border-espresso/6">
                     <span className="label-caps text-[9px] text-taupe/60 mb-1">
