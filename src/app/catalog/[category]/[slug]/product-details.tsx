@@ -231,22 +231,58 @@ export function ProductDetails({
               {/* Trust signals */}
               <div className="flex flex-wrap items-center gap-3 mb-6">
                 <span className="inline-flex items-center gap-1.5 text-[11px] text-sage label-caps">
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                    <path d="M2 6.5l2.5 2.5 5.5-5.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2 6.5l2.5 2.5 5.5-5.5"
+                      stroke="currentColor"
+                      strokeWidth="1.3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                   Ручная работа
                 </span>
                 <span className="w-px h-3 bg-espresso/15" />
                 <span className="inline-flex items-center gap-1.5 text-[11px] text-sage label-caps">
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                    <path d="M2 6.5l2.5 2.5 5.5-5.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2 6.5l2.5 2.5 5.5-5.5"
+                      stroke="currentColor"
+                      strokeWidth="1.3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                   100% хлопок
                 </span>
                 <span className="w-px h-3 bg-espresso/15" />
                 <span className="inline-flex items-center gap-1.5 text-[11px] text-sage label-caps">
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                    <path d="M2 6.5l2.5 2.5 5.5-5.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2 6.5l2.5 2.5 5.5-5.5"
+                      stroke="currentColor"
+                      strokeWidth="1.3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                   Доставка по России
                 </span>
@@ -290,14 +326,22 @@ export function ProductDetails({
                 )}
                 {product.material && (
                   <div className="flex flex-col items-center text-center p-4 bg-sand rounded-xl border border-espresso/6">
-                    <span className="label-caps text-[9px] text-taupe/60 mb-1">Материал</span>
-                    <span className="text-espresso text-[12px] leading-snug">{product.material}</span>
+                    <span className="label-caps text-[9px] text-taupe/60 mb-1">
+                      Материал
+                    </span>
+                    <span className="text-espresso text-[12px] leading-snug">
+                      {product.material}
+                    </span>
                   </div>
                 )}
                 {product.dimensions && (
                   <div className="flex flex-col items-center text-center p-4 bg-sand rounded-xl border border-espresso/6">
-                    <span className="label-caps text-[9px] text-taupe/60 mb-1">Размеры</span>
-                    <span className="text-espresso text-[12px] leading-snug">{product.dimensions}</span>
+                    <span className="label-caps text-[9px] text-taupe/60 mb-1">
+                      Размеры
+                    </span>
+                    <span className="text-espresso text-[12px] leading-snug">
+                      {product.dimensions}
+                    </span>
                   </div>
                 )}
               </div>
@@ -328,7 +372,11 @@ export function ProductDetails({
                     asChild
                     className="flex items-center justify-center gap-2 w-full bg-espresso hover:bg-terracotta text-white py-4 h-auto rounded-2xl transition-colors label-caps"
                   >
-                    <a href="https://t.me/Olga_Stariva" target="_blank" rel="noopener noreferrer">
+                    <a
+                      href="https://t.me/Olga_Stariva"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       Узнать наличие
                     </a>
                   </Button>
@@ -340,8 +388,19 @@ export function ProductDetails({
                   className="flex items-center justify-center gap-2 w-full border-espresso/20 text-espresso hover:bg-espresso hover:text-parchment py-3 h-auto rounded-2xl transition-colors label-caps"
                 >
                   <a href="tel:+79778722546">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M4.5 5.5c0-1 .8-2 1.8-2h2c.5 0 .9.3 1 .8l.7 2.5c.2.6-.1 1.2-.6 1.5l-1.2.7c1 2.3 2.8 4.1 5.1 5.1l.7-1.2c.3-.5.9-.8 1.5-.6l2.5.7c.5.1.8.5.8 1v2c0 1-1 1.8-2 1.8C9.7 17.8 6.2 14.3 4.5 5.5Z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/>
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M4.5 5.5c0-1 .8-2 1.8-2h2c.5 0 .9.3 1 .8l.7 2.5c.2.6-.1 1.2-.6 1.5l-1.2.7c1 2.3 2.8 4.1 5.1 5.1l.7-1.2c.3-.5.9-.8 1.5-.6l2.5.7c.5.1.8.5.8 1v2c0 1-1 1.8-2 1.8C9.7 17.8 6.2 14.3 4.5 5.5Z"
+                        stroke="currentColor"
+                        strokeWidth="1.3"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                     Позвонить
                   </a>
@@ -350,18 +409,60 @@ export function ProductDetails({
                 {/* Delivery info */}
                 <div className="flex items-center justify-center gap-4 pt-1">
                   <span className="flex items-center gap-1.5 text-[10px] text-taupe label-caps">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <rect x="3" y="7" width="12" height="10" rx="1" stroke="currentColor" strokeWidth="1.3"/>
-                      <path d="M15 11h3.5l2.5 3v3h-6" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/>
-                      <circle cx="7.5" cy="17" r="2" stroke="currentColor" strokeWidth="1.3"/>
-                      <circle cx="17.5" cy="17" r="2" stroke="currentColor" strokeWidth="1.3"/>
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <rect
+                        x="3"
+                        y="7"
+                        width="12"
+                        height="10"
+                        rx="1"
+                        stroke="currentColor"
+                        strokeWidth="1.3"
+                      />
+                      <path
+                        d="M15 11h3.5l2.5 3v3h-6"
+                        stroke="currentColor"
+                        strokeWidth="1.3"
+                        strokeLinejoin="round"
+                      />
+                      <circle
+                        cx="7.5"
+                        cy="17"
+                        r="2"
+                        stroke="currentColor"
+                        strokeWidth="1.3"
+                      />
+                      <circle
+                        cx="17.5"
+                        cy="17"
+                        r="2"
+                        stroke="currentColor"
+                        strokeWidth="1.3"
+                      />
                     </svg>
                     Доставка по России
                   </span>
                   <span className="w-px h-3 bg-espresso/15" />
                   <span className="flex items-center gap-1.5 text-[10px] text-taupe label-caps">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M12 2L9.1 8.6 2 9.2l5.4 4.7-1.6 7L12 17.4l6.2 3.5-1.6-7L22 9.2l-7.1-.6L12 2Z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/>
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M12 2L9.1 8.6 2 9.2l5.4 4.7-1.6 7L12 17.4l6.2 3.5-1.6-7L22 9.2l-7.1-.6L12 2Z"
+                        stroke="currentColor"
+                        strokeWidth="1.3"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                     С 2018 года
                   </span>
@@ -392,13 +493,31 @@ export function ProductDetails({
           <div className="max-w-6xl mx-auto">
             <div className="max-w-3xl p-6 bg-sand rounded-2xl border border-espresso/8">
               <h2 className="font-serif text-xl text-espresso mb-3 flex items-center gap-2">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="text-terracotta">
-                  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2Z" stroke="currentColor" strokeWidth="1.3"/>
-                  <path d="M12 8v4l3 3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                  className="text-terracotta"
+                >
+                  <path
+                    d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2Z"
+                    stroke="currentColor"
+                    strokeWidth="1.3"
+                  />
+                  <path
+                    d="M12 8v4l3 3"
+                    stroke="currentColor"
+                    strokeWidth="1.3"
+                    strokeLinecap="round"
+                  />
                 </svg>
                 Уход за изделием
               </h2>
-              <p className="text-taupe text-sm leading-relaxed">{product.careInstructions}</p>
+              <p className="text-taupe text-sm leading-relaxed">
+                {product.careInstructions}
+              </p>
             </div>
           </div>
         </section>
@@ -408,7 +527,9 @@ export function ProductDetails({
       <section className="pb-16 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="max-w-3xl">
-            <h2 className="font-serif text-2xl text-espresso mb-6">Частые вопросы</h2>
+            <h2 className="font-serif text-2xl text-espresso mb-6">
+              Частые вопросы
+            </h2>
             <div className="space-y-3">
               {faqItems.map((item) => (
                 <details
@@ -416,7 +537,9 @@ export function ProductDetails({
                   className="group border border-espresso/10 rounded-xl overflow-hidden"
                 >
                   <summary className="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer list-none text-espresso hover:bg-sand transition-colors">
-                    <span className="text-sm font-medium leading-snug">{item.q}</span>
+                    <span className="text-sm font-medium leading-snug">
+                      {item.q}
+                    </span>
                     <svg
                       width="16"
                       height="16"
@@ -425,7 +548,13 @@ export function ProductDetails({
                       aria-hidden="true"
                       className="flex-shrink-0 transition-transform duration-200 group-open:rotate-180"
                     >
-                      <path d="M3 6l5 5 5-5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path
+                        d="M3 6l5 5 5-5"
+                        stroke="currentColor"
+                        strokeWidth="1.3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </summary>
                   <div className="px-5 pb-4 pt-1 text-taupe text-sm leading-relaxed border-t border-espresso/8">
@@ -444,7 +573,9 @@ export function ProductDetails({
           <div className="max-w-6xl mx-auto pt-16">
             <div className="flex items-end justify-between mb-10">
               <div>
-                <span className="label-caps text-terracotta mb-2 block">Смотрите также</span>
+                <span className="label-caps text-terracotta mb-2 block">
+                  Смотрите также
+                </span>
                 <h2 className="font-serif text-2xl lg:text-3xl text-espresso">
                   Похожие товары
                 </h2>
@@ -454,8 +585,19 @@ export function ProductDetails({
                 className="hidden sm:inline-flex items-center gap-1.5 label-caps text-[11px] text-espresso/60 hover:text-terracotta transition-colors"
               >
                 Все товары
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                  <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M2 6h8M7 3l3 3-3 3"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                  />
                 </svg>
               </Link>
             </div>

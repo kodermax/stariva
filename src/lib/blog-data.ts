@@ -263,7 +263,8 @@ export const blogPosts: BlogPost[] = [
         type: "image",
         src: "/images/blog/cotton-materials.jpg",
         alt: "Материалы для плетения макраме абажура",
-        caption: "Натуральный хлопковый шнур — основа любого изделия из макраме",
+        caption:
+          "Натуральный хлопковый шнур — основа любого изделия из макраме",
       },
       {
         type: "heading",
@@ -321,7 +322,8 @@ export const blogPosts: BlogPost[] = [
         type: "image",
         src: "/images/catalog/tipi-kids.jpg",
         alt: "Детский вигвам из макраме в интерьере",
-        caption: "Детский вигвам Stariva — ручная работа из натурального хлопка и дерева",
+        caption:
+          "Детский вигвам Stariva — ручная работа из натурального хлопка и дерева",
       },
       {
         type: "heading",
@@ -351,7 +353,8 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "makrame-v-interere-skandinavskiy-stil",
-    title: "Макраме в интерьере: как вписать в скандинавский и минималистичный стиль",
+    title:
+      "Макраме в интерьере: как вписать в скандинавский и минималистичный стиль",
     excerpt:
       "Советы по сочетанию изделий из макраме с современными интерьерами: скандинавский стиль, минимализм, japandi и эко.",
     date: "2025-05-05",

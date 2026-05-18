@@ -53,7 +53,14 @@ export function OrganizationJsonLd() {
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ],
         opens: "10:00",
         closes: "20:00",
       },
@@ -431,10 +438,7 @@ export function PersonJsonLd() {
     worksFor: {
       "@id": `${BASE_URL}/#organization`,
     },
-    sameAs: [
-      "https://t.me/Olga_Stariva",
-      "https://vk.com/stariva_macrame",
-    ],
+    sameAs: ["https://t.me/Olga_Stariva", "https://vk.com/stariva_macrame"],
   };
 
   return (

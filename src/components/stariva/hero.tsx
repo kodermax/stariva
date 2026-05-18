@@ -12,7 +12,7 @@ const directions = [
     label: "Одежда",
     sublabel: "Платья · Топы · Накидки",
     href: "/catalog/clothes",
-    image: "/images/home/hero-clothes.jpg",
+    image: "/images/home/hero-clothes.png",
     objectPosition: "center 20%",
     accent: "#b85c38",
     tag: "Летняя коллекция 2026",

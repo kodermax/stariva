@@ -75,7 +75,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
-  const relatedPosts = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
+  const relatedPosts = blogPosts
+    .filter((p) => p.slug !== post.slug)
+    .slice(0, 2);
   const url = `/blog/${slug}`;
 
   return (
@@ -111,7 +113,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <article className="max-w-[1400px] mx-auto px-6 lg:px-10">
           <header className="max-w-3xl mx-auto text-center mb-12">
             <div className="flex items-center justify-center gap-4 mb-6">
-              <span className="label-caps text-terracotta">{post.category}</span>
+              <span className="label-caps text-terracotta">
+                {post.category}
+              </span>
               <span className="w-1 h-1 rounded-full bg-taupe/50" />
               <span className="label-caps text-taupe">{post.readTime}</span>
             </div>

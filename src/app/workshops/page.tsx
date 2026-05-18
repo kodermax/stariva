@@ -4,10 +4,7 @@ import type { Metadata } from "next";
 import { Footer } from "@/components/stariva/footer";
 import { Header } from "@/components/stariva/header";
 import { Badge } from "@/components/ui/badge";
-import {
-  BreadcrumbJsonLd,
-  ItemListJsonLd,
-} from "@/components/stariva/json-ld";
+import { BreadcrumbJsonLd, ItemListJsonLd } from "@/components/stariva/json-ld";
 import {
   categoryLabels,
   formatPrice,

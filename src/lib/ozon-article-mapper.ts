@@ -8,9 +8,7 @@ import type {
   ProductCategory,
   ProductSubcategory,
 } from "./ozon-types";
-import {
-  getNextArticle,
-} from "@/data/ozon-article-template";
+import { getNextArticle } from "@/data/ozon-article-template";
 
 /**
  * Маппинг Ozon offer_id на внутренние артикулы

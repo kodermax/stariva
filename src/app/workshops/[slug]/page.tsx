@@ -392,7 +392,9 @@ export default async function WorkshopDetailPage({
                     className="group border border-espresso/10 rounded-xl overflow-hidden"
                   >
                     <summary className="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer list-none text-espresso font-medium hover:bg-sand transition-colors">
-                      <span className="text-sm leading-snug">{item.question}</span>
+                      <span className="text-sm leading-snug">
+                        {item.question}
+                      </span>
                       <svg
                         width="16"
                         height="16"

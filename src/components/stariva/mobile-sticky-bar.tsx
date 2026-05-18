@@ -11,7 +11,10 @@ interface MobileStickyBarProps {
   productName?: string;
 }
 
-export function MobileStickyBar({ ozonUrl, productName }: MobileStickyBarProps) {
+export function MobileStickyBar({
+  ozonUrl,
+  productName,
+}: MobileStickyBarProps) {
   const [show, setShow] = useState(false);
   const pathname = usePathname();
 

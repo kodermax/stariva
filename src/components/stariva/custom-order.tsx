@@ -71,9 +71,23 @@ export function CustomOrder() {
                 className="group flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#005BFF]/8 hover:bg-[#005BFF]/15 text-[#005BFF] transition-colors duration-200"
               >
                 <OzonIcon className="w-4 h-4 shrink-0" />
-                <span className="label-caps text-[12px]">Смотреть каталог на Ozon</span>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" className="ml-auto transition-transform group-hover:translate-x-0.5">
-                  <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                <span className="label-caps text-[12px]">
+                  Смотреть каталог на Ozon
+                </span>
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  aria-hidden="true"
+                  className="ml-auto transition-transform group-hover:translate-x-0.5"
+                >
+                  <path
+                    d="M2 6h8M7 3l3 3-3 3"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                  />
                 </svg>
               </Link>
             </div>
