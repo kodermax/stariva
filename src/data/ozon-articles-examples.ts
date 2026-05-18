@@ -332,7 +332,8 @@ export function example9_viewAllExamples() {
   for (const [categoryName, articles] of Object.entries(categories)) {
     console.log(`${categoryName}:`);
     for (const article of articles) {
-      const example = ARTICLE_EXAMPLES[article];
+      const example =
+        ARTICLE_EXAMPLES[article as keyof typeof ARTICLE_EXAMPLES];
       if (example) {
         console.log(`  ${article}: ${example.name}`);
       }

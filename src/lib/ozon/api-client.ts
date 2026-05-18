@@ -120,9 +120,14 @@ export async function fetchFromOzon(): Promise<Product[] | null> {
   const clientId = env.OZON_CLIENT_ID;
   const apiKey = env.OZON_API_KEY;
 
+  if (!clientId || !apiKey) {
+    console.log("[v0] Ozon credentials not configured, skipping fetch");
+    return null;
+  }
+
   console.log(
     "[v0] Ozon credentials found. Client ID starts with:",
-    `${clientId?.substring(0, 5)}...`,
+    `${clientId.substring(0, 5)}...`,
   );
 
   try {
