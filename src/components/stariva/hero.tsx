@@ -25,7 +25,7 @@ const directions = [
     label: "Интерьер",
     sublabel: "Абажуры · Вигвамы · Мобили",
     href: "/catalog/interior",
-    image: "/images/home/hero-interior.jpg",
+    image: "/images/home/hero-interior.png",
     objectPosition: "center center",
     accent: "#7a6e5f",
     tag: "Для вашего дома",
@@ -38,7 +38,7 @@ const directions = [
     label: "Декор",
     sublabel: "Панно · Плейсменты · Кашпо",
     href: "/catalog/interior",
-    image: "/images/home/hero-decor.jpg",
+    image: "/images/home/hero-decor.png",
     objectPosition: "center center",
     accent: "#8c7b6b",
     tag: "Детали, которые важны",
@@ -67,6 +67,7 @@ export function Hero() {
       {directions.map((dir, i) => (
         <motion.div
           key={dir.id}
+          initial={{ opacity: i === 0 ? 1 : 0 }}
           animate={{ opacity: i === active ? 1 : 0 }}
           transition={{ duration: 0.9, ease: "easeInOut" }}
           className="absolute inset-0 z-0"
@@ -79,6 +80,8 @@ export function Hero() {
             style={{ objectPosition: dir.objectPosition }}
             priority={i === 0}
             sizes="100vw"
+            quality={100}
+            unoptimized
           />
         </motion.div>
       ))}
@@ -86,9 +89,9 @@ export function Hero() {
       {/* Overlay: only bottom gradient + subtle top vignette, no heavy dark */}
       <div className="absolute inset-0 z-[1] pointer-events-none">
         {/* top vignette */}
-        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-espresso/60 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-espresso/40 to-transparent" />
         {/* bottom gradient for text legibility */}
-        <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-espresso/85 via-espresso/30 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-espresso/75 via-espresso/20 to-transparent" />
       </div>
 
       {/* Content */}
@@ -193,7 +196,7 @@ export function Hero() {
           {/* Direction switcher */}
           {/* biome-ignore lint/a11y/noStaticElementInteractions: wrapper pauses auto-advance on hover, not interactive itself */}
           <div
-            className="flex lg:flex-col gap-1.5 lg:gap-4 pb-1"
+            className="flex lg:flex-col gap-1.5 lg:gap-5 px-4 py-3 lg:px-5 lg:py-4 rounded-2xl bg-black/25 backdrop-blur-md"
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
           >
@@ -206,11 +209,11 @@ export function Hero() {
                   setPaused(true);
                 }}
                 className={`group flex items-center gap-3 text-left transition-all duration-300 ${
-                  i === active ? "opacity-100" : "opacity-35 hover:opacity-65"
+                  i === active ? "opacity-100" : "opacity-40 hover:opacity-70"
                 }`}
               >
                 {/* Progress bar for active */}
-                <div className="flex-shrink-0 w-px h-10 bg-white/20 relative overflow-hidden rounded-full">
+                <div className="shrink-0 w-0.5 h-11 bg-white/20 relative overflow-hidden rounded-full">
                   {i === active && (
                     <motion.div
                       className="absolute top-0 left-0 w-full rounded-full"
@@ -222,21 +225,21 @@ export function Hero() {
                     />
                   )}
                   {i !== active && (
-                    <div className="absolute inset-0 bg-white/40 rounded-full" />
+                    <div className="absolute inset-0 bg-white/35 rounded-full" />
                   )}
                 </div>
                 <div>
-                  <div className="label-caps text-white/50 text-[9px] leading-none mb-0.5">
+                  <div className="label-caps text-white/60 text-[10px] leading-none mb-1">
                     {dir.index}
                   </div>
-                  <div className="text-white font-serif text-[16px] lg:text-[18px] leading-snug">
+                  <div className="text-white font-serif text-[17px] lg:text-[20px] leading-snug drop-shadow-sm">
                     {dir.label}
                   </div>
                   {i === active && (
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
-                      className="text-white/50 text-[11px] mt-0.5"
+                      className="text-white/70 text-[12px] mt-0.5"
                     >
                       {dir.sublabel}
                     </motion.div>
