@@ -477,42 +477,6 @@ export function ProductDetails({
         </div>
       </section>
 
-      {/* Care & Characteristics */}
-      {product.careInstructions && (
-        <section className="pb-12 px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="max-w-3xl p-6 bg-sand rounded-2xl border border-espresso/8">
-              <h2 className="font-serif text-xl text-espresso mb-3 flex items-center gap-2">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
-                  className="text-terracotta"
-                >
-                  <path
-                    d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2Z"
-                    stroke="currentColor"
-                    strokeWidth="1.3"
-                  />
-                  <path
-                    d="M12 8v4l3 3"
-                    stroke="currentColor"
-                    strokeWidth="1.3"
-                    strokeLinecap="round"
-                  />
-                </svg>
-                Уход за изделием
-              </h2>
-              <p className="text-taupe text-sm leading-relaxed">
-                {product.careInstructions}
-              </p>
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* FAQ */}
       <section className="pb-16 px-4">
         <div className="max-w-6xl mx-auto">

@@ -1,4 +1,5 @@
 import {
+  AvitoIcon,
   LivemasterIcon,
   OzonIcon,
   PhoneIcon,
@@ -166,6 +167,17 @@ export function Footer() {
                 >
                   <OzonIcon className="w-4 h-4" />
                   Ozon
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.avito.ru/brands/i3320470/all?sellerId=5c2374e4adcfe4219ff7e1702a15d27f"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-parchment/85 hover:text-linen transition-colors"
+                >
+                  <AvitoIcon className="w-4 h-4" />
+                  Авито
                 </a>
               </li>
             </ul>
