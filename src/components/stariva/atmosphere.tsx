@@ -74,7 +74,7 @@ export function Atmosphere() {
               />
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
                 <span className="label-caps text-parchment/95 mix-blend-difference">
-                  Мастерская — Подмосковье
+                  Мастерская
                 </span>
                 <span className="label-caps text-parchment/95 mix-blend-difference">
                   Зима 2026
@@ -95,7 +95,7 @@ export function Atmosphere() {
               <p className="text-pretty">
                 Stariva начиналась в 2018 году с одной деревянной рамы и желания
                 плести узлы по старым русским образцам. Сегодня у меня своя
-                мастерская в Подмосковье, где пахнет хлопком, пчелиным воском и
+                мастерская, где пахнет хлопком, пчелиным воском и
                 свежим чаем.
               </p>
               <p className="text-pretty">

@@ -190,7 +190,7 @@ export default function AboutPage() {
       <section className="relative aspect-[16/7] overflow-hidden">
         <Image
           src="/images/about/atelier-wide.jpg"
-          alt="Мастерская Stariva в Подмосковье"
+          alt="Мастерская Stariva"
           fill
           className="object-cover object-center"
           sizes="100vw"
@@ -198,7 +198,7 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-espresso/10" />
         <div className="absolute bottom-8 right-8 lg:bottom-12 lg:right-14">
           <span className="label-caps text-white/60 text-[10px] tracking-widest">
-            Мастерская Stariva, Подмосковье
+            Мастерская Stariva
           </span>
         </div>
       </section>
