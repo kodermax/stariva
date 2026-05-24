@@ -154,10 +154,10 @@ export default function PrivacyPolicyPage() {
             <p className="mt-4">
               Для реализации своих прав обратитесь ко мне по адресу:{" "}
               <a
-                href="mailto:hello@stariva.ru"
+                href="mailto:info@stariva.ru"
                 className="text-terracotta hover:underline"
               >
-                hello@stariva.ru
+                info@stariva.ru
               </a>{" "}
               или по телефону{" "}
               <a
@@ -207,10 +207,10 @@ export default function PrivacyPolicyPage() {
               <p>
                 Email:{" "}
                 <a
-                  href="mailto:hello@stariva.ru"
+                  href="mailto:info@stariva.ru"
                   className="text-terracotta hover:underline"
                 >
-                  hello@stariva.ru
+                  info@stariva.ru
                 </a>
               </p>
               <p>

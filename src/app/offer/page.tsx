@@ -115,10 +115,10 @@ export default function OfferPage() {
               возврате денежных средств. Для этого необходимо направить
               фотографии дефекта и описание проблемы на{" "}
               <a
-                href="mailto:hello@stariva.ru"
+                href="mailto:info@stariva.ru"
                 className="text-terracotta hover:underline"
               >
-                hello@stariva.ru
+                info@stariva.ru
               </a>
               .
             </p>
@@ -209,10 +209,10 @@ export default function OfferPage() {
               <p>
                 Email:{" "}
                 <a
-                  href="mailto:hello@stariva.ru"
+                  href="mailto:info@stariva.ru"
                   className="text-terracotta hover:underline"
                 >
-                  hello@stariva.ru
+                  info@stariva.ru
                 </a>
               </p>
               <p>
