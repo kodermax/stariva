@@ -23,7 +23,7 @@ export const blogPosts: BlogPost[] = [
     title: "История макраме: от морских узлов до уютного интерьера",
     excerpt:
       "Как древнее искусство плетения узлов превратилось в символ домашнего уюта и осознанного потребления.",
-    date: "2024-12-15",
+    date: "2025-11-20",
     readTime: "7 мин",
     category: "История",
     coverImage: "/images/blog/macrame-history.jpg",
@@ -78,7 +78,7 @@ export const blogPosts: BlogPost[] = [
     title: "Как выбрать макраме-светильник для вашего дома",
     excerpt:
       "Практичное руководство по выбору идеального светильника: размеры, стили и сочетания с интерьером.",
-    date: "2024-12-08",
+    date: "2025-11-10",
     readTime: "5 мин",
     category: "Советы",
     coverImage: "/images/blog/bedroom-styling.jpg",
@@ -132,7 +132,7 @@ export const blogPosts: BlogPost[] = [
     title: "Уход за изделиями из макраме: простые правила долгой жизни",
     excerpt:
       "Как сохранить красоту ручной работы на долгие годы: чистка, хранение и защита от повреждений.",
-    date: "2024-11-28",
+    date: "2025-10-28",
     readTime: "4 мин",
     category: "Советы",
     coverImage: "/images/blog/care-guide.jpg",
@@ -187,7 +187,7 @@ export const blogPosts: BlogPost[] = [
     title: "Философия slow living и ручная работа",
     excerpt:
       "Почему осознанное потребление и вещи с душой становятся новой роскошью нашего времени.",
-    date: "2024-11-15",
+    date: "2025-10-15",
     readTime: "6 мин",
     category: "Философия",
     coverImage: "/images/blog/slow-living.jpg",
@@ -242,7 +242,7 @@ export const blogPosts: BlogPost[] = [
     title: "Абажур из макраме своими руками: с чего начать новичку",
     excerpt:
       "Пошаговое руководство для тех, кто хочет сплести первый аба��ур из макраме. Какие материалы нужны, какие узлы освоить и где купить готовый.",
-    date: "2025-03-10",
+    date: "2026-03-10",
     readTime: "8 мин",
     category: "Мастерство",
     coverImage: "/images/blog/macrame-detail.jpg",
@@ -301,7 +301,7 @@ export const blogPosts: BlogPost[] = [
     title: "Как украсить детскую комнату с помощью макраме",
     excerpt:
       "Идеи декора детской комнаты в стиле бохо и эко: вигвамы, панно, гирлянды и абажуры из натурального хлопка.",
-    date: "2025-04-22",
+    date: "2026-04-22",
     readTime: "5 мин",
     category: "Интерьер",
     coverImage: "/images/catalog/tipi-kids.jpg",
@@ -357,7 +357,7 @@ export const blogPosts: BlogPost[] = [
       "Макраме в интерьере: как вписать в скандинавский и минималистичный стиль",
     excerpt:
       "Советы по сочетанию изделий из макраме с современными интерьерами: скандинавский стиль, минимализм, japandi и эко.",
-    date: "2025-05-05",
+    date: "2026-05-05",
     readTime: "6 мин",
     category: "Интерьер",
     coverImage: "/images/blog/living-room-styling.jpg",
@@ -419,7 +419,7 @@ export const blogPosts: BlogPost[] = [
     title: "Как выбрать натуральные материалы для макраме: хлопок, лён и джут",
     excerpt:
       "Разбираемся в различиях между волокнами: какой хлопок лучше для белья, а какой — для абажура. Свойства, плюсы и минусы каждого материала.",
-    date: "2025-01-05",
+    date: "2026-01-05",
     readTime: "6 мин",
     category: "Материалы",
     coverImage: "/images/blog/natural-fibers.jpg",
@@ -481,7 +481,7 @@ export const blogPosts: BlogPost[] = [
     title: "Дизайн макраме: с чего начать, если вы не художник",
     excerpt:
       "Практические советы по поиску вдохновения, созданию собственного узора и адаптации существующих схем для ваших идей.",
-    date: "2025-02-14",
+    date: "2026-02-14",
     readTime: "7 мин",
     category: "Мастерство",
     coverImage: "/images/blog/workspace-creative.jpg",
@@ -543,7 +543,7 @@ export const blogPosts: BlogPost[] = [
     title: "Макраме и Feng Shui: как древняя техника актуальна сегодня",
     excerpt:
       "Баланс, гармония и осознанность в макраме. Как плетение работает как медитация и почему это важно для современного мира.",
-    date: "2025-03-02",
+    date: "2026-03-02",
     readTime: "8 мин",
     category: "Философия",
     coverImage: "/images/blog/hands-crafting.jpg",
@@ -605,7 +605,7 @@ export const blogPosts: BlogPost[] = [
     title: "Макраме для молодожёнов: экологичные идеи для свадебного декора",
     excerpt:
       "От фотозон до подарков: как использовать макраме в оформлении свадьбы. Идеи в стиле эко, бохо и минимализм.",
-    date: "2025-04-01",
+    date: "2026-04-01",
     readTime: "6 мин",
     category: "События",
     coverImage: "/images/blog/boho-bedroom.jpg",
@@ -667,7 +667,7 @@ export const blogPosts: BlogPost[] = [
     title: "Макраме для балконов и лоджий: защита от солнца и ветра",
     excerpt:
       "Как использовать макраме не только как декор, но и как функциональный элемент: ширмы, экраны и занавески для открытых пространств.",
-    date: "2025-05-10",
+    date: "2026-05-10",
     readTime: "5 мин",
     category: "Интерьер",
     coverImage: "/images/blog/minimalist-interior.jpg",
