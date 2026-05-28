@@ -718,6 +718,8 @@ export const blogPosts: BlogPost[] = [
     ],
   },
 ];
+
+export function getPostBySlug(slug: string) {
   return blogPosts.find((post) => post.slug === slug);
 }
 
