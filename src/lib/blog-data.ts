@@ -1099,13 +1099,9 @@ export const blogPosts: BlogPost[] = [
   },
 ];
 
-<<<<<<< HEAD
 export function getPostBySlug(slug: string): BlogPost | undefined {
-=======
-export function getPostBySlug(slug: string) {
   return blogPosts.find((post) => post.slug === slug);
 }
->>>>>>> main
 
 export function formatDate(dateString: string): string {
   const date = new Date(dateString);
