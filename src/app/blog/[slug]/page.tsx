@@ -38,7 +38,6 @@ export async function generateMetadata({
       description: post.excerpt,
       url: `${BASE_URL}${url}`,
       publishedTime: post.date,
-      authors: ["Ольга Карпычева"],
       images: [{ url: image, width: 1200, height: 630, alt: post.title }],
     },
     twitter: {
@@ -204,31 +203,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             })}
           </div>
 
-          {/* Author / CTA Section */}
+          {/* CTA Section */}
           <div className="max-w-2xl mx-auto mt-16 pt-12 border-t border-espresso/10">
-            <div className="flex flex-col md:flex-row items-center gap-6 bg-sand rounded-xl p-6 lg:p-8">
-              <div className="relative w-20 h-20 rounded-full overflow-hidden shrink-0">
-                <Image
-                  src="/images/craftswoman.jpg"
-                  alt="Мастер Stariva"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="text-center md:text-left">
-                <p className="label-caps text-terracotta mb-2">Автор</p>
-                <p className="font-serif text-xl text-espresso mb-1">
-                  Ольга Карпычева
-                </p>
-                <p className="text-taupe text-sm">
-                  Создаю уют руками с 2018 года. Каждое изделие — с любовью и
-                  вниманием к деталям.
-                </p>
-              </div>
-            </div>
-
             {/* CTA to catalog */}
-            <div className="mt-8 p-6 bg-espresso rounded-xl text-parchment text-center">
+            <div className="p-6 bg-espresso rounded-xl text-parchment text-center">
               <p className="font-serif text-xl mb-2">Понравилась статья?</p>
               <p className="text-parchment/70 text-sm mb-5">
                 Посмотрите изделия ручного макраме в нашем каталоге
