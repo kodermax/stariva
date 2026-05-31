@@ -183,11 +183,7 @@ function ProductCard({
                 −{Math.round((1 - product.price / product.oldPrice) * 100)}%
               </span>
             )}
-            {!product.inStock && (
-              <span className="label-caps bg-espresso/80 text-parchment px-2.5 py-1 rounded-full text-[10px]">
-                Нет в наличии
-              </span>
-            )}
+
           </div>
           {/* Quick Ozon link on hover */}
           {product.ozonUrl && product.inStock && (

@@ -70,13 +70,7 @@ function ProductCard({ product }: { product: Product; index?: number }) {
             Скидка
           </span>
         )}
-        {!product.inStock && (
-          <div className="absolute inset-0 bg-parchment/60 flex items-center justify-center">
-            <span className="label-caps text-espresso bg-parchment/90 px-4 py-2 rounded-full">
-              Нет в наличии
-            </span>
-          </div>
-        )}
+
       </div>
       <h3 className="font-serif text-xl text-espresso mb-1 group-hover:text-terracotta transition-colors">
         {product.name}
