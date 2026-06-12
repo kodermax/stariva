@@ -1,12 +1,53 @@
-"use client";
-
-import { motion } from "motion/react";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound, useParams } from "next/navigation";
+import { notFound } from "next/navigation";
 import { Footer } from "@/components/stariva/footer";
 import { Header } from "@/components/stariva/header";
+import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/stariva/json-ld";
 import { blogPosts, formatDate, getPostBySlug } from "@/lib/blog-data";
+
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://stariva.ru";
+
+interface BlogPostPageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export async function generateStaticParams() {
+  return blogPosts.map((post) => ({ slug: post.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: BlogPostPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
+  if (!post) return {};
+
+  const url = `/blog/${slug}`;
+  const image = `${BASE_URL}${post.coverImage}`;
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+    alternates: { canonical: `${BASE_URL}${url}` },
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.excerpt,
+      url: `${BASE_URL}${url}`,
+      publishedTime: post.date,
+      images: [{ url: image, width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [image],
+    },
+  };
+}
 
 function ArrowLeftIcon({ className }: { className?: string }) {
   return (
@@ -25,49 +66,51 @@ function ArrowLeftIcon({ className }: { className?: string }) {
   );
 }
 
-export default function BlogPostPage() {
-  const params = useParams();
-  const slug = params.slug as string;
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug } = await params;
   const post = getPostBySlug(slug);
 
   if (!post) {
     notFound();
   }
 
-  // Find related posts (same category, excluding current)
   const relatedPosts = blogPosts
     .filter((p) => p.slug !== post.slug)
     .slice(0, 2);
+  const url = `/blog/${slug}`;
 
   return (
     <>
       <Header variant="solid" />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Главная", href: "/" },
+          { name: "Блог", href: "/blog" },
+          { name: post.title, href: url },
+        ]}
+      />
+      <ArticleJsonLd
+        title={post.title}
+        description={post.excerpt}
+        image={post.coverImage}
+        datePublished={post.date}
+        url={url}
+      />
       <main className="pt-24 lg:pt-32 pb-20">
         {/* Back Link */}
         <div className="max-w-[1400px] mx-auto px-6 lg:px-10 mb-8">
-          <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4 }}
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 text-taupe hover:text-terracotta transition-colors"
           >
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 text-taupe hover:text-terracotta transition-colors"
-            >
-              <ArrowLeftIcon className="w-4 h-4" />
-              <span className="label-caps-md">Назад к блогу</span>
-            </Link>
-          </motion.div>
+            <ArrowLeftIcon className="w-4 h-4" />
+            <span className="label-caps-md">Назад к блогу</span>
+          </Link>
         </div>
 
         {/* Article Header */}
         <article className="max-w-[1400px] mx-auto px-6 lg:px-10">
-          <motion.header
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl mx-auto text-center mb-12"
-          >
+          <header className="max-w-3xl mx-auto text-center mb-12">
             <div className="flex items-center justify-center gap-4 mb-6">
               <span className="label-caps text-terracotta">
                 {post.category}
@@ -81,18 +124,13 @@ export default function BlogPostPage() {
             <p className="text-taupe text-lg leading-relaxed mb-6">
               {post.excerpt}
             </p>
-            <time className="text-sm text-taupe/70">
+            <time dateTime={post.date} className="text-sm text-taupe/70">
               {formatDate(post.date)}
             </time>
-          </motion.header>
+          </header>
 
           {/* Cover Image */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative aspect-[21/9] lg:aspect-[2.5/1] overflow-hidden rounded-xl mb-16"
-          >
+          <div className="relative aspect-[21/9] lg:aspect-[2.5/1] overflow-hidden rounded-xl mb-16">
             <Image
               src={post.coverImage}
               alt={post.title}
@@ -101,15 +139,10 @@ export default function BlogPostPage() {
               sizes="(max-width: 1400px) 100vw, 1400px"
               priority
             />
-          </motion.div>
+          </div>
 
           {/* Article Content */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="max-w-2xl mx-auto"
-          >
+          <div className="max-w-2xl mx-auto">
             {post.content.map((block, index) => {
               switch (block.type) {
                 case "paragraph":
@@ -168,84 +201,78 @@ export default function BlogPostPage() {
                   return null;
               }
             })}
-          </motion.div>
+          </div>
 
-          {/* Author / CTA Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="max-w-2xl mx-auto mt-16 pt-12 border-t border-espresso/10"
-          >
-            <div className="flex flex-col md:flex-row items-center gap-6 bg-sand rounded-xl p-6 lg:p-8">
-              <div className="relative w-20 h-20 rounded-full overflow-hidden shrink-0">
-                <Image
-                  src="/images/craftswoman.jpg"
-                  alt="Мастер Stariva"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="text-center md:text-left">
-                <p className="label-caps text-terracotta mb-2">Автор</p>
-                <p className="font-serif text-xl text-espresso mb-1">
-                  Ольга Карпычева
-                </p>
-                <p className="text-taupe text-sm">
-                  Создаю уют руками с 2018 года. Каждое изделие — с любовью и
-                  вниманием к деталям.
-                </p>
-              </div>
+          {/* CTA Section */}
+          <div className="max-w-2xl mx-auto mt-16 pt-12 border-t border-espresso/10">
+            {/* CTA to catalog */}
+            <div className="p-6 bg-espresso rounded-xl text-parchment text-center">
+              <p className="font-serif text-xl mb-2">Понравилась статья?</p>
+              <p className="text-parchment/70 text-sm mb-5">
+                Посмотрите изделия ручного макраме в нашем каталоге
+              </p>
+              <Link
+                href="/catalog"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-terracotta text-parchment label-caps-md hover:bg-terracotta/90 transition-colors"
+              >
+                Смотреть каталог
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M2 6h8M7 3l3 3-3 3"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </Link>
             </div>
-          </motion.div>
+          </div>
         </article>
 
         {/* Related Posts */}
         {relatedPosts.length > 0 && (
           <section className="max-w-[1400px] mx-auto px-6 lg:px-10 mt-20 lg:mt-32">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="font-serif text-2xl lg:text-3xl text-espresso mb-10 text-center">
-                Читайте также
-              </h2>
-              <div className="grid md:grid-cols-2 gap-8 lg:gap-10 max-w-4xl mx-auto">
-                {relatedPosts.map((relatedPost) => (
-                  <Link
-                    key={relatedPost.slug}
-                    href={`/blog/${relatedPost.slug}`}
-                    className="group block"
-                  >
-                    <div className="relative aspect-[4/3] overflow-hidden rounded-lg mb-5">
-                      <Image
-                        src={relatedPost.coverImage}
-                        alt={relatedPost.title}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, 400px"
-                      />
-                      <div className="absolute inset-0 bg-espresso/10 group-hover:bg-espresso/0 transition-colors duration-500" />
-                    </div>
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="label-caps text-terracotta">
-                        {relatedPost.category}
-                      </span>
-                      <span className="w-1 h-1 rounded-full bg-taupe/50" />
-                      <span className="label-caps text-taupe">
-                        {relatedPost.readTime}
-                      </span>
-                    </div>
-                    <h3 className="font-serif text-xl text-espresso group-hover:text-terracotta transition-colors text-balance">
-                      {relatedPost.title}
-                    </h3>
-                  </Link>
-                ))}
-              </div>
-            </motion.div>
+            <h2 className="font-serif text-2xl lg:text-3xl text-espresso mb-10 text-center">
+              Читайте также
+            </h2>
+            <div className="grid md:grid-cols-2 gap-8 lg:gap-10 max-w-4xl mx-auto">
+              {relatedPosts.map((relatedPost) => (
+                <Link
+                  key={relatedPost.slug}
+                  href={`/blog/${relatedPost.slug}`}
+                  className="group block"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-lg mb-5">
+                    <Image
+                      src={relatedPost.coverImage}
+                      alt={relatedPost.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 400px"
+                    />
+                    <div className="absolute inset-0 bg-espresso/10 group-hover:bg-espresso/0 transition-colors duration-500" />
+                  </div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="label-caps text-terracotta">
+                      {relatedPost.category}
+                    </span>
+                    <span className="w-1 h-1 rounded-full bg-taupe/50" />
+                    <span className="label-caps text-taupe">
+                      {relatedPost.readTime}
+                    </span>
+                  </div>
+                  <h3 className="font-serif text-xl text-espresso group-hover:text-terracotta transition-colors text-balance">
+                    {relatedPost.title}
+                  </h3>
+                </Link>
+              ))}
+            </div>
           </section>
         )}
 

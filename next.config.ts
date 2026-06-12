@@ -10,7 +10,12 @@ const nextConfig = {
       // Ozon CDN domains for product images
       { protocol: "https", hostname: "cdn1.ozon.ru" },
       { protocol: "https", hostname: "cdn2.ozon.ru" },
+      { protocol: "https", hostname: "cdn3.ozon.ru" },
+      { protocol: "https", hostname: "cdn1.ozone.ru" },
+      { protocol: "https", hostname: "cdn2.ozone.ru" },
+      { protocol: "https", hostname: "cdn3.ozone.ru" },
       { protocol: "https", hostname: "ir.ozone.ru" },
+      { protocol: "https", hostname: "s3.ozone.ru" },
     ],
   },
   async redirects() {

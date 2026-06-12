@@ -614,6 +614,33 @@ export function StariveLogo(props: IconProps) {
   );
 }
 
+export function AvitoIcon(props: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      {...props}
+    >
+      <circle cx="9" cy="9" r="3" stroke="currentColor" strokeWidth="1.3" />
+      <circle cx="16" cy="7" r="2" stroke="currentColor" strokeWidth="1.3" />
+      <path
+        d="M3 19c0-3 2.7-5 6-5s6 2 6 5"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+      />
+      <path
+        d="M16 13c2 .5 4 2 4 4"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export function OzonIcon(props: IconProps) {
   return (
     <svg

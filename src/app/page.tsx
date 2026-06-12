@@ -1,15 +1,59 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { CustomOrder } from "@/components/stariva/custom-order";
 import { Footer } from "@/components/stariva/footer";
 import { Header } from "@/components/stariva/header";
 import { Hero } from "@/components/stariva/hero";
+import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/stariva/json-ld";
 import { Marquee } from "@/components/stariva/marquee";
 import { MobileStickyBar } from "@/components/stariva/mobile-sticky-bar";
-
 import { Process } from "@/components/stariva/process";
 import { Reviews } from "@/components/stariva/reviews";
 import { Button } from "@/components/ui/button";
+import { getFeaturedProducts } from "@/lib/ozon-service";
+import { formatPrice } from "@/lib/products";
+
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://stariva.ru";
+
+export const metadata: Metadata = {
+  alternates: { canonical: BASE_URL },
+};
+
+// ─── Homepage FAQ ─────────────────────────────────────────────────────────────
+const homeFaq = [
+  {
+    question: "Где купить изделия Stariva?",
+    answer:
+      "Все изделия Stariva продаются на маркетплейсе Ozon с доставкой по всей России. Также можно оформить индивидуальный заказ напрямую через Telegram или по телефону.",
+  },
+  {
+    question: "Из чего сделаны изделия Stariva?",
+    answer:
+      "Все изделия создаются из натурального хлопкового шнура без синтетических добавок и химических красителей. Хлопок экологичен, безопасен для дома и приятен на ощупь.",
+  },
+  {
+    question: "Можно ли заказать изделие по индивидуальным размерам?",
+    answer:
+      "Да, мы принимаем индивидуальные заказы. Напишите в Telegram @Olga_Stariva или позвоните по номеру +7 977 872 25 46 — обсудим ваши пожелания и рассчитаем стоимость.",
+  },
+  {
+    question: "Сколько времени занимает изготовление?",
+    answer:
+      "Готовые изделия отправляем в течение 1–3 дней. Изделия на индивидуальный заказ изготавливаются 7–21 день в зависимости от сложности и размера.",
+  },
+  {
+    question: "Как ухаживать за изделиями из макраме?",
+    answer:
+      "Раз в неделю удаляйте пыль мягкой щёткой или феном на холодном режиме. При необходимости замочите в тёплой воде с мягким мылом на 15–20 минут, прополощите и сушите горизонтально. Не выжимайте.",
+  },
+  {
+    question: "Есть ли мастер-классы по макраме?",
+    answer:
+      "Да! Мы предлагаем видео-мастер-классы по созданию абажуров, одежды и декора интерьера. Доступ навсегда, HD-видео, смотрите в своём темпе. Купить на Ozon.",
+  },
+];
 
 // ─── Three-direction sections ────────────────────────────────────────────────
 
@@ -64,56 +108,11 @@ const directions = [
   },
 ];
 
-// ─── Featured picks per category ─────────────────────────────────────────────
-
-const picks = [
-  {
-    name: "Платье макраме «Летний бриз»",
-    price: "8 900 ₽",
-    category: "Одежда",
-    image: "/images/catalog/dress-boho-2.jpg",
-    href: "/catalog/clothes/dress-boho-2",
-  },
-  {
-    name: "Абажур «Купол» Ø60 см",
-    price: "12 400 ₽",
-    category: "Декор интерьера",
-    image: "/images/catalog/lampshade-dome.jpg",
-    href: "/catalog/interior/lampshade-dome",
-  },
-  {
-    name: "Панно «Горы» 80×50 см",
-    price: "5 600 ₽",
-    category: "Декор интерьера",
-    image: "/images/catalog/panno-large.jpg",
-    href: "/catalog/interior/panno-large",
-  },
-  {
-    name: "Авоська макраме",
-    price: "2 800 ₽",
-    category: "Сумки",
-    image: "/images/catalog/category-decor.jpg",
-    href: "/catalog/bags/avsk-macrame",
-  },
-  {
-    name: "Плейсменты × 4 шт.",
-    price: "3 200 ₽",
-    category: "Декор интерьера",
-    image: "/images/catalog/placemat-set.jpg",
-    href: "/catalog/interior/placemat-set",
-  },
-  {
-    name: "Топ макраме «Бали»",
-    price: "4 100 ₽",
-    category: "Одежда",
-    image: "/images/catalog/top-macrame.jpg",
-    href: "/catalog/clothes/top-macrame",
-  },
-];
-
-export default function Page() {
+export default async function Page() {
+  const featuredProducts = await getFeaturedProducts();
   return (
     <main className="bg-parchment text-espresso">
+      <BreadcrumbJsonLd items={[{ name: "Главная", href: "/" }]} />
       <Header variant="transparent" />
 
       {/* ── Hero: three-direction switcher ── */}
@@ -267,31 +266,57 @@ export default function Page() {
             </Link>
           </div>
 
-          {/* Grid: 2 cols on mobile, 3 on md, 6 thumbnails */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-5 lg:gap-6">
-            {picks.map((p) => (
-              <Link key={p.name} href={p.href} className="group">
-                <div className="relative aspect-[3/4] rounded-lg overflow-hidden mb-3 bg-parchment">
-                  <Image
-                    src={p.image}
-                    alt={p.name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                  />
-                  <div className="absolute top-3 left-3">
-                    <span className="label-caps bg-parchment/90 text-espresso px-2.5 py-1 rounded-full text-[10px]">
-                      {p.category}
-                    </span>
+          {featuredProducts.length > 0 ? (
+            /* Grid: 2 cols on mobile, 3 on md */
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-5 lg:gap-6">
+              {featuredProducts.slice(0, 6).map((p) => (
+                <Link
+                  key={p.id}
+                  href={`/catalog/${p.category}/${p.slug}`}
+                  className="group"
+                >
+                  <div className="relative aspect-[3/4] rounded-lg overflow-hidden mb-3 bg-parchment">
+                    <Image
+                      src={p.images[0] ?? "/placeholder.jpg"}
+                      alt={p.name}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                    />
+                    <div className="absolute top-3 left-3">
+                      <span className="label-caps bg-parchment/90 text-espresso px-2.5 py-1 rounded-full text-[10px]">
+                        {p.category === "clothes"
+                          ? "Одежда"
+                          : p.category === "bags"
+                            ? "Сумки"
+                            : "Декор интерьера"}
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <h4 className="font-serif text-espresso text-lg leading-snug group-hover:text-terracotta transition-colors line-clamp-2">
-                  {p.name}
-                </h4>
-                <p className="text-taupe text-sm mt-1">{p.price}</p>
-              </Link>
-            ))}
-          </div>
+                  <h4 className="font-serif text-espresso text-lg leading-snug group-hover:text-terracotta transition-colors line-clamp-2">
+                    {p.name}
+                  </h4>
+                  <p className="text-taupe text-sm mt-1">
+                    {formatPrice(p.price, p.currency)}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16 text-taupe">
+              <p className="font-serif text-xl mb-4">Товары загружаются…</p>
+              <p className="text-sm">
+                Загляните в{" "}
+                <Link
+                  href="/catalog"
+                  className="underline hover:text-terracotta"
+                >
+                  каталог
+                </Link>{" "}
+                или зайдите позже.
+              </p>
+            </div>
+          )}
 
           <div className="mt-10 text-center lg:hidden">
             <Button
@@ -399,6 +424,57 @@ export default function Page() {
       <Process />
       <Reviews />
       <CustomOrder />
+
+      {/* ── FAQ ── */}
+      <FAQJsonLd items={homeFaq} />
+      <section className="py-20 lg:py-28 bg-parchment">
+        <div className="max-w-[1440px] mx-auto px-5 lg:px-12">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-12">
+              <span className="label-caps text-terracotta mb-3 block">
+                Вопросы и ответы
+              </span>
+              <h2 className="font-serif text-3xl lg:text-4xl text-espresso">
+                Часто спрашивают
+              </h2>
+            </div>
+            <div className="space-y-3">
+              {homeFaq.map((item) => (
+                <details
+                  key={item.question}
+                  className="group border border-espresso/10 rounded-xl overflow-hidden"
+                >
+                  <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none text-espresso hover:bg-sand transition-colors">
+                    <span className="font-serif text-[17px] leading-snug">
+                      {item.question}
+                    </span>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      aria-hidden="true"
+                      className="flex-shrink-0 transition-transform duration-200 group-open:rotate-180 text-terracotta"
+                    >
+                      <path
+                        d="M3 6l5 5 5-5"
+                        stroke="currentColor"
+                        strokeWidth="1.3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </summary>
+                  <div className="px-6 pb-5 pt-2 text-taupe text-[15px] leading-[1.8] border-t border-espresso/8">
+                    {item.answer}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Footer />
       <MobileStickyBar />
     </main>

@@ -27,7 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${BASE_URL}/workshops`,
       lastModified: new Date(),
       changeFrequency: "weekly",
-      priority: 0.8,
+      priority: 0.85,
     },
     {
       url: `${BASE_URL}/blog`,
@@ -65,33 +65,50 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const categoryPages: MetadataRoute.Sitemap = categories.map((cat) => ({
     url: `${BASE_URL}/catalog/${cat.slug}`,
     lastModified: new Date(),
-    changeFrequency: "daily",
+    changeFrequency: "daily" as const,
     priority: 0.85,
   }));
 
   // ── Товары ────────────────────────────────────────────────────────────────
   const products = await getProducts();
-  const productPages: MetadataRoute.Sitemap = products.map((product) => ({
-    url: `${BASE_URL}/catalog/${product.category}/${product.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: 0.75,
-  }));
+  const productPages: MetadataRoute.Sitemap = products.map((product) => {
+    const firstImage = product.images[0];
+    const imageUrl = firstImage?.startsWith("http")
+      ? firstImage
+      : firstImage
+        ? `${BASE_URL}${firstImage}`
+        : undefined;
+
+    return {
+      url: `${BASE_URL}/catalog/${product.category}/${product.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: product.featured ? 0.85 : 0.75,
+      ...(imageUrl
+        ? {
+            images: [imageUrl],
+          }
+        : {}),
+    };
+  });
 
   // ── Статьи блога ──────────────────────────────────────────────────────────
   const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
     url: `${BASE_URL}/blog/${post.slug}`,
     lastModified: new Date(post.date),
-    changeFrequency: "monthly",
-    priority: 0.6,
+    changeFrequency: "monthly" as const,
+    // Новые статьи получают чуть выший приоритет
+    priority: new Date(post.date) > new Date("2025-01-01") ? 0.7 : 0.6,
+    images: [`${BASE_URL}${post.coverImage}`],
   }));
 
   // ── Мастер-классы ─────────────────────────────────────────────────────────
   const workshopPages: MetadataRoute.Sitemap = workshops.map((workshop) => ({
     url: `${BASE_URL}/workshops/${workshop.slug}`,
     lastModified: new Date(),
-    changeFrequency: "monthly",
-    priority: 0.7,
+    changeFrequency: "monthly" as const,
+    priority: workshop.featured ? 0.8 : 0.7,
+    images: [`${BASE_URL}${workshop.cover}`],
   }));
 
   return [

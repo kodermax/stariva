@@ -147,10 +147,10 @@ export default function PersonalDataConsentPage() {
               направив письменное заявление Оператору по адресу электронной
               почты{" "}
               <a
-                href="mailto:hello@stariva.ru"
+                href="mailto:info@stariva.ru"
                 className="text-terracotta hover:underline"
               >
-                hello@stariva.ru
+                info@stariva.ru
               </a>{" "}
               или по телефону{" "}
               <a
@@ -193,15 +193,15 @@ export default function PersonalDataConsentPage() {
               9. Контакты Оператора
             </h2>
             <div className="space-y-1">
-              <p>СЗ Капычева О. А.</p>
+              <p>СЗ Карпычева О. А.</p>
               <p>ИНН: 502480197143</p>
               <p>
                 Email:{" "}
                 <a
-                  href="mailto:hello@stariva.ru"
+                  href="mailto:info@stariva.ru"
                   className="text-terracotta hover:underline"
                 >
-                  hello@stariva.ru
+                  info@stariva.ru
                 </a>
               </p>
               <p>

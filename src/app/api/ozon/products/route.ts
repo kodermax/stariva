@@ -11,6 +11,11 @@ async function fetchOzonProducts(): Promise<OzonProductInfoResponse | null> {
   const clientId = env.OZON_CLIENT_ID;
   const apiKey = env.OZON_API_KEY;
 
+  if (!clientId || !apiKey) {
+    console.log("[v0] Ozon credentials not configured");
+    return null;
+  }
+
   try {
     // First, get product list
     const listResponse = await fetch(`${OZON_API_URL}/v2/product/list`, {
