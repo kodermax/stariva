@@ -18,6 +18,12 @@ import { makrameDlyaKafeIRestoranov } from "./makrame-dlya-kafe-i-restoranov";
 import { makrameSumkiTrendLeta } from "./makrame-sumki-trend-leta";
 import { kakUkhazhivatZaMakrameStirkaChistkaKhranenie } from "./kak-ukhazhivat-za-makrame-stirka-chistka-khranenie";
 import { makrameVMalenkoyKvartire } from "./makrame-v-malenkoy-kvartire";
+import { makrameOsenZimniyDekor } from "./makrame-osen-zimniy-dekor";
+import { naturalnoKrasenieKhlopka } from "./naturalnoe-krasenie-khlopka";
+import { makrameNaUlice } from "./makrame-na-ulice";
+import { bazovyeUzlyMakrame } from "./5-bazovykh-uzlov-makrame";
+import { trendyMakrame20252026 } from "./trendy-makrame-2025-2026";
+import { kakVybratPervyyMasterKlass } from "./kak-vybrat-pervyy-master-klass";
 
 import type { BlogPost } from "./types";
 
@@ -40,6 +46,12 @@ export const blogPosts: BlogPost[] = [
   makrameSumkiTrendLeta,
   kakUkhazhivatZaMakrameStirkaChistkaKhranenie,
   makrameVMalenkoyKvartire,
+  makrameOsenZimniyDekor,
+  naturalnoKrasenieKhlopka,
+  makrameNaUlice,
+  bazovyeUzlyMakrame,
+  trendyMakrame20252026,
+  kakVybratPervyyMasterKlass,
 ];
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
