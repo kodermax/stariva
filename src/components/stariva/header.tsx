@@ -34,6 +34,7 @@ const nav = [
   { label: "Каталог", href: "/catalog", hasMega: true },
   { label: "Мастер-классы", href: "/workshops" },
   { label: "Блог", href: "/blog" },
+  { label: "Для бизнеса", href: "/b2b" },
   { label: "О бренде", href: "/about" },
 ];
 
@@ -400,6 +401,7 @@ export function Header({ variant = "solid" }: HeaderProps) {
               { label: "Весь каталог", href: "/catalog" },
               { label: "Мастер-классы", href: "/workshops" },
               { label: "Блог", href: "/blog" },
+              { label: "Для бизнеса", href: "/b2b" },
               { label: "О бренде", href: "/about" },
               { label: "Заказать", href: "/#order" },
             ].map((item) => (
