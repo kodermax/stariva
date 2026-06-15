@@ -7,6 +7,7 @@ import {
   OrganizationJsonLd,
   WebSiteJsonLd,
 } from "@/components/stariva/json-ld";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -117,6 +118,7 @@ export default function RootLayout({
         <OrganizationJsonLd />
         <WebSiteJsonLd />
         {children}
+        <Toaster position="top-center" richColors />
         {env.NODE_ENV === "production" && <Analytics />}
         {env.NODE_ENV === "production" && (
           <>
