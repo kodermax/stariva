@@ -1,13 +1,13 @@
 import { createGroq } from "@ai-sdk/groq";
-import { generateObject } from "ai";
+import { generateText } from "ai";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { env } from "@/lib/env";
 import {
   calculatePrice,
   describeSelection,
   formatRub,
 } from "@/lib/custom-order/pricing";
+import { env } from "@/lib/env";
 
 export const runtime = "nodejs";
 
@@ -71,15 +71,25 @@ export async function POST(request: NextRequest) {
 
   const groq = createGroq({ apiKey: env.GROQ_API_KEY });
 
+  const jsonSchema = `{
+  "designSummary": "краткое описание изделия, 1–2 предложения",
+  "suggestions": ["идея 1", "идея 2", "идея 3"],
+  "estimatedMin": 2000,
+  "estimatedMax": 4000,
+  "productionDays": "10–14 дней",
+  "note": "короткая заметка про подтверждение цены мастером"
+}`;
+
   try {
-    const { object } = await generateObject({
+    const { text } = await generateText({
       model: groq(env.GROQ_MODEL),
-      schema: estimateSchema,
       system:
         "Ты — консультант мастерской макраме Stariva. Изделия плетутся вручную из натурального хлопкового шнура. " +
         "Помогаешь клиенту с индивидуальным заказом: предлагаешь идеи дизайна и ориентировочную стоимость. " +
         "Отвечай только на русском языке, дружелюбно и по делу. " +
-        "Не обещай точную цену — это ориентир, итог подтверждает мастер.",
+        "Не обещай точную цену — это ориентир, итог подтверждает мастер. " +
+        "ВАЖНО: отвечай ТОЛЬКО валидным JSON-объектом без каких-либо пояснений, markdown-блоков или лишнего текста. " +
+        `Формат ответа:\n${jsonSchema}`,
       prompt: [
         `Запрос клиента: "${data.description}"`,
         selectionText ? `Выбранные параметры: ${selectionText}.` : "",
@@ -87,13 +97,32 @@ export async function POST(request: NextRequest) {
         ruleEstimate
           ? `Базовый расчёт по прайсу мастерской: ${formatRub(ruleEstimate.min)}–${formatRub(ruleEstimate.max)}. Используй его как ориентир, можешь скорректировать с учётом сложности из описания.`
           : "Параметры не выбраны — оцени по описанию, типичный диапазон для макраме 1500–8000 ₽.",
-        "Дай структурированный ответ строго по схеме.",
+        "Дай ответ строго в виде JSON-объекта.",
       ]
         .filter(Boolean)
         .join("\n"),
     });
 
-    return NextResponse.json(object);
+    // Извлекаем JSON из ответа (модель иногда оборачивает в ```json ... ```)
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      console.error("[ai/estimate] No JSON in response:", text);
+      return NextResponse.json(
+        { error: "Не удалось получить ответ AI. Попробуйте позже." },
+        { status: 502 },
+      );
+    }
+
+    const parsed = estimateSchema.safeParse(JSON.parse(jsonMatch[0]));
+    if (!parsed.success) {
+      console.error("[ai/estimate] Schema validation failed:", parsed.error);
+      return NextResponse.json(
+        { error: "Не удалось получить ответ AI. Попробуйте позже." },
+        { status: 502 },
+      );
+    }
+
+    return NextResponse.json(parsed.data);
   } catch (error) {
     console.error("[ai/estimate] Groq error:", error);
     return NextResponse.json(
