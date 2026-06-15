@@ -88,6 +88,8 @@ function isFallbackError(error: unknown): boolean {
     // Groq: модель не смогла вызвать tool — пробуем другой провайдер
     msg.includes("Failed to call a function") ||
     msg.includes("failed_generation") ||
+    // Groq: вернул пустой ответ без текста и без tool calls
+    msg.includes("empty_response") ||
     msg.includes("rate_limit") ||
     msg.includes("Rate limit") ||
     msg.includes("overloaded") ||
@@ -138,7 +140,16 @@ async function tryStreamText(
   // Поэтому ждём steps — он реджектится при любой ошибке стрима,
   // включая "Failed to call a function" от Groq.
   await result.consumeStream();
-  await result.steps;
+  const steps = await result.steps;
+
+  // Groq иногда возвращает пустой/null ответ без ошибки — нужно явно это поймать
+  const responseText = steps.at(-1)?.text ?? "";
+  const hasToolCalls = (steps.at(-1)?.toolCalls?.length ?? 0) > 0;
+  if (!hasToolCalls && responseText.trim() === "") {
+    throw new Error(
+      "empty_response: provider returned no text and no tool calls",
+    );
+  }
 
   return result;
 }
