@@ -1,6 +1,12 @@
 import { createGroq } from "@ai-sdk/groq";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import {
+  observe,
+  propagateAttributes,
+  setActiveTraceIO,
+} from "@langfuse/tracing";
+import { trace } from "@opentelemetry/api";
+import {
   convertToModelMessages,
   type LanguageModel,
   stepCountIs,
@@ -124,7 +130,7 @@ async function tryStreamText(
 
 // ─── Основной обработчик ─────────────────────────────────────────────────────
 
-export async function POST(request: NextRequest) {
+async function handler(request: NextRequest) {
   const models = getAvailableModels();
 
   if (models.length === 0) {
@@ -174,50 +180,81 @@ export async function POST(request: NextRequest) {
   const modelMessages = await convertToModelMessages(trimmed);
   const system = buildSystemPrompt();
 
+  // Записываем последнее сообщение пользователя как input трейса
+  const lastUserMessage = [...trimmed].reverse().find((m) => m.role === "user");
+  const inputText = lastUserMessage?.parts
+    .filter((p) => p.type === "text")
+    .map((p) => (p as { type: "text"; text: string }).text)
+    .join(" ");
+
+  setActiveTraceIO({ input: inputText });
+
   // ─── Перебираем провайдеры по очереди ──────────────────────────────────────
   let lastError: unknown;
 
-  for (const { name, model } of models) {
-    try {
-      const result = await tryStreamText(model, {
-        system,
-        messages: modelMessages,
-        tools: chatTools as ToolSet,
-        sessionId,
-        providerName: name,
-      });
+  return await propagateAttributes({ sessionId }, async () => {
+    for (const { name, model } of models) {
+      try {
+        const result = await tryStreamText(model, {
+          system,
+          messages: modelMessages,
+          tools: chatTools as ToolSet,
+          sessionId,
+          providerName: name,
+        });
 
-      // Гарантируем flush трейса в Langfuse после завершения стрима
-      // (важно для serverless: функция может завершиться до отправки трейса)
-      after(async () => await langfuseSpanProcessor.forceFlush());
+        const streamResponse = result.toUIMessageStreamResponse({
+          onError: (error) => {
+            console.error(`[ai/chat] stream error (${name}):`, error);
+            return "Не удалось получить ответ. Попробуйте ещё раз.";
+          },
+        });
 
-      return result.toUIMessageStreamResponse({
-        onError: (error) => {
-          console.error(`[ai/chat] stream error (${name}):`, error);
-          return "Не удалось получить ответ. Попробуйте ещё раз.";
-        },
-      });
-    } catch (error) {
-      lastError = error;
-      console.error(`[ai/chat] provider "${name}" failed:`, error);
+        // Обновляем output трейса и закрываем span после завершения стрима
+        Promise.resolve(result.text).then(
+          (text) => {
+            setActiveTraceIO({ output: text });
+            trace.getActiveSpan()?.end();
+          },
+          () => {
+            trace.getActiveSpan()?.end();
+          },
+        );
 
-      if (isFallbackError(error)) {
-        const isLast = name === models[models.length - 1].name;
-        if (!isLast) {
-          console.warn(
-            `[ai/chat] falling back from "${name}" to next provider`,
-          );
-          continue;
+        // Гарантируем flush трейса в Langfuse после завершения стрима
+        // (важно для serverless: функция может завершиться до отправки трейса)
+        after(async () => await langfuseSpanProcessor.forceFlush());
+
+        return streamResponse;
+      } catch (error) {
+        lastError = error;
+        console.error(`[ai/chat] provider "${name}" failed:`, error);
+
+        if (isFallbackError(error)) {
+          const isLast = name === models[models.length - 1].name;
+          if (!isLast) {
+            console.warn(
+              `[ai/chat] falling back from "${name}" to next provider`,
+            );
+            continue;
+          }
         }
+
+        break;
       }
-
-      break;
     }
-  }
 
-  console.error("[ai/chat] all providers failed, last error:", lastError);
-  return NextResponse.json(
-    { error: "Не удалось получить ответ. Попробуйте позже." },
-    { status: 502 },
-  );
+    console.error("[ai/chat] all providers failed, last error:", lastError);
+    return NextResponse.json(
+      { error: "Не удалось получить ответ. Попробуйте позже." },
+      { status: 502 },
+    );
+  });
 }
+
+// Оборачиваем handler в observe() — создаёт корневой трейс в Langfuse
+// endOnExit: false — span не закрывается сразу, ждёт завершения стрима
+export const POST = observe(handler, {
+  name: "stariva-chat",
+  endOnExit: false,
+});
