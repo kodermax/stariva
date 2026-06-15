@@ -282,9 +282,9 @@ export function ChatWidget() {
                 <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 border-2 border-espresso" />
               </div>
               <div className="min-w-0">
-                <p className="font-serif text-[17px] leading-tight">Стэри</p>
+                <p className="font-serif text-[17px] leading-tight">Ника</p>
                 <p className="text-parchment/65 text-[11px] leading-tight">
-                  Консультант мастерской · онлайн
+                  Цифровой помощник мастерской · онлайн
                 </p>
               </div>
               <button
