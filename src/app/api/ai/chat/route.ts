@@ -1,13 +1,16 @@
 import { createGroq } from "@ai-sdk/groq";
 import {
   convertToModelMessages,
+  stepCountIs,
   streamText,
+  type ToolSet,
   type UIMessage,
   validateUIMessages,
 } from "ai";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { buildSystemPrompt } from "@/lib/chat/knowledge";
+import { chatTools } from "@/lib/chat/tools";
 import { env } from "@/lib/env";
 
 export const runtime = "nodejs";
@@ -39,7 +42,10 @@ export async function POST(request: NextRequest) {
 
   let messages: UIMessage[];
   try {
-    messages = await validateUIMessages({ messages: rawMessages });
+    messages = await validateUIMessages({
+      messages: rawMessages,
+      tools: chatTools,
+    });
   } catch {
     return NextResponse.json(
       { error: "Некорректный формат сообщений" },
@@ -64,10 +70,20 @@ export async function POST(request: NextRequest) {
       model: groq(env.GROQ_MODEL),
       system: buildSystemPrompt(),
       messages: await convertToModelMessages(trimmed),
+      tools: chatTools as ToolSet,
+      // Разрешаем несколько шагов: вызвать инструмент → получить данные →
+      // сформулировать осмысленный ответ клиенту.
+      stopWhen: stepCountIs(5),
       temperature: 0.6,
     });
 
-    return result.toUIMessageStreamResponse();
+    return result.toUIMessageStreamResponse({
+      // Отдаём осмысленный текст ошибки клиенту вместо «An error occurred».
+      onError: (error) => {
+        console.error("[ai/chat] stream error:", error);
+        return "Не удалось получить ответ. Попробуйте ещё раз.";
+      },
+    });
   } catch (error) {
     console.error("[ai/chat] Groq error:", error);
     return NextResponse.json(
