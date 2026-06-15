@@ -1,10 +1,10 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import type { Metadata } from "next";
 import { Footer } from "@/components/stariva/footer";
 import { Header } from "@/components/stariva/header";
+import { PhoneIcon, TelegramIcon } from "@/components/stariva/icons";
 import { BreadcrumbJsonLd } from "@/components/stariva/json-ld";
-import { TelegramIcon, PhoneIcon } from "@/components/stariva/icons";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://stariva.ru";
@@ -109,7 +109,7 @@ const useCases = [
   },
 ];
 
-const process = [
+const orderSteps = [
   {
     step: "01",
     title: "Заявка",
@@ -220,8 +220,20 @@ export default function B2BPage() {
                 className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-white/30 text-white label-caps-md hover:border-white/60 transition-colors duration-300"
               >
                 Как работаем
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M7 2v10M3 8l4 4 4-4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M7 2v10M3 8l4 4 4-4"
+                    stroke="currentColor"
+                    strokeWidth="1.3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </a>
             </div>
@@ -240,8 +252,12 @@ export default function B2BPage() {
                 key={i}
                 className="px-7 py-5 bg-white/8 backdrop-blur-sm flex flex-col gap-1 min-w-[110px]"
               >
-                <span className="font-serif text-3xl lg:text-4xl text-white leading-none">{s.value}</span>
-                <span className="label-caps text-white/50 text-[10px] leading-tight whitespace-pre">{s.label}</span>
+                <span className="font-serif text-3xl lg:text-4xl text-white leading-none">
+                  {s.value}
+                </span>
+                <span className="label-caps text-white/50 text-[10px] leading-tight whitespace-pre">
+                  {s.label}
+                </span>
               </div>
             ))}
           </div>
@@ -252,7 +268,9 @@ export default function B2BPage() {
       <section className="py-28 lg:py-40">
         <div className="max-w-[1440px] mx-auto px-6 lg:px-14">
           <div className="mb-16 lg:mb-20">
-            <p className="label-caps text-terracotta tracking-widest mb-4">Подходит для</p>
+            <p className="label-caps text-terracotta tracking-widest mb-4">
+              Подходит для
+            </p>
             <h2 className="font-serif text-[clamp(2.5rem,5vw,4.5rem)] text-espresso leading-[1.05]">
               Любой коммерческой
               <br />
@@ -276,13 +294,18 @@ export default function B2BPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-espresso/50 to-transparent" />
                   <div className="absolute bottom-5 left-6">
-                    <span className="font-serif text-2xl text-white">{uc.label}</span>
+                    <span className="font-serif text-2xl text-white">
+                      {uc.label}
+                    </span>
                   </div>
                 </div>
                 <div className="p-6 bg-white">
                   <ul className="space-y-2.5">
                     {uc.items.map((item) => (
-                      <li key={item} className="flex items-center gap-3 text-espresso/70 text-sm">
+                      <li
+                        key={item}
+                        className="flex items-center gap-3 text-espresso/70 text-sm"
+                      >
                         <span className="w-1 h-1 rounded-full bg-espresso/30 flex-shrink-0" />
                         {item}
                       </li>
@@ -300,7 +323,9 @@ export default function B2BPage() {
         <div className="max-w-[1440px] mx-auto px-6 lg:px-14">
           <div className="mb-16 lg:mb-20 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <div>
-              <p className="label-caps text-terracotta tracking-widest mb-4">Почему Stariva</p>
+              <p className="label-caps text-terracotta tracking-widest mb-4">
+                Почему Stariva
+              </p>
               <h2 className="font-serif text-[clamp(2.5rem,5vw,4.5rem)] text-espresso leading-[1.05]">
                 Преимущества
                 <br />
@@ -308,17 +333,26 @@ export default function B2BPage() {
               </h2>
             </div>
             <p className="text-taupe text-base leading-[1.8] max-w-sm lg:text-right">
-              Работаем с коммерческими объектами с 2020 года.
-              Больше 50 реализованных проектов по всей России.
+              Работаем с коммерческими объектами с 2020 года. Больше 50
+              реализованных проектов по всей России.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-espresso/8 border border-espresso/8 rounded-2xl overflow-hidden">
             {advantages.map((adv) => (
-              <div key={adv.number} className="bg-sand p-8 lg:p-10 flex flex-col gap-4">
-                <span className="font-serif text-5xl text-espresso/10 leading-none select-none">{adv.number}</span>
-                <h3 className="font-serif text-xl lg:text-2xl text-espresso leading-tight">{adv.title}</h3>
-                <p className="text-taupe leading-[1.8] text-[14px]">{adv.body}</p>
+              <div
+                key={adv.number}
+                className="bg-sand p-8 lg:p-10 flex flex-col gap-4"
+              >
+                <span className="font-serif text-5xl text-espresso/10 leading-none select-none">
+                  {adv.number}
+                </span>
+                <h3 className="font-serif text-xl lg:text-2xl text-espresso leading-tight">
+                  {adv.title}
+                </h3>
+                <p className="text-taupe leading-[1.8] text-[14px]">
+                  {adv.body}
+                </p>
               </div>
             ))}
           </div>
@@ -326,17 +360,22 @@ export default function B2BPage() {
       </section>
 
       {/* ── Process ──────────────────────────────────────────────────────── */}
-      <section id="process" className="py-28 lg:py-40 bg-espresso text-parchment">
+      <section
+        id="process"
+        className="py-28 lg:py-40 bg-espresso text-parchment"
+      >
         <div className="max-w-[1440px] mx-auto px-6 lg:px-14">
           <div className="mb-16 lg:mb-20">
-            <p className="label-caps text-linen/50 tracking-widest mb-4">Процесс</p>
+            <p className="label-caps text-linen/50 tracking-widest mb-4">
+              Процесс
+            </p>
             <h2 className="font-serif text-[clamp(2.5rem,5vw,4.5rem)] text-parchment leading-[1.05]">
               Как мы работаем
             </h2>
           </div>
 
           <div className="space-y-0">
-            {process.map((item) => (
+            {orderSteps.map((item) => (
               <div
                 key={item.step}
                 className="grid grid-cols-[56px_1fr] lg:grid-cols-[100px_1fr] gap-6 lg:gap-12 py-9 border-t border-parchment/8 group"
@@ -345,8 +384,12 @@ export default function B2BPage() {
                   {item.step}
                 </div>
                 <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 lg:gap-16">
-                  <h3 className="font-serif text-xl lg:text-2xl text-parchment lg:w-48 flex-shrink-0">{item.title}</h3>
-                  <p className="text-parchment/55 text-[14px] leading-[1.85] lg:max-w-2xl">{item.desc}</p>
+                  <h3 className="font-serif text-xl lg:text-2xl text-parchment lg:w-48 flex-shrink-0">
+                    {item.title}
+                  </h3>
+                  <p className="text-parchment/55 text-[14px] leading-[1.85] lg:max-w-2xl">
+                    {item.desc}
+                  </p>
                 </div>
               </div>
             ))}
@@ -360,7 +403,9 @@ export default function B2BPage() {
         <div className="max-w-[1440px] mx-auto px-6 lg:px-14">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-14">
-              <p className="label-caps text-terracotta tracking-widest mb-4">FAQ</p>
+              <p className="label-caps text-terracotta tracking-widest mb-4">
+                FAQ
+              </p>
               <h2 className="font-serif text-[clamp(2rem,4vw,3.5rem)] text-espresso leading-[1.1]">
                 Вопросы о корпоративных заказах
               </h2>
@@ -372,7 +417,9 @@ export default function B2BPage() {
                   className="group border border-espresso/10 rounded-xl overflow-hidden"
                 >
                   <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none text-espresso hover:bg-sand transition-colors">
-                    <span className="font-serif text-[17px] leading-snug">{item.q}</span>
+                    <span className="font-serif text-[17px] leading-snug">
+                      {item.q}
+                    </span>
                     <svg
                       width="16"
                       height="16"
@@ -381,7 +428,13 @@ export default function B2BPage() {
                       aria-hidden="true"
                       className="flex-shrink-0 transition-transform duration-200 group-open:rotate-180 text-espresso/40"
                     >
-                      <path d="M3 6l5 5 5-5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                      <path
+                        d="M3 6l5 5 5-5"
+                        stroke="currentColor"
+                        strokeWidth="1.3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </summary>
                   <div className="px-6 pb-5 pt-2 text-taupe text-[15px] leading-[1.8] border-t border-espresso/8">
@@ -400,7 +453,9 @@ export default function B2BPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
             {/* Left: text */}
             <div className="lg:col-span-6">
-              <p className="label-caps text-terracotta tracking-widest mb-4">Начнём?</p>
+              <p className="label-caps text-terracotta tracking-widest mb-4">
+                Начнём?
+              </p>
               <h2 className="font-serif text-[clamp(2.5rem,5vw,4.5rem)] text-espresso leading-[1.05] text-balance mb-6">
                 Расскажите о вашем проекте
               </h2>
@@ -455,8 +510,20 @@ export default function B2BPage() {
               className="inline-flex items-center gap-2 label-caps-md text-espresso border border-espresso/15 px-6 py-3 rounded-full hover:border-espresso transition-colors"
             >
               Каталог
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M2 6h8M7 3l3 3-3 3"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </Link>
             <Link
@@ -464,8 +531,20 @@ export default function B2BPage() {
               className="inline-flex items-center gap-2 label-caps-md text-espresso border border-espresso/15 px-6 py-3 rounded-full hover:border-espresso transition-colors"
             >
               Статья о декоре для кафе
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M2 6h8M7 3l3 3-3 3"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </Link>
           </div>
