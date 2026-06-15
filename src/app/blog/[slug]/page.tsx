@@ -198,6 +198,38 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                       </p>
                     </blockquote>
                   );
+                case "cta":
+                  return (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: blog content blocks are static and never reordered
+                    <div
+                      key={index}
+                      className="my-10 p-6 bg-sand rounded-xl border border-espresso/8 text-center"
+                    >
+                      <p className="text-espresso/80 text-base mb-4">
+                        {block.text}
+                      </p>
+                      <Link
+                        href={block.href ?? "/catalog"}
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-espresso text-parchment label-caps-md hover:bg-terracotta transition-colors"
+                      >
+                        {block.label ?? "Перейти"}
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 12 12"
+                          fill="none"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M2 6h8M7 3l3 3-3 3"
+                            stroke="currentColor"
+                            strokeWidth="1.2"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                      </Link>
+                    </div>
+                  );
                 default:
                   return null;
               }

@@ -5,7 +5,7 @@ export const kakVyibratNaturalnyeMaterialyDlyaMakrame: BlogPost = {
   title: "Как выбрать натуральные материалы для макраме: хлопок, лён и джут",
   excerpt:
     "Разбираемся в различиях между волокнами: какой хлопок лучше для белья, а какой — для абажура. Свойства, плюсы и минусы каждого материала.",
-  date: "2026-01-05",
+  date: "2026-03-20",
   readTime: "6 мин",
   category: "Материалы",
   coverImage: "/images/blog/natural-fibers.jpg",

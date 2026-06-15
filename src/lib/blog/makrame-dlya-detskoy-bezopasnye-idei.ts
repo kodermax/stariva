@@ -5,7 +5,7 @@ export const makrameDlyaDetskoyBezopasnyeIdei: BlogPost = {
   title: "Макраме для детской: безопасные идеи для комнаты малыша",
   excerpt:
     "Мобили, ловцы снов и настенный декор для детской. Как выбрать безопасные материалы и создать уютное пространство для ребёнка.",
-  date: "2025-06-01",
+  date: "2025-08-18",
   readTime: "7 мин",
   category: "Интерьер",
   coverImage: "/images/blog/nursery-decor.png",
@@ -59,6 +59,12 @@ export const makrameDlyaDetskoyBezopasnyeIdei: BlogPost = {
     {
       type: "paragraph",
       text: "В Stariva все изделия для детских делаются из 100% натурального хлопка без красителей. Мы понимаем, что для родителей безопасность — на первом месте.",
+    },
+    {
+      type: "cta",
+      text: "Безопасный декор для детской из натурального хлопка — мобили, панно и кашпо",
+      href: "/catalog/interior",
+      label: "Декор для детской",
     },
   ],
 };

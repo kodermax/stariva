@@ -5,7 +5,7 @@ export const makrameOsenZimniyDekor: BlogPost = {
   title: "Осенний декор из макраме: как обновить интерьер к холодному сезону",
   excerpt:
     "Идеи для создания тёплой осенней атмосферы с помощью макраме. Какие изделия выбрать, как расставить акценты и сочетать с сезонными материалами.",
-  date: "2025-08-10",
+  date: "2025-10-25",
   readTime: "6 мин",
   category: "Интерьер",
   coverImage: "/images/blog/autumn-decor.png",
@@ -56,6 +56,12 @@ export const makrameOsenZimniyDekor: BlogPost = {
     {
       type: "quote",
       text: "«Осень — лучшее время замедлиться, зажечь свечу и почувствовать, как красиво жить дома.»",
+    },
+    {
+      type: "cta",
+      text: "Абажуры и панно, которые сделают ваш дом теплее этой осенью",
+      href: "/catalog/interior",
+      label: "Осенний декор",
     },
   ],
 };

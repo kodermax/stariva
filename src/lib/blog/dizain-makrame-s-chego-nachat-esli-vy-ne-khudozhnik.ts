@@ -5,7 +5,7 @@ export const dizainMakrameSChegoNachatEsliVyNeKhudozhnik: BlogPost = {
   title: "Дизайн макраме: с чего начать, если вы не художник",
   excerpt:
     "Практические советы по поиску вдохновения, созданию собственного узора и адаптации существующих схем для ваших идей.",
-  date: "2026-02-14",
+  date: "2026-04-03",
   readTime: "7 мин",
   category: "Мастерство",
   coverImage: "/images/blog/workspace-creative.jpg",

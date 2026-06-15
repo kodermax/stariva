@@ -5,7 +5,7 @@ export const kakVybratMakrameSvetilnikDlyaDoma: BlogPost = {
   title: "Как выбрать макраме-светильник для вашего дома",
   excerpt:
     "Практичное руководство по выбору идеального светильника: размеры, стили и сочетания с интерьером.",
-  date: "2025-11-10",
+  date: "2026-02-20",
   readTime: "5 мин",
   category: "Советы",
   coverImage: "/images/blog/bedroom-styling.jpg",
@@ -51,6 +51,12 @@ export const kakVybratMakrameSvetilnikDlyaDoma: BlogPost = {
     {
       type: "paragraph",
       text: "И последнее — доверяйте интуиции. Если изделие вызывает тёплое чувство в груди, если вы представляете его в своём доме — скорее всего, это именно то, что вам нужно.",
+    },
+    {
+      type: "cta",
+      text: "Посмотрите нашу коллекцию абажуров из макраме — от компактных до больших, для любого интерьера",
+      href: "/catalog/interior",
+      label: "Каталог абажуров",
     },
   ],
 };

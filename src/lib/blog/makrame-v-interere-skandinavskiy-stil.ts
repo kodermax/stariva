@@ -6,7 +6,7 @@ export const makrameVInterereSkandinvskiyStil: BlogPost = {
     "Макраме в интерьере: как вписать в скандинавский и минималистичный стиль",
   excerpt:
     "Советы по сочетанию изделий из макраме с современными интерьерами: скандинавский стиль, минимализм, japandi и эко.",
-  date: "2026-05-05",
+  date: "2026-05-28",
   readTime: "6 мин",
   category: "Интерьер",
   coverImage: "/images/blog/living-room-styling.jpg",
@@ -60,6 +60,12 @@ export const makrameVInterereSkandinvskiyStil: BlogPost = {
     {
       type: "paragraph",
       text: "Посмотреть все изделия для интерьера — абажуры, панно и плейсменты — можно в каталоге Stariva на Ozon. Доставка по всей России.",
+    },
+    {
+      type: "cta",
+      text: "Абажуры, панно и плейсменты из макраме для минималистичного интерьера",
+      href: "/catalog/interior",
+      label: "Каталог для интерьера",
     },
   ],
 };

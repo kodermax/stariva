@@ -5,7 +5,7 @@ export const naturalnoKrasenieKhlopka: BlogPost = {
   title: "Натуральное крашение хлопка: как создаются цветные изделия Stariva",
   excerpt:
     "Как мы красим хлопок растительными красителями: индиго, грецкий орех, куркума. Почему это сложнее и ценнее синтетики.",
-  date: "2025-08-25",
+  date: "2025-11-08",
   readTime: "7 мин",
   category: "Материалы",
   coverImage: "/images/blog/natural-dyeing.png",
@@ -55,6 +55,12 @@ export const naturalnoKrasenieKhlopka: BlogPost = {
     {
       type: "quote",
       text: "«Синтетика даёт идеальный цвет. Природа даёт живой — и это намного интереснее.»",
+    },
+    {
+      type: "cta",
+      text: "Изделия из натурально окрашенного хлопка — уникальные оттенки, созданные природой",
+      href: "/catalog",
+      label: "Смотреть каталог",
     },
   ],
 };

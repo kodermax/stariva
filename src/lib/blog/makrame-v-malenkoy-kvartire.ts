@@ -5,7 +5,7 @@ export const makrameVMalenkoyKvartire: BlogPost = {
   title: "Макраме в маленькой квартире: идеи для студий и однокомнатных",
   excerpt:
     "Как добавить уют и текстуру в компактное пространство. Макраме, которое не загромождает, а украшает.",
-  date: "2025-07-15",
+  date: "2025-10-10",
   readTime: "5 мин",
   category: "Интерьер",
   coverImage: "/images/blog/small-apartment.png",
@@ -63,6 +63,12 @@ export const makrameVMalenkoyKvartire: BlogPost = {
     {
       type: "quote",
       text: "«Маленькое пространство требует продуманности. Каждая вещь должна работать и визуально, и функционально.»",
+    },
+    {
+      type: "cta",
+      text: "Компактные абажуры и панно, которые не займут места в вашей квартире",
+      href: "/catalog/interior",
+      label: "Каталог декора",
     },
   ],
 };

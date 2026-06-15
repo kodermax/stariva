@@ -5,7 +5,7 @@ export const filosofiyaSlowLivingIRuchnayaRabota: BlogPost = {
   title: "Философия slow living и ручная работа",
   excerpt:
     "Почему осознанное потребление и вещи с душой становятся новой роскошью нашего времени.",
-  date: "2025-10-15",
+  date: "2026-01-10",
   readTime: "6 мин",
   category: "Философия",
   coverImage: "/images/blog/slow-living.jpg",
