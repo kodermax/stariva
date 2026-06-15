@@ -4,6 +4,14 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import type { Review } from "@/lib/ozon-types";
 
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString("ru-RU", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
 function Stars({ rating }: { rating: number }) {
   return (
     <div
@@ -48,10 +56,9 @@ function OzonBadge() {
 interface ReviewCardProps {
   review: Review;
   index: number;
-  formatDate: (iso: string) => string;
 }
 
-export function ReviewCard({ review, index, formatDate }: ReviewCardProps) {
+export function ReviewCard({ review, index }: ReviewCardProps) {
   const coverPhoto = review.photos?.[0];
 
   return (
