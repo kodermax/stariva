@@ -1,6 +1,4 @@
 import { env } from "../env";
-
-import { env } from "../env";
 import { extractAttributes, transformOzonProduct } from "./transformers";
 import type { ExtractedAttributes, OzonProductInfoV3 } from "./transformers";
 
@@ -235,9 +233,6 @@ export async function fetchFromOzon(): Promise<Product[] | null> {
       "[v0] Ozon API error:",
       error instanceof Error ? error.message : error,
     );
-    return null;
-  }
-}   );
     return null;
   }
 }

@@ -2,13 +2,13 @@ import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import Script from "next/script";
-import { env } from "@/lib/env";
 import { ChatWidget } from "@/components/stariva/chat-widget";
 import {
   OrganizationJsonLd,
   WebSiteJsonLd,
 } from "@/components/stariva/json-ld";
 import { Toaster } from "@/components/ui/sonner";
+import { env } from "@/lib/env";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -78,7 +78,7 @@ export const metadata: Metadata = {
     other: {
       "yandex-verification": "e889c7fefe9519f3",
       // Pinterest Rich Pins verification — подтвердить на pinterest.com/website/verify/
-      "p:domain_verify": "stariva",
+      "p:domain_verify": "d792755a6d4c2df8e315e33395176200",
     },
   },
   alternates: {

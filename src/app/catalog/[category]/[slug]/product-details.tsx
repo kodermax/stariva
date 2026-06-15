@@ -6,10 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { ColorSwatches } from "@/components/stariva/color-indicator";
 import { OzonIcon } from "@/components/stariva/icons";
-import { trackOzonClick } from "@/lib/analytics";
-import { parseMultipleColors } from "@/lib/colors";
-import type { Category, Product } from "@/lib/ozon-types";
-import { formatPrice } from "@/lib/products";
+import { PinterestSaveButton } from "@/components/stariva/pinterest-save-button";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -19,6 +16,10 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
+import { trackOzonClick } from "@/lib/analytics";
+import { parseMultipleColors } from "@/lib/colors";
+import type { Category, Product } from "@/lib/ozon-types";
+import { formatPrice } from "@/lib/products";
 
 interface ProductDetailsProps {
   product: Product;
@@ -395,6 +396,19 @@ export function ProductDetails({
                     Позвонить
                   </a>
                 </Button>
+
+                {/* Pinterest Save */}
+                <PinterestSaveButton
+                  url={`${typeof window !== "undefined" ? window.location.origin : "https://stariva.ru"}/catalog/${categorySlug}/${product.slug}`}
+                  imageUrl={
+                    product.images[0]?.startsWith("http")
+                      ? product.images[0]
+                      : `https://stariva.ru${product.images[0]}`
+                  }
+                  description={`${product.name} — ${product.shortDescription || "изделие ручного макраме из натурального хлопка"} | Stariva`}
+                  variant="button"
+                  className="w-full justify-center"
+                />
 
                 {/* Delivery info */}
                 <div className="flex items-center justify-center gap-4 pt-1">
