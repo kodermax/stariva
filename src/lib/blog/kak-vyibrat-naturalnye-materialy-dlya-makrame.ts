@@ -60,5 +60,11 @@ export const kakVyibratNaturalnyeMaterialyDlyaMakrame: BlogPost = {
       type: "paragraph",
       text: "В Stariva мы используем только натуральный хлопок без химических обработок. Каждый моток отбирается вручную по качеству — это гарантирует, что ваше изделие прослужит долгие годы.",
     },
+    {
+      type: "cta",
+      text: "Все изделия Stariva — из отборного натурального хлопка без химии",
+      href: "/catalog",
+      label: "Смотреть каталог",
+    },
   ],
 };

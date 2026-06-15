@@ -64,5 +64,11 @@ export const kakUkhazhivatZaMakrameStirkaChistkaKhranenie: BlogPost = {
       type: "quote",
       text: "«Натуральные материалы живут долго, если вы относитесь к ним с уважением.»",
     },
+    {
+      type: "cta",
+      text: "Изделия из натурального хлопка, которые служат годами — абажуры, панно и сумки ручной работы",
+      href: "/catalog",
+      label: "Перейти в каталог",
+    },
   ],
 };
