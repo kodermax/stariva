@@ -1,5 +1,5 @@
-import { fetchFromOzon } from "./ozon/api-client";
-import type { Product } from "./ozon-types";
+import { fetchFromOzon, fetchOzonReviews } from "./ozon/api-client";
+import type { Product, Review } from "./ozon-types";
 import { categories } from "./products";
 
 export async function getProducts(): Promise<Product[]> {
@@ -47,6 +47,15 @@ export async function getFeaturedProducts(): Promise<Product[]> {
     if (catProducts.length > 0) result.push(catProducts[0]);
   }
   return result.slice(0, 3);
+}
+
+/**
+ * Fetches reviews from Ozon, returning an empty array on failure.
+ * Optionally filter by SKU list for per-product reviews.
+ */
+export async function getReviews(skus?: number[]): Promise<Review[]> {
+  const reviews = await fetchOzonReviews(20, skus);
+  return reviews ?? [];
 }
 
 export { categories } from "./products";

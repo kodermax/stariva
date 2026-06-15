@@ -78,6 +78,42 @@ export interface OzonProductInfoResponse {
   };
 }
 
+// ─── Ozon Review API Types ────────────────────────────────────────────────────
+
+export interface OzonReview {
+  uuid: string;
+  sku: number;
+  rating: number; // 1–5
+  created_at: string; // ISO-8601
+  text: string;
+  /** Author's display name – may be absent if hidden by buyer */
+  reviewer_name?: string;
+  /** Photo URLs attached by buyer */
+  media?: { url: string }[];
+  /** "published" | "processing" | "rejected" */
+  status: string;
+}
+
+export interface OzonReviewListResponse {
+  reviews: OzonReview[];
+  total: number;
+  page_token: string;
+}
+
+// Normalised review for the UI (decoupled from raw Ozon shape)
+export interface Review {
+  id: string;
+  rating: number;
+  text: string;
+  date: string; // ISO-8601
+  reviewerName: string;
+  productSku?: number;
+  photos: string[];
+  source: "ozon" | "static";
+}
+
+// ─── Internal Product Types ───────────────────────────────────────────────────
+
 // Internal Product Types
 export type ProductCategory = "clothes" | "interior" | "bags";
 export type ProductSubcategory =

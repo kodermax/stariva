@@ -6,6 +6,7 @@ import { Header } from "@/components/stariva/header";
 import { Footer } from "@/components/stariva/footer";
 import { MobileStickyBar } from "@/components/stariva/mobile-sticky-bar";
 import { ProductDetails } from "./product-details";
+import { Reviews } from "@/components/stariva/reviews";
 import {
   BreadcrumbJsonLd,
   FAQJsonLd,
@@ -196,6 +197,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
         category={category}
         categorySlug={categorySlug}
         relatedProducts={relatedProducts}
+      />
+      <Reviews
+        limit={3}
+        skus={product.ozonId ? [product.ozonId] : undefined}
+        heading="Отзывы о товаре"
       />
       <Footer />
       {product.ozonUrl && (
