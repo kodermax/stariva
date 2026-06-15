@@ -56,7 +56,7 @@ export function CustomOrder() {
           </a>
 
           <Link
-            href="/catalog"
+            href="https://www.ozon.ru/seller/stariva-makrame-odezhda-dekor-vyazanye-sumki-izdeliya-iz-shnura/"
             className="group flex items-center gap-3 px-6 py-4 rounded-full bg-[#005BFF]/8 hover:bg-[#005BFF]/15 text-[#005BFF] transition-colors duration-200"
           >
             <OzonIcon className="w-4 h-4 shrink-0" />
