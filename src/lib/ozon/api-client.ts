@@ -167,6 +167,10 @@ export async function fetchOzonReviews(
     });
 
     if (!res.ok) {
+      if (res.status === 403) {
+        // Subscription doesn't include reviews API — skip silently
+        return null;
+      }
       const text = await res.text();
       console.log("[ozon] Reviews request failed:", res.status, text);
       return null;
