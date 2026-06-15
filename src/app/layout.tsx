@@ -3,10 +3,12 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import Script from "next/script";
 import { env } from "@/lib/env";
+import { ChatWidget } from "@/components/stariva/chat-widget";
 import {
   OrganizationJsonLd,
   WebSiteJsonLd,
 } from "@/components/stariva/json-ld";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -117,6 +119,8 @@ export default function RootLayout({
         <OrganizationJsonLd />
         <WebSiteJsonLd />
         {children}
+        <ChatWidget />
+        <Toaster position="top-center" richColors />
         {env.NODE_ENV === "production" && <Analytics />}
         {env.NODE_ENV === "production" && (
           <>
