@@ -5,6 +5,7 @@ import { trace } from "@opentelemetry/api";
 import {
   convertToModelMessages,
   type LanguageModel,
+  type ModelMessage,
   stepCountIs,
   streamText,
   type ToolSet,
@@ -90,6 +91,8 @@ function isFallbackError(error: unknown): boolean {
     msg.includes("failed_generation") ||
     // Groq: вернул пустой ответ без текста и без tool calls
     msg.includes("empty_response") ||
+    // Groq: в истории есть reasoning parts, которые модель не поддерживает
+    msg.includes("reasoning is not supported") ||
     msg.includes("rate_limit") ||
     msg.includes("Rate limit") ||
     msg.includes("overloaded") ||
@@ -204,6 +207,18 @@ async function handler(request: NextRequest) {
   }));
 
   const modelMessages = await convertToModelMessages(trimmed);
+
+  // Groq не поддерживает reasoning parts в истории сообщений —
+  // удаляем их чтобы не получить 400 при fallback с reasoning-модели
+  const safeModelMessages: ModelMessage[] = modelMessages.map((msg) => {
+    if (!("content" in msg) || !Array.isArray(msg.content)) return msg;
+    return {
+      ...msg,
+      content: msg.content.filter(
+        (part: { type?: string }) => part.type !== "reasoning",
+      ),
+    } as ModelMessage;
+  });
   const system = buildSystemPrompt();
 
   // Извлекаем текст последнего сообщения пользователя для input трейса
@@ -227,7 +242,7 @@ async function handler(request: NextRequest) {
       try {
         const result = await tryStreamText(model, {
           system,
-          messages: modelMessages,
+          messages: safeModelMessages,
           tools: chatTools as ToolSet,
           sessionId,
           providerName: name,
