@@ -319,7 +319,7 @@ export default function B2BPage() {
         </div>
       </section>
 
-      {/* ── Advantages ───��───────────────────────────────────────────────── */}
+      {/* ── Advantages ────────────────────────────────────────────────────── */}
       <section className="py-28 lg:py-40 bg-sand">
         <div className="max-w-[1440px] mx-auto px-6 lg:px-14">
           <div className="mb-16 lg:mb-20 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
@@ -328,7 +328,7 @@ export default function B2BPage() {
                 Почему Stariva
               </p>
               <h2 className="font-serif text-[clamp(2.5rem,5vw,4.5rem)] text-espresso leading-[1.05]">
-                Пр��имущества
+                Преимущества
                 <br />
                 <span className="text-taupe">для бизнеса</span>
               </h2>
