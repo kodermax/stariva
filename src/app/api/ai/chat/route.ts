@@ -1,6 +1,8 @@
 import { createGroq } from "@ai-sdk/groq";
+import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import {
   convertToModelMessages,
+  type LanguageModel,
   stepCountIs,
   streamText,
   type ToolSet,
@@ -20,8 +22,91 @@ export const maxDuration = 30;
 const MAX_MESSAGES = 24;
 const MAX_CHARS_PER_MESSAGE = 4000;
 
+// ─── Провайдеры ──────────────────────────────────────────────────────────────
+
+/**
+ * Возвращает список доступных моделей в порядке приоритета.
+ * Groq — основной, Cerebras — резервный.
+ * Модель считается "доступной", если задан соответствующий API-ключ.
+ */
+function getAvailableModels(): Array<{
+  name: string;
+  model: LanguageModel;
+}> {
+  const models: Array<{ name: string; model: LanguageModel }> = [];
+
+  if (env.GROQ_API_KEY) {
+    const groq = createGroq({ apiKey: env.GROQ_API_KEY });
+    models.push({ name: "groq", model: groq(env.GROQ_MODEL) });
+  }
+
+  if (env.CEREBRAS_API_KEY) {
+    const cerebras = createOpenAICompatible({
+      name: "cerebras",
+      apiKey: env.CEREBRAS_API_KEY,
+      baseURL: "https://api.cerebras.ai/v1",
+      headers: { "X-Cerebras-3rd-Party-Integration": "vercel-ai-sdk" },
+    });
+    models.push({ name: "cerebras", model: cerebras(env.CEREBRAS_MODEL) });
+  }
+
+  return models;
+}
+
+// ─── Определение ошибок, при которых стоит пробовать следующий провайдер ────
+
+function isFallbackError(error: unknown): boolean {
+  const msg = error instanceof Error ? error.message : String(error ?? "");
+  return (
+    // Groq: невалидный вызов инструмента
+    msg.includes("Failed to call a function") ||
+    // Общие сетевые / серверные ошибки
+    msg.includes("503") ||
+    msg.includes("502") ||
+    msg.includes("529") ||
+    msg.includes("rate_limit") ||
+    msg.includes("overloaded") ||
+    msg.includes("Service Unavailable") ||
+    msg.includes("Bad Gateway")
+  );
+}
+
+// ─── Попытка стриминга через конкретную модель ───────────────────────────────
+
+async function tryStreamText(
+  model: LanguageModel,
+  params: {
+    system: string;
+    messages: Awaited<ReturnType<typeof convertToModelMessages>>;
+    tools: ToolSet;
+  },
+) {
+  // streamText сам по себе не бросает синхронно — ошибки вылетают при
+  // consumeStream. Вызываем consumeStream, чтобы поймать их до того, как
+  // отдадим ответ клиенту.
+  const result = streamText({
+    model,
+    system: params.system,
+    messages: params.messages,
+    tools: params.tools,
+    stopWhen: stepCountIs(5),
+    temperature: 0.6,
+    maxRetries: 0, // отключаем внутренние ретраи — fallback управляем сами
+  });
+
+  // Ждём первого чанка, чтобы убедиться, что стрим открылся без ошибки.
+  // Если провайдер сразу вернул ошибку — она выброситься здесь.
+  await result.consumeStream();
+
+  return result;
+}
+
+// ─── Основной обработчик ─────────────────────────────────────────────────────
+
 export async function POST(request: NextRequest) {
-  if (!env.GROQ_API_KEY) {
+  const models = getAvailableModels();
+
+  if (models.length === 0) {
     return NextResponse.json(
       { error: "AI-консультант не настроен", code: "not_configured" },
       { status: 503 },
@@ -42,10 +127,7 @@ export async function POST(request: NextRequest) {
 
   let messages: UIMessage[];
   try {
-    messages = await validateUIMessages({
-      messages: rawMessages,
-      tools: chatTools,
-    });
+    messages = await validateUIMessages({ messages: rawMessages });
   } catch {
     return NextResponse.json(
       { error: "Некорректный формат сообщений" },
@@ -63,32 +145,52 @@ export async function POST(request: NextRequest) {
     ),
   }));
 
-  const groq = createGroq({ apiKey: env.GROQ_API_KEY });
+  const modelMessages = await convertToModelMessages(trimmed);
+  const system = buildSystemPrompt();
 
-  try {
-    const result = streamText({
-      model: groq(env.GROQ_MODEL),
-      system: buildSystemPrompt(),
-      messages: await convertToModelMessages(trimmed),
-      tools: chatTools as ToolSet,
-      // Разрешаем несколько шагов: вызвать инструмент → получить данные →
-      // сформулировать осмысленный ответ клиенту.
-      stopWhen: stepCountIs(5),
-      temperature: 0.6,
-    });
+  // ─── Перебираем провайдеры по очереди ──────────────────────────────────────
+  let lastError: unknown;
 
-    return result.toUIMessageStreamResponse({
-      // Отдаём осмысленный текст ошибки клиенту вместо «An error occurred».
-      onError: (error) => {
-        console.error("[ai/chat] stream error:", error);
-        return "Не удалось получить ответ. Попробуйте ещё раз.";
-      },
-    });
-  } catch (error) {
-    console.error("[ai/chat] Groq error:", error);
-    return NextResponse.json(
-      { error: "Не удалось получить ответ. Попробуйте позже." },
-      { status: 502 },
-    );
+  for (const { name, model } of models) {
+    try {
+      const result = await tryStreamText(model, {
+        system,
+        messages: modelMessages,
+        tools: chatTools as ToolSet,
+      });
+
+      return result.toUIMessageStreamResponse({
+        onError: (error) => {
+          console.error(`[ai/chat] stream error (${name}):`, error);
+          return "Не удалось получить ответ. Попробуйте ещё раз.";
+        },
+      });
+    } catch (error) {
+      lastError = error;
+      console.error(`[ai/chat] provider "${name}" failed:`, error);
+
+      if (isFallbackError(error)) {
+        // Есть ещё провайдеры — пробуем следующий
+        const isLast = name === models[models.length - 1].name;
+        if (!isLast) {
+          console.warn(
+            `[ai/chat] falling back from "${name}" to next provider`,
+
+            `[ai/chat] falling back from "${name}" to next provider`,
+          );
+          continue;
+        }
+      }
+
+      // Либо ошибка не требует fallback, либо провайдеры кончились
+      break;
+    }
   }
+
+  // Все провайдеры исчерпаны
+  console.error("[ai/chat] all providers failed, last error:", lastError);
+  return NextResponse.json(
+    { error: "Не удалось получить ответ. Попробуйте позже." },
+    { status: 502 },
+  );
 }

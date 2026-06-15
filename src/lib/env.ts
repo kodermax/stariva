@@ -9,9 +9,16 @@ export const env = createEnv({
     OZON_API_KEY: z.string().min(1).optional(),
     OZON_CLIENT_ID: z.string().min(1).optional(),
 
-    // Groq AI (ai-sdk) — для AI-помощника по индивидуальным заказам
+    // Groq AI (ai-sdk) — основной провайдер AI-помощника
     GROQ_API_KEY: z.string().min(1).optional(),
-    GROQ_MODEL: z.string().min(1).default("llama-3.3-70b-versatile"),
+    GROQ_MODEL: z
+      .string()
+      .min(1)
+      .default("llama3-groq-70b-8192-tool-use-preview"),
+
+    // Cerebras AI (резервный провайдер, если Groq недоступен или вернул ошибку)
+    CEREBRAS_API_KEY: z.string().min(1).optional(),
+    CEREBRAS_MODEL: z.string().min(1).default("gpt-oss-120b"),
 
     // Telegram Bot API — для отправки заявок на индивидуальный заказ
     TELEGRAM_BOT_TOKEN: z.string().min(1).optional(),
@@ -44,6 +51,8 @@ export const env = createEnv({
     OZON_CLIENT_ID: process.env.OZON_CLIENT_ID,
     GROQ_API_KEY: process.env.GROQ_API_KEY,
     GROQ_MODEL: process.env.GROQ_MODEL,
+    CEREBRAS_API_KEY: process.env.CEREBRAS_API_KEY,
+    CEREBRAS_MODEL: process.env.CEREBRAS_MODEL,
     TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN,
     TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
