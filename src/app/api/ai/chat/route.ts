@@ -1,10 +1,6 @@
 import { createGroq } from "@ai-sdk/groq";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
-import {
-  observe,
-  propagateAttributes,
-  setActiveTraceIO,
-} from "@langfuse/tracing";
+import { observe, propagateAttributes } from "@langfuse/tracing";
 import { trace } from "@opentelemetry/api";
 import {
   convertToModelMessages,
@@ -72,9 +68,26 @@ function isFallbackError(error: unknown): boolean {
     }
   }
 
+  // Проверяем вложенный responseBody / data — Groq возвращает {error: {message, type}}
+  const data =
+    (error as { data?: unknown })?.data ??
+    (error as { responseBody?: unknown })?.responseBody;
+  if (data != null) {
+    const dataStr =
+      typeof data === "string" ? data : JSON.stringify(data ?? "");
+    if (
+      dataStr.includes("Failed to call a function") ||
+      dataStr.includes("failed_generation")
+    ) {
+      return true;
+    }
+  }
+
   const msg = error instanceof Error ? error.message : String(error ?? "");
   return (
+    // Groq: модель не смогла вызвать tool — пробуем другой провайдер
     msg.includes("Failed to call a function") ||
+    msg.includes("failed_generation") ||
     msg.includes("rate_limit") ||
     msg.includes("Rate limit") ||
     msg.includes("overloaded") ||
@@ -121,9 +134,11 @@ async function tryStreamText(
     },
   });
 
-  // consumeStream() выбрасывает ошибку синхронно если провайдер вернул её
-  // до начала стриминга (например "Failed to call a function").
+  // consumeStream() раскладывает ошибки через rejectResultPromises(), а не бросает сам.
+  // Поэтому ждём steps — он реджектится при любой ошибке стрима,
+  // включая "Failed to call a function" от Groq.
   await result.consumeStream();
+  await result.steps;
 
   return result;
 }
@@ -180,14 +195,18 @@ async function handler(request: NextRequest) {
   const modelMessages = await convertToModelMessages(trimmed);
   const system = buildSystemPrompt();
 
-  // Записываем последнее сообщение пользователя как input трейса
+  // Извлекаем текст последнего сообщения пользователя для input трейса
   const lastUserMessage = [...trimmed].reverse().find((m) => m.role === "user");
   const inputText = lastUserMessage?.parts
     .filter((p) => p.type === "text")
     .map((p) => (p as { type: "text"; text: string }).text)
     .join(" ");
 
-  setActiveTraceIO({ input: inputText });
+  // Устанавливаем input на root span через атрибуты OTel
+  const activeSpan = trace.getActiveSpan();
+  if (activeSpan && inputText) {
+    activeSpan.setAttribute("langfuse.input", inputText);
+  }
 
   // ─── Перебираем провайдеры по очереди ──────────────────────────────────────
   let lastError: unknown;
@@ -210,14 +229,14 @@ async function handler(request: NextRequest) {
           },
         });
 
-        // Обновляем output трейса и закрываем span после завершения стрима
+        // Обновляем output root span и закрываем его после завершения стрима
         Promise.resolve(result.text).then(
           (text) => {
-            setActiveTraceIO({ output: text });
-            trace.getActiveSpan()?.end();
+            activeSpan?.setAttribute("langfuse.output", text);
+            activeSpan?.end();
           },
           () => {
-            trace.getActiveSpan()?.end();
+            activeSpan?.end();
           },
         );
 
@@ -238,6 +257,8 @@ async function handler(request: NextRequest) {
             );
             continue;
           }
+          // Последний провайдер тоже упал — выходим из цикла
+          break;
         }
 
         break;
@@ -252,7 +273,7 @@ async function handler(request: NextRequest) {
   });
 }
 
-// Оборачиваем handler в observe() — создаёт корневой трейс в Langfuse
+// Оборачиваем handler в observe() — создаёт корневой трейс в Langfuse.
 // endOnExit: false — span не закрывается сразу, ждёт завершения стрима
 export const POST = observe(handler, {
   name: "stariva-chat",
