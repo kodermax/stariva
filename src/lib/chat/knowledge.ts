@@ -3,7 +3,6 @@
 // индивидуальные заказы, мастер-классы, материалы, уход, доставка и оплата.
 // Любые темы вне этого контекста — вежливо отклоняются.
 
-import { categories } from "@/lib/products";
 import {
   COLORS,
   COMPLEXITIES,
@@ -11,6 +10,7 @@ import {
   PRODUCT_TYPES,
   SIZES,
 } from "@/lib/custom-order/pricing";
+import { categories } from "@/lib/products";
 import { categoryLabels, levelLabels, workshops } from "@/lib/workshops-data";
 
 /** Быстрые подсказки, которые показываем в пустом окне чата. */

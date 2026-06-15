@@ -6,7 +6,11 @@ import type { Review } from "@/lib/ozon-types";
 
 function Stars({ rating }: { rating: number }) {
   return (
-    <div className="flex items-center gap-1 text-terracotta" aria-label={`Оценка ${rating} из 5`}>
+    <div
+      role="img"
+      aria-label={`Оценка ${rating} из 5`}
+      className="flex items-center gap-1 text-terracotta"
+    >
       {Array.from({ length: 5 }).map((_, i) => (
         <svg
           // biome-ignore lint/suspicious/noArrayIndexKey: static 5-star row
@@ -28,7 +32,12 @@ function Stars({ rating }: { rating: number }) {
 function OzonBadge() {
   return (
     <span className="inline-flex items-center gap-1 label-caps text-[9px] bg-[#005BFF]/8 text-[#005BFF] px-2 py-0.5 rounded-full">
-      <svg viewBox="0 0 16 16" fill="currentColor" className="w-2.5 h-2.5" aria-hidden="true">
+      <svg
+        viewBox="0 0 16 16"
+        fill="currentColor"
+        className="w-2.5 h-2.5"
+        aria-hidden="true"
+      >
         <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 4.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z" />
       </svg>
       Ozon

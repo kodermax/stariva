@@ -9,7 +9,11 @@ interface OzonButtonProps {
   price?: number;
 }
 
-export function OzonButton({ url, workshopTitle, price }: OzonButtonProps) {
+export function OzonButton({
+  url,
+  workshopTitle,
+  price: _price,
+}: OzonButtonProps) {
   return (
     <a
       href={url}
