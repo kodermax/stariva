@@ -14,6 +14,7 @@ import { after, NextResponse } from "next/server";
 import { buildSystemPrompt } from "@/lib/chat/knowledge";
 import { chatTools } from "@/lib/chat/tools";
 import { env } from "@/lib/env";
+import { langfuseSpanProcessor } from "../../../../../instrumentation";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -47,19 +48,6 @@ function getAvailableModels(): Array<{ name: string; model: LanguageModel }> {
   }
 
   return models;
-}
-
-// ─── Langfuse: forceFlush после стриминга ────────────────────────────────────
-
-async function flushLangfuse() {
-  try {
-    // Импортируем динамически — если Langfuse не настроен, модуль всё равно
-    // загружен через instrumentation.ts, но flush безопасен при пустом processor.
-    const { LangfuseSpanProcessor } = await import("@langfuse/otel");
-    await new LangfuseSpanProcessor().forceFlush();
-  } catch {
-    // Langfuse недоступен — не критично, просто пропускаем
-  }
 }
 
 // ─── Определение ошибок, при которых стоит пробовать следующий провайдер ────
@@ -201,7 +189,7 @@ export async function POST(request: NextRequest) {
 
       // Гарантируем flush трейса в Langfuse после завершения стрима
       // (важно для serverless: функция может завершиться до отправки трейса)
-      after(flushLangfuse);
+      after(async () => await langfuseSpanProcessor.forceFlush());
 
       return result.toUIMessageStreamResponse({
         onError: (error) => {

@@ -4,22 +4,25 @@
 // автоматически попадают в Langfuse (трейсы, tool-вызовы, стоимость, latency).
 //
 // Документация: https://langfuse.com/integrations/frameworks/vercel-ai-sdk
+//
+// ВАЖНО: используем NodeTracerProvider напрямую, а не registerOTel из @vercel/otel,
+// так как @vercel/otel не поддерживает OpenTelemetry JS SDK v2, на котором
+// основаны @langfuse/otel и @langfuse/tracing.
+// https://github.com/vercel/otel/issues/154
 
-export async function register() {
-  // Запускаем только на сервере — не в Edge и не в браузере
-  if (process.env.NEXT_RUNTIME !== "nodejs") return;
+import { LangfuseSpanProcessor } from "@langfuse/otel";
+import { NodeTracerProvider } from "@opentelemetry/sdk-trace-node";
 
-  // Если ключи не заданы — трассировка отключена, не падаем
-  if (!process.env.LANGFUSE_PUBLIC_KEY || !process.env.LANGFUSE_SECRET_KEY) {
-    return;
-  }
+// Создаём процессор на уровне модуля — он живёт всё время работы сервера.
+// Экспортируем для вызова forceFlush() из route-handler после стриминга.
+export const langfuseSpanProcessor = new LangfuseSpanProcessor();
 
-  const { LangfuseSpanProcessor } = await import("@langfuse/otel");
-  const { NodeTracerProvider } = await import("@opentelemetry/sdk-trace-node");
+const tracerProvider = new NodeTracerProvider({
+  spanProcessors: [langfuseSpanProcessor],
+});
 
-  const provider = new NodeTracerProvider({
-    spanProcessors: [new LangfuseSpanProcessor()],
-  });
+tracerProvider.register();
 
-  provider.register();
-}
+// register() требуется Next.js как экспорт из instrumentation.ts,
+// но реальная инициализация уже произошла выше при загрузке модуля.
+export async function register() {}

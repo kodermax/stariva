@@ -24,7 +24,7 @@ export const env = createEnv({
     // Ключи: https://cloud.langfuse.com → Settings → API Keys
     LANGFUSE_PUBLIC_KEY: z.string().min(1).optional(),
     LANGFUSE_SECRET_KEY: z.string().min(1).optional(),
-    LANGFUSE_BASEURL: z
+    LANGFUSE_BASE_URL: z
       .string()
       .url()
       .default("https://cloud.langfuse.com")
@@ -65,7 +65,7 @@ export const env = createEnv({
     CEREBRAS_MODEL: process.env.CEREBRAS_MODEL,
     LANGFUSE_PUBLIC_KEY: process.env.LANGFUSE_PUBLIC_KEY,
     LANGFUSE_SECRET_KEY: process.env.LANGFUSE_SECRET_KEY,
-    LANGFUSE_BASEURL: process.env.LANGFUSE_BASEURL,
+    LANGFUSE_BASE_URL: process.env.LANGFUSE_BASE_URL,
     TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN,
     TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
