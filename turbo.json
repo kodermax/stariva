@@ -1,0 +1,27 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "env": [
+        "NODE_ENV",
+        "OZON_API_KEY",
+        "OZON_CLIENT_ID",
+        "GROQ_API_KEY",
+        "GROQ_MODEL",
+        "CEREBRAS_API_KEY",
+        "CEREBRAS_MODEL",
+        "LANGFUSE_PUBLIC_KEY",
+        "LANGFUSE_SECRET_KEY",
+        "LANGFUSE_BASE_URL",
+        "LANGFUSE_BASEURL",
+        "TELEGRAM_BOT_TOKEN",
+        "TELEGRAM_CHAT_ID",
+        "RESEND_API_KEY",
+        "ORDER_EMAIL_TO",
+        "ORDER_EMAIL_FROM",
+        "SKIP_ENV_VALIDATION",
+        "YANDEX_VERIFICATION"
+      ]
+    }
+  }
+}

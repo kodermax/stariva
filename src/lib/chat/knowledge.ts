@@ -91,12 +91,18 @@ const DELIVERY_BLOCK = `
 - Оплата готовых изделий — через Ozon; индивидуальные заказы обсуждаются с мастером напрямую.
 `.trim();
 
+// Кэш промпта — данные статичны при инициализации модуля, пересобирать нет смысла
+let _cachedSystemPrompt: string | null = null;
+
 /**
  * Системный промпт консультанта. Жёстко ограничивает бота тематикой сайта
  * и снабжает его фактами о бренде, ассортименте, ценах и услугах.
+ * Результат кэшируется после первого вызова.
  */
 export function buildSystemPrompt(): string {
-  return [
+  if (_cachedSystemPrompt) return _cachedSystemPrompt;
+
+  _cachedSystemPrompt = [
     "Ты — Ника, дружелюбный цифровой помощник мастерской макраме Stariva (stariva.ru).",
     "Stariva — это ручное плетение из натурального хлопка с 2018 года: одежда, сумки и декор интерьера, а также видео-мастер-классы.",
     "",
@@ -144,4 +150,6 @@ export function buildSystemPrompt(): string {
     "━━━ КОНТАКТЫ ━━━",
     CONTACTS_BLOCK,
   ].join("\n");
+
+  return _cachedSystemPrompt;
 }

@@ -65,16 +65,31 @@ async function flushLangfuse() {
 // ─── Определение ошибок, при которых стоит пробовать следующий провайдер ────
 
 function isFallbackError(error: unknown): boolean {
+  // AI SDK: AIAPICallError имеет числовой statusCode
+  if (
+    error != null &&
+    typeof error === "object" &&
+    "statusCode" in error &&
+    typeof (error as { statusCode: unknown }).statusCode === "number"
+  ) {
+    const status = (error as { statusCode: number }).statusCode;
+    if (status === 429 || status === 502 || status === 503 || status === 529) {
+      return true;
+    }
+  }
+
   const msg = error instanceof Error ? error.message : String(error ?? "");
   return (
     msg.includes("Failed to call a function") ||
-    msg.includes("503") ||
-    msg.includes("502") ||
-    msg.includes("529") ||
     msg.includes("rate_limit") ||
+    msg.includes("Rate limit") ||
     msg.includes("overloaded") ||
     msg.includes("Service Unavailable") ||
-    msg.includes("Bad Gateway")
+    msg.includes("Bad Gateway") ||
+    msg.includes("timeout") ||
+    msg.includes("ETIMEDOUT") ||
+    msg.includes("ECONNRESET") ||
+    msg.includes("ECONNREFUSED")
   );
 }
 

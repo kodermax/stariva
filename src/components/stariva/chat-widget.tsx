@@ -487,9 +487,15 @@ export function ChatWidget() {
   const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  // Стабильный ID сессии — живёт всё время монтирования компонента,
+  // группирует трейсы одного чата в Langfuse
+  const sessionId = useRef(`session-${Math.random().toString(36).slice(2)}`);
 
   const { messages, sendMessage, status, stop, error } = useChat({
-    transport: new DefaultChatTransport({ api: "/api/ai/chat" }),
+    transport: new DefaultChatTransport({
+      api: "/api/ai/chat",
+      body: { sessionId: sessionId.current },
+    }),
   });
 
   const isBusy = status === "submitted" || status === "streaming";
