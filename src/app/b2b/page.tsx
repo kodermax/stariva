@@ -5,6 +5,7 @@ import { Footer } from "@/components/stariva/footer";
 import { Header } from "@/components/stariva/header";
 import { BreadcrumbJsonLd } from "@/components/stariva/json-ld";
 import { TelegramIcon, PhoneIcon } from "@/components/stariva/icons";
+import { Reviews } from "@/components/stariva/reviews";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://stariva.ru";
@@ -302,7 +303,7 @@ export default function B2BPage() {
             <div>
               <p className="label-caps text-terracotta tracking-widest mb-4">Почему Stariva</p>
               <h2 className="font-serif text-[clamp(2.5rem,5vw,4.5rem)] text-espresso leading-[1.05]">
-                Преимущества
+                Пр��имущества
                 <br />
                 <span className="text-taupe">для бизнеса</span>
               </h2>
@@ -393,6 +394,9 @@ export default function B2BPage() {
           </div>
         </div>
       </section>
+
+      {/* ── Reviews ──────────────────────────────────────────────────────── */}
+      <Reviews limit={3} heading="Нас выбирают — и возвращаются" />
 
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
       <section className="py-28 lg:py-40 bg-sand">

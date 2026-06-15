@@ -1,4 +1,4 @@
-import type { Product } from "../ozon-types";
+import type { Product, OzonReview, Review } from "../ozon-types";
 
 import { env } from "../env";
 import { extractAttributes, transformOzonProduct } from "./transformers";
@@ -115,6 +115,78 @@ async function fetchProductAttributes(
     return new Map();
   }
 }
+
+// ─── Reviews ─────────────────────────────────────────────────────────────────
+
+function transformOzonReview(raw: OzonReview): Review {
+  return {
+    id: raw.uuid,
+    rating: raw.rating,
+    text: raw.text,
+    date: raw.created_at,
+    reviewerName: raw.reviewer_name ?? "Покупатель",
+    productSku: raw.sku,
+    photos: (raw.media ?? []).map((m) => m.url),
+    source: "ozon",
+  };
+}
+
+/**
+ * Fetches published reviews from Ozon Seller API.
+ * Returns null if credentials are missing or the request fails.
+ * Revalidates every 4 hours (ISR).
+ */
+export async function fetchOzonReviews(
+  limit = 20,
+  skus?: number[],
+): Promise<Review[] | null> {
+  const clientId = env.OZON_CLIENT_ID;
+  const apiKey = env.OZON_API_KEY;
+
+  if (!clientId || !apiKey) {
+    return null;
+  }
+
+  try {
+    const body: Record<string, unknown> = {
+      limit,
+      sort_dir: "DESC",
+      with_text_only: true,
+    };
+    if (skus && skus.length > 0) {
+      body.skus = skus;
+    }
+
+    const res = await fetch(`${OZON_API_URL}/v1/review/list`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Client-Id": clientId,
+        "Api-Key": apiKey,
+      },
+      body: JSON.stringify(body),
+      next: { revalidate: 14400 }, // 4 hours
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      console.log("[ozon] Reviews request failed:", res.status, text);
+      return null;
+    }
+
+    const data = await res.json();
+    // API returns { reviews: [...] } or { result: { reviews: [...] } }
+    const raw: OzonReview[] =
+      data.reviews ?? data.result?.reviews ?? [];
+    const published = raw.filter((r) => r.status === "published" && r.text?.trim());
+    return published.map(transformOzonReview);
+  } catch (error) {
+    console.log("[ozon] Reviews fetch error:", error instanceof Error ? error.message : error);
+    return null;
+  }
+}
+
+// ─── Products ─────────────────────────────────────────────────────────────────
 
 export async function fetchFromOzon(): Promise<Product[] | null> {
   const clientId = env.OZON_CLIENT_ID;
