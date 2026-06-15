@@ -17,12 +17,9 @@ export default function NotFound() {
       <Header variant="solid" />
 
       <main className="flex-1 flex flex-col items-center justify-center px-5 py-24 lg:py-40">
-
         {/* Large editorial number */}
         <div className="relative select-none mb-10 lg:mb-16" aria-hidden="true">
-          <span
-            className="font-serif text-[clamp(140px,28vw,320px)] leading-none text-near-black/[0.04] tracking-tighter pointer-events-none"
-          >
+          <span className="font-serif text-[clamp(140px,28vw,320px)] leading-none text-near-black/[0.04] tracking-tighter pointer-events-none">
             404
           </span>
           {/* Overlaid thin rule — macrame thread motif */}
@@ -47,8 +44,8 @@ export default function NotFound() {
 
         {/* Description */}
         <p className="text-mid-grey text-base lg:text-lg text-center max-w-md leading-[1.8] mb-12">
-          Возможно, страница была перемещена или удалена.
-          Попробуйте найти нужное через меню или воспользуйтесь ссылками ниже.
+          Возможно, страница была перемещена или удалена. Попробуйте найти
+          нужное через меню или воспользуйтесь ссылками ниже.
         </p>
 
         {/* Primary CTA */}
@@ -57,15 +54,29 @@ export default function NotFound() {
           className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-near-black text-white font-sans text-xs tracking-widest uppercase hover:bg-dark-grey transition-colors mb-12"
         >
           На главную
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M2 7h10M8 3l4 4-4 4"
+              stroke="currentColor"
+              strokeWidth="1.3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </Link>
 
         {/* Divider */}
         <div className="flex items-center gap-4 mb-8 w-full max-w-sm">
           <span className="flex-1 h-px bg-light-grey" />
-          <span className="text-mid-grey text-[11px] tracking-widest uppercase font-sans">или перейдите</span>
+          <span className="text-mid-grey text-[11px] tracking-widest uppercase font-sans">
+            или перейдите
+          </span>
           <span className="flex-1 h-px bg-light-grey" />
         </div>
 
@@ -81,7 +92,6 @@ export default function NotFound() {
             </Link>
           ))}
         </div>
-
       </main>
 
       <Footer />

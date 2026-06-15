@@ -183,7 +183,6 @@ function ProductCard({
                 −{Math.round((1 - product.price / product.oldPrice) * 100)}%
               </span>
             )}
-
           </div>
           {/* Quick Ozon link on hover */}
           {product.ozonUrl && product.inStock && (

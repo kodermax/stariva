@@ -26,7 +26,8 @@ export const makrameOsenZimniyDekor: BlogPost = {
       type: "image",
       src: "/images/blog/autumn-decor.png",
       alt: "Осенний интерьер с макраме",
-      caption: "Макраме + сухоцветы + свечи — беспроигрышное сочетание для осени",
+      caption:
+        "Макраме + сухоцветы + свечи — беспроигрышное сочетание для осени",
     },
     {
       type: "heading",

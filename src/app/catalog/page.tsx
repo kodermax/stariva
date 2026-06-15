@@ -70,7 +70,6 @@ function ProductCard({ product }: { product: Product; index?: number }) {
             Скидка
           </span>
         )}
-
       </div>
       <h3 className="font-serif text-xl text-espresso mb-1 group-hover:text-terracotta transition-colors">
         {product.name}

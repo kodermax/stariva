@@ -26,8 +26,7 @@ export const makrameAbazhurSvoimiRukamiSChegoNachat: BlogPost = {
       type: "image",
       src: "/images/blog/cotton-materials.jpg",
       alt: "Материалы для плетения макраме абажура",
-      caption:
-        "Натуральный хлопковый шнур — основа любого изделия из макраме",
+      caption: "Натуральный хлопковый шнур — основа любого изделия из макраме",
     },
     {
       type: "heading",
