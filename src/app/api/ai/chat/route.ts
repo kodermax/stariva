@@ -107,6 +107,12 @@ function isFallbackError(error: unknown): boolean {
 
 // ─── Попытка стриминга через конкретную модель ───────────────────────────────
 
+/**
+ * Запускает streamText и ждёт первых данных или ошибки.
+ * Возвращает result если поток начался успешно.
+ * Бросает ошибку если провайдер ответил ошибкой ДО начала стриминга
+ * (например "Failed to call a function" от Groq).
+ */
 async function tryStreamText(
   model: LanguageModel,
   params: {
@@ -120,6 +126,17 @@ async function tryStreamText(
   const telemetryEnabled =
     !!env.LANGFUSE_PUBLIC_KEY && !!env.LANGFUSE_SECRET_KEY;
 
+  // Промис, который реджектится если streamText поймал ошибку провайдера.
+  // Резолвится как только первый chunk пришёл (поток начался нормально).
+  let resolveStreamStarted: () => void;
+  let rejectStreamStarted: (e: unknown) => void;
+  const streamStarted = new Promise<void>((res, rej) => {
+    resolveStreamStarted = res;
+    rejectStreamStarted = rej;
+  });
+
+  let gotChunk = false;
+
   const result = streamText({
     model,
     system: params.system,
@@ -130,29 +147,39 @@ async function tryStreamText(
     maxRetries: 0,
     experimental_telemetry: {
       isEnabled: telemetryEnabled,
-      // Имя трейса в Langfuse
       functionId: "stariva-chat",
       metadata: {
         provider: params.providerName,
         sessionId: params.sessionId,
       },
     },
+    onChunk: ({ chunk }) => {
+      // Tool calls тоже считаются валидным ответом
+      if (
+        chunk.type === "text-delta" ||
+        chunk.type === "tool-call" ||
+        chunk.type === "tool-input-start"
+      ) {
+        gotChunk = true;
+        resolveStreamStarted();
+      }
+    },
+    onError: ({ error }) => rejectStreamStarted(error),
+    onFinish: () => {
+      if (!gotChunk) {
+        rejectStreamStarted(
+          new Error(
+            "empty_response: provider returned no text and no tool calls",
+          ),
+        );
+      } else {
+        resolveStreamStarted();
+      }
+    },
   });
 
-  // consumeStream() раскладывает ошибки через rejectResultPromises(), а не бросает сам.
-  // Поэтому ждём steps — он реджектится при любой ошибке стрима,
-  // включая "Failed to call a function" от Groq.
-  await result.consumeStream();
-  const steps = await result.steps;
-
-  // Groq иногда возвращает пустой/null ответ без ошибки — нужно явно это поймать
-  const responseText = steps.at(-1)?.text ?? "";
-  const hasToolCalls = (steps.at(-1)?.toolCalls?.length ?? 0) > 0;
-  if (!hasToolCalls && responseText.trim() === "") {
-    throw new Error(
-      "empty_response: provider returned no text and no tool calls",
-    );
-  }
+  // Ждём либо первый chunk, либо ошибку провайдера
+  await streamStarted;
 
   return result;
 }
