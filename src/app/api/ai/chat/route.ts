@@ -10,7 +10,7 @@ import {
   validateUIMessages,
 } from "ai";
 import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { buildSystemPrompt } from "@/lib/chat/knowledge";
 import { chatTools } from "@/lib/chat/tools";
 import { env } from "@/lib/env";
@@ -27,12 +27,8 @@ const MAX_CHARS_PER_MESSAGE = 4000;
 /**
  * Возвращает список доступных моделей в порядке приоритета.
  * Groq — основной, Cerebras — резервный.
- * Модель считается "доступной", если задан соответствующий API-ключ.
  */
-function getAvailableModels(): Array<{
-  name: string;
-  model: LanguageModel;
-}> {
+function getAvailableModels(): Array<{ name: string; model: LanguageModel }> {
   const models: Array<{ name: string; model: LanguageModel }> = [];
 
   if (env.GROQ_API_KEY) {
@@ -53,14 +49,25 @@ function getAvailableModels(): Array<{
   return models;
 }
 
+// ─── Langfuse: forceFlush после стриминга ────────────────────────────────────
+
+async function flushLangfuse() {
+  try {
+    // Импортируем динамически — если Langfuse не настроен, модуль всё равно
+    // загружен через instrumentation.ts, но flush безопасен при пустом processor.
+    const { LangfuseSpanProcessor } = await import("@langfuse/otel");
+    await new LangfuseSpanProcessor().forceFlush();
+  } catch {
+    // Langfuse недоступен — не критично, просто пропускаем
+  }
+}
+
 // ─── Определение ошибок, при которых стоит пробовать следующий провайдер ────
 
 function isFallbackError(error: unknown): boolean {
   const msg = error instanceof Error ? error.message : String(error ?? "");
   return (
-    // Groq: невалидный вызов инструмента
     msg.includes("Failed to call a function") ||
-    // Общие сетевые / серверные ошибки
     msg.includes("503") ||
     msg.includes("502") ||
     msg.includes("529") ||
@@ -79,11 +86,13 @@ async function tryStreamText(
     system: string;
     messages: Awaited<ReturnType<typeof convertToModelMessages>>;
     tools: ToolSet;
+    sessionId: string;
+    providerName: string;
   },
 ) {
-  // streamText сам по себе не бросает синхронно — ошибки вылетают при
-  // consumeStream. Вызываем consumeStream, чтобы поймать их до того, как
-  // отдадим ответ клиенту.
+  const telemetryEnabled =
+    !!env.LANGFUSE_PUBLIC_KEY && !!env.LANGFUSE_SECRET_KEY;
+
   const result = streamText({
     model,
     system: params.system,
@@ -91,11 +100,20 @@ async function tryStreamText(
     tools: params.tools,
     stopWhen: stepCountIs(5),
     temperature: 0.6,
-    maxRetries: 0, // отключаем внутренние ретраи — fallback управляем сами
+    maxRetries: 0,
+    experimental_telemetry: {
+      isEnabled: telemetryEnabled,
+      // Имя трейса в Langfuse
+      functionId: "stariva-chat",
+      metadata: {
+        provider: params.providerName,
+        sessionId: params.sessionId,
+      },
+    },
   });
 
-  // Ждём первого чанка, чтобы убедиться, что стрим открылся без ошибки.
-  // Если провайдер сразу вернул ошибку — она выброситься здесь.
+  // consumeStream() выбрасывает ошибку синхронно если провайдер вернул её
+  // до начала стриминга (например "Failed to call a function").
   await result.consumeStream();
 
   return result;
@@ -124,6 +142,11 @@ export async function POST(request: NextRequest) {
   if (!Array.isArray(rawMessages)) {
     return NextResponse.json({ error: "Некорректный запрос" }, { status: 400 });
   }
+
+  // sessionId для группировки трейсов одного чата в Langfuse
+  const sessionId =
+    (body as { sessionId?: string })?.sessionId ??
+    `anon-${Date.now().toString(36)}`;
 
   let messages: UIMessage[];
   try {
@@ -157,7 +180,13 @@ export async function POST(request: NextRequest) {
         system,
         messages: modelMessages,
         tools: chatTools as ToolSet,
+        sessionId,
+        providerName: name,
       });
+
+      // Гарантируем flush трейса в Langfuse после завершения стрима
+      // (важно для serverless: функция может завершиться до отправки трейса)
+      after(flushLangfuse);
 
       return result.toUIMessageStreamResponse({
         onError: (error) => {
@@ -170,24 +199,19 @@ export async function POST(request: NextRequest) {
       console.error(`[ai/chat] provider "${name}" failed:`, error);
 
       if (isFallbackError(error)) {
-        // Есть ещё провайдеры — пробуем следующий
         const isLast = name === models[models.length - 1].name;
         if (!isLast) {
           console.warn(
-            `[ai/chat] falling back from "${name}" to next provider`,
-
             `[ai/chat] falling back from "${name}" to next provider`,
           );
           continue;
         }
       }
 
-      // Либо ошибка не требует fallback, либо провайдеры кончились
       break;
     }
   }
 
-  // Все провайдеры исчерпаны
   console.error("[ai/chat] all providers failed, last error:", lastError);
   return NextResponse.json(
     { error: "Не удалось получить ответ. Попробуйте позже." },

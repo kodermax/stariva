@@ -20,6 +20,16 @@ export const env = createEnv({
     CEREBRAS_API_KEY: z.string().min(1).optional(),
     CEREBRAS_MODEL: z.string().min(1).default("gpt-oss-120b"),
 
+    // Langfuse — трассировка и логирование запросов к AI (опционально)
+    // Ключи: https://cloud.langfuse.com → Settings → API Keys
+    LANGFUSE_PUBLIC_KEY: z.string().min(1).optional(),
+    LANGFUSE_SECRET_KEY: z.string().min(1).optional(),
+    LANGFUSE_BASEURL: z
+      .string()
+      .url()
+      .default("https://cloud.langfuse.com")
+      .optional(),
+
     // Telegram Bot API — для отправки заявок на индивидуальный заказ
     TELEGRAM_BOT_TOKEN: z.string().min(1).optional(),
     TELEGRAM_CHAT_ID: z.string().min(1).optional(),
@@ -53,6 +63,9 @@ export const env = createEnv({
     GROQ_MODEL: process.env.GROQ_MODEL,
     CEREBRAS_API_KEY: process.env.CEREBRAS_API_KEY,
     CEREBRAS_MODEL: process.env.CEREBRAS_MODEL,
+    LANGFUSE_PUBLIC_KEY: process.env.LANGFUSE_PUBLIC_KEY,
+    LANGFUSE_SECRET_KEY: process.env.LANGFUSE_SECRET_KEY,
+    LANGFUSE_BASEURL: process.env.LANGFUSE_BASEURL,
     TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN,
     TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
