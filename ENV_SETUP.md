@@ -38,6 +38,50 @@
 
 > **Индивидуальные заказы.** Заявки с формы уходят в Telegram (`TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID`) и/или на email через Resend. Если не задан ни один канал, в режиме разработки заявка просто логируется в консоль. AI-помощник (`GROQ_API_KEY`) и калькулятор стоимости работают независимо: без ключа Groq калькулятор продолжает считать цену, а кнопка «Спросить AI» сообщает, что помощник не подключён.
 
+### Личный кабинет и платные мастер-классы
+
+Раздел `/account` использует БД PostgreSQL, авторизацию better-auth, оплату YooKassa и хранилище видео Yandex Object Storage (S3).
+
+| Переменная                    | Назначение                                                                        |
+| ----------------------------- | --------------------------------------------------------------------------------- |
+| `DATABASE_URL`                | Строка подключения PostgreSQL (`postgres://user:pass@host:5432/db`)               |
+| `BETTER_AUTH_SECRET`          | Секрет для подписи сессий. Сгенерировать: `openssl rand -base64 32`               |
+| `BETTER_AUTH_URL`             | Базовый URL приложения (dev: `http://localhost:3000`, prod: `https://stariva.ru`) |
+| `NEXT_PUBLIC_SITE_URL`        | Публичный URL сайта (для редиректа после оплаты)                                  |
+| `YOOKASSA_SHOP_ID`            | shopId магазина YooKassa                                                          |
+| `YOOKASSA_SECRET_KEY`         | Секретный ключ YooKassa (для теста — ключ тестового магазина)                     |
+| `YANDEX_S3_ENDPOINT`          | Эндпоинт хранилища (по умолчанию `https://storage.yandexcloud.net`)               |
+| `YANDEX_S3_REGION`            | Регион (по умолчанию `ru-central1`)                                               |
+| `YANDEX_S3_ACCESS_KEY_ID`     | Статический ключ доступа сервисного аккаунта                                      |
+| `YANDEX_S3_SECRET_ACCESS_KEY` | Секрет статического ключа                                                         |
+| `YANDEX_S3_BUCKET`            | Имя бакета с видео и материалами                                                  |
+
+> **Письма авторизации** (подтверждение email, magic link, сброс пароля) отправляются через Resend. Нужны `RESEND_API_KEY` и `ORDER_EMAIL_FROM`. Без них в dev-режиме ссылки выводятся в консоль.
+
+#### Миграции базы данных
+
+Схема описана в `src/lib/db/schema.ts`. Команды (миграции в БД запускаются вручную):
+
+```bash
+bun run db:generate   # сгенерировать SQL-миграцию из схемы
+bun run db:migrate    # применить миграции к базе
+bun run db:studio     # открыть Drizzle Studio
+```
+
+#### Хранение видео в Yandex S3
+
+Видеоуроки и PDF-материалы лежат в бакете по конвенции ключей:
+
+```
+workshops/<slug>/<lessonId>.mp4      # видео урока
+```
+
+`lessonId` по умолчанию равен `<slug>-<номер>` (например, `boho-dress-3`). Ключ можно переопределить в `workshops-data.ts` через поле `videoKey` урока, а PDF-материалы добавить в `materialFiles`. Видео отдаётся плееру через короткоживущие pre-signed ссылки только после проверки доступа.
+
+#### Вебхук YooKassa
+
+В личном кабинете YooKassa настройте HTTP-уведомление на `https://<домен>/api/payments/webhook` для событий `payment.succeeded` и `payment.canceled`. Подлинность уведомления проверяется повторным запросом статуса платежа в API YooKassa, доступ к курсу выдаётся автоматически после успешной оплаты.
+
 #### Client-side (клиентские)
 
 Доступны в браузере (должны начинаться с `NEXT_PUBLIC_`):
@@ -87,6 +131,7 @@ const clientId = env.OZON_CLIENT_ID;
    ```
 
 3. Используйте в коде:
+
    ```typescript
    import { env } from "@/lib/env";
    const key = env.NEW_API_KEY;
@@ -103,6 +148,7 @@ const clientId = env.OZON_CLIENT_ID;
    ```
 
 2. Добавьте в секцию `client` в `lib/env.ts`:
+
    ```typescript
    client: {
      NEXT_PUBLIC_API_URL: z.string().url(),

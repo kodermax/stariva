@@ -4,6 +4,29 @@ export type WorkshopCategory = "lampshades" | "clothing" | "interior";
 export interface WorkshopLesson {
   title: string;
   duration: string; // e.g. "12 мин"
+  /** Стабильный идентификатор урока. Если не задан — генерируется как `${slug}-${n}`. */
+  id?: string;
+  /** Ключ объекта видео в Yandex S3. Если не задан — `workshops/${slug}/${id}.mp4`. */
+  videoKey?: string;
+  /** Бесплатный урок-превью (доступен без покупки). По умолчанию бесплатен только первый. */
+  free?: boolean;
+}
+
+/** Урок с гарантированно заполненными полями (после резолвинга). */
+export interface ResolvedLesson {
+  id: string;
+  index: number;
+  title: string;
+  duration: string;
+  durationSeconds: number;
+  videoKey: string;
+  free: boolean;
+}
+
+/** PDF-материал к мастер-классу (хранится в Yandex S3). */
+export interface WorkshopMaterialFile {
+  label: string;
+  key: string;
 }
 
 export interface Workshop {
@@ -21,6 +44,8 @@ export interface Workshop {
   whatYouLearn: string[];
   materials: string[];
   lessons: WorkshopLesson[];
+  /** PDF-материалы курса для скачивания (хранятся в Yandex S3). */
+  materialFiles?: WorkshopMaterialFile[];
   ozonUrl?: string;
   featured?: boolean;
 }
@@ -296,4 +321,61 @@ export function formatPrice(price: number): string {
     currency: "RUB",
     maximumFractionDigits: 0,
   }).format(price);
+}
+
+/**
+ * Парсит человекочитаемую длительность ("3 ч 20 мин", "12 мин") в секунды.
+ */
+export function parseDurationToSeconds(duration: string): number {
+  let total = 0;
+  const hours = duration.match(/(\d+)\s*ч/);
+  const minutes = duration.match(/(\d+)\s*мин/);
+  if (hours) total += Number(hours[1]) * 3600;
+  if (minutes) total += Number(minutes[1]) * 60;
+  return total;
+}
+
+/** Префикс ключей объектов курса в Yandex S3. */
+export function workshopStoragePrefix(slug: string): string {
+  return `workshops/${slug}`;
+}
+
+/**
+ * Возвращает уроки мастер-класса с заполненными id, ключами видео и флагом
+ * бесплатного превью. По умолчанию бесплатен только первый урок.
+ *
+ * Конвенция ключей S3 (если videoKey не задан явно):
+ *   workshops/<slug>/<lessonId>.mp4
+ */
+export function getWorkshopLessons(workshop: Workshop): ResolvedLesson[] {
+  return workshop.lessons.map((lesson, i) => {
+    const id = lesson.id ?? `${workshop.slug}-${i + 1}`;
+    return {
+      id,
+      index: i,
+      title: lesson.title,
+      duration: lesson.duration,
+      durationSeconds: parseDurationToSeconds(lesson.duration),
+      videoKey:
+        lesson.videoKey ?? `${workshopStoragePrefix(workshop.slug)}/${id}.mp4`,
+      free: lesson.free ?? i === 0,
+    };
+  });
+}
+
+/** Находит конкретный урок мастер-класса по его id. */
+export function getWorkshopLesson(
+  slug: string,
+  lessonId: string,
+): { workshop: Workshop; lesson: ResolvedLesson } | undefined {
+  const workshop = getWorkshopBySlug(slug);
+  if (!workshop) return undefined;
+  const lesson = getWorkshopLessons(workshop).find((l) => l.id === lessonId);
+  if (!lesson) return undefined;
+  return { workshop, lesson };
+}
+
+/** Цена мастер-класса в копейках (для платёжной системы и БД). */
+export function workshopPriceKopecks(workshop: Workshop): number {
+  return Math.round(workshop.price * 100);
 }

@@ -1,9 +1,14 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import type { Metadata } from "next";
 import { Footer } from "@/components/stariva/footer";
 import { Header } from "@/components/stariva/header";
+import {
+  BreadcrumbJsonLd,
+  CourseJsonLd,
+  FAQJsonLd,
+} from "@/components/stariva/json-ld";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,12 +17,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { OzonButton } from "./ozon-button";
-import {
-  BreadcrumbJsonLd,
-  CourseJsonLd,
-  FAQJsonLd,
-} from "@/components/stariva/json-ld";
 import {
   categoryLabels,
   formatPrice,
@@ -26,6 +25,7 @@ import {
   levelLabels,
   workshops,
 } from "@/lib/workshops-data";
+import { WorkshopPurchase } from "./workshop-purchase";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://stariva.ru";
@@ -100,7 +100,7 @@ export default async function WorkshopDetailPage({
     {
       question: "Где купить курс?",
       answer:
-        "Курс продаётся на Ozon. После покупки вы получите доступ к видеоурокам.",
+        "Курс можно купить прямо на сайте: нажмите «Купить», оплатите онлайн через YooKassa, и доступ к видеоурокам сразу появится в вашем личном кабинете.",
     },
   ];
 
@@ -498,12 +498,11 @@ export default async function WorkshopDetailPage({
                     ))}
                   </div>
 
-                  {workshop.ozonUrl && (
-                    <OzonButton
-                      url={workshop.ozonUrl}
-                      workshopTitle={workshop.title}
-                    />
-                  )}
+                  <WorkshopPurchase
+                    slug={workshop.slug}
+                    price={workshop.price}
+                    title={workshop.title}
+                  />
 
                   <p className="text-center text-xs text-taupe leading-relaxed">
                     Доступ навсегда&nbsp;·&nbsp;HD-видео&nbsp;·&nbsp;Все
