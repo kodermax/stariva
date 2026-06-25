@@ -30,7 +30,7 @@ const MAX_CHARS_PER_MESSAGE = 4000;
 
 /**
  * Возвращает список доступных моделей в порядке приоритета.
- * Groq — основной, Cerebras — резервный.
+ * Groq — основной, Cerebras — резервный, OpenRouter — последний запасной.
  */
 function getAvailableModels(): Array<{ name: string; model: LanguageModel }> {
   const models: Array<{ name: string; model: LanguageModel }> = [];
@@ -48,6 +48,18 @@ function getAvailableModels(): Array<{ name: string; model: LanguageModel }> {
       headers: { "X-Cerebras-3rd-Party-Integration": "vercel-ai-sdk" },
     });
     models.push({ name: "cerebras", model: cerebras(env.CEREBRAS_MODEL) });
+  }
+
+  if (env.OPENROUTER_API_KEY) {
+    const openrouter = createOpenAICompatible({
+      name: "openrouter",
+      apiKey: env.OPENROUTER_API_KEY,
+      baseURL: "https://openrouter.ai/api/v1",
+    });
+    models.push({
+      name: "openrouter",
+      model: openrouter(env.OPENROUTER_MODEL),
+    });
   }
 
   return models;

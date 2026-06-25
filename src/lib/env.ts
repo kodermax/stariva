@@ -20,6 +20,10 @@ export const env = createEnv({
     CEREBRAS_API_KEY: z.string().min(1).optional(),
     CEREBRAS_MODEL: z.string().min(1).default("gpt-oss-120b"),
 
+    // OpenRouter (последний резервный провайдер, если Groq и Cerebras недоступны)
+    OPENROUTER_API_KEY: z.string().min(1).optional(),
+    OPENROUTER_MODEL: z.string().min(1).default("openai/gpt-oss-120b:free"),
+
     // Langfuse — трассировка и логирование запросов к AI (опционально)
     // Ключи: https://cloud.langfuse.com → Settings → API Keys
     LANGFUSE_PUBLIC_KEY: z.string().min(1).optional(),
@@ -88,6 +92,8 @@ export const env = createEnv({
     GROQ_MODEL: process.env.GROQ_MODEL,
     CEREBRAS_API_KEY: process.env.CEREBRAS_API_KEY,
     CEREBRAS_MODEL: process.env.CEREBRAS_MODEL,
+    OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY,
+    OPENROUTER_MODEL: process.env.OPENROUTER_MODEL,
     LANGFUSE_PUBLIC_KEY: process.env.LANGFUSE_PUBLIC_KEY,
     LANGFUSE_SECRET_KEY: process.env.LANGFUSE_SECRET_KEY,
     LANGFUSE_BASE_URL: process.env.LANGFUSE_BASE_URL,
