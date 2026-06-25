@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PasswordInput } from "@/components/ui/password-input";
 import { signIn } from "@/lib/auth/client";
 
 export function SignInForm() {
@@ -30,7 +31,9 @@ export function SignInForm() {
 
     if (error) {
       if (error.status === 403) {
-        toast.error("Email не подтверждён. Проверьте почту — мы отправили письмо со ссылкой.");
+        toast.error(
+          "Email не подтверждён. Проверьте почту — мы отправили письмо со ссылкой.",
+        );
       } else {
         toast.error(error.message || "Неверный email или пароль");
       }
@@ -65,9 +68,8 @@ export function SignInForm() {
             Забыли пароль?
           </Link>
         </div>
-        <Input
+        <PasswordInput
           id="password"
-          type="password"
           autoComplete="current-password"
           placeholder="••••••••"
           value={password}
@@ -84,12 +86,16 @@ export function SignInForm() {
       </Button>
 
       <div className="relative py-1 text-center">
-        <span className="relative z-10 bg-white px-3 text-xs text-taupe">или</span>
+        <span className="relative z-10 bg-white px-3 text-xs text-taupe">
+          или
+        </span>
         <span className="absolute left-0 right-0 top-1/2 h-px bg-espresso/10" />
       </div>
 
       <Button asChild variant="outline" className="w-full">
-        <Link href={`/magic-link?callbackURL=${encodeURIComponent(callbackURL)}`}>
+        <Link
+          href={`/magic-link?callbackURL=${encodeURIComponent(callbackURL)}`}
+        >
           Войти по ссылке на email
         </Link>
       </Button>

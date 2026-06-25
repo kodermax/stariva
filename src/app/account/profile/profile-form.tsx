@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PasswordInput } from "@/components/ui/password-input";
 import { authClient } from "@/lib/auth/client";
 
 interface ProfileFormProps {
@@ -145,9 +146,8 @@ export function ProfileForm({
         <h2 className="font-serif text-xl text-espresso mb-4">Смена пароля</h2>
         <div className="space-y-1.5 mb-3">
           <Label htmlFor="currentPassword">Текущий пароль</Label>
-          <Input
+          <PasswordInput
             id="currentPassword"
-            type="password"
             autoComplete="current-password"
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
@@ -156,9 +156,8 @@ export function ProfileForm({
         </div>
         <div className="space-y-1.5 mb-4">
           <Label htmlFor="newPassword">Новый пароль</Label>
-          <Input
+          <PasswordInput
             id="newPassword"
-            type="password"
             autoComplete="new-password"
             placeholder="Минимум 8 символов"
             value={newPassword}

@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PasswordInput } from "@/components/ui/password-input";
 import { signUp } from "@/lib/auth/client";
 
 export function SignUpForm() {
@@ -48,15 +49,36 @@ export function SignUpForm() {
     return (
       <div className="text-center space-y-3 py-2">
         <div className="mx-auto w-12 h-12 rounded-full bg-sage/20 flex items-center justify-center">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 7l8 5 8-5" stroke="#7a8a6f" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-            <rect x="3" y="5" width="18" height="14" rx="2" stroke="#7a8a6f" strokeWidth="1.6" />
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M4 7l8 5 8-5"
+              stroke="#7a8a6f"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <rect
+              x="3"
+              y="5"
+              width="18"
+              height="14"
+              rx="2"
+              stroke="#7a8a6f"
+              strokeWidth="1.6"
+            />
           </svg>
         </div>
         <p className="text-espresso font-medium">Проверьте почту</p>
         <p className="text-taupe text-sm leading-relaxed">
           Мы отправили письмо на <span className="text-espresso">{email}</span>.
-          Перейдите по ссылке в письме, чтобы подтвердить email и войти в кабинет.
+          Перейдите по ссылке в письме, чтобы подтвердить email и войти в
+          кабинет.
         </p>
       </div>
     );
@@ -90,9 +112,8 @@ export function SignUpForm() {
       </div>
       <div className="space-y-1.5">
         <Label htmlFor="password">Пароль</Label>
-        <Input
+        <PasswordInput
           id="password"
-          type="password"
           autoComplete="new-password"
           placeholder="Минимум 8 символов"
           value={password}

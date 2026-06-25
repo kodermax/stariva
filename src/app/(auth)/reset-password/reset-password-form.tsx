@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PasswordInput } from "@/components/ui/password-input";
 import { authClient } from "@/lib/auth/client";
 
 export function ResetPasswordForm() {
@@ -66,9 +67,8 @@ export function ResetPasswordForm() {
     <form onSubmit={onSubmit} className="space-y-4">
       <div className="space-y-1.5">
         <Label htmlFor="password">Новый пароль</Label>
-        <Input
+        <PasswordInput
           id="password"
-          type="password"
           autoComplete="new-password"
           placeholder="Минимум 8 символов"
           value={password}
@@ -79,9 +79,8 @@ export function ResetPasswordForm() {
       </div>
       <div className="space-y-1.5">
         <Label htmlFor="confirm">Повторите пароль</Label>
-        <Input
+        <PasswordInput
           id="confirm"
-          type="password"
           autoComplete="new-password"
           placeholder="••••••••"
           value={confirm}
