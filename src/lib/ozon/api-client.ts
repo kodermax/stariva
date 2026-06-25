@@ -1,4 +1,5 @@
 import { env } from "../env";
+import type { OzonReview, Product, Review } from "../ozon-types";
 import { extractAttributes, transformOzonProduct } from "./transformers";
 import type { ExtractedAttributes, OzonProductInfoV3 } from "./transformers";
 
