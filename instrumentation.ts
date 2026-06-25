@@ -10,19 +10,23 @@
 // основаны @langfuse/otel и @langfuse/tracing.
 // https://github.com/vercel/otel/issues/154
 
-import { LangfuseSpanProcessor } from "@langfuse/otel";
-import { NodeTracerProvider } from "@opentelemetry/sdk-trace-node";
+// register() вызывается Next.js при старте Node.js-сервера.
+// Используем динамический import() чтобы Turbopack не пытался резолвить
+// @langfuse/otel во время сборки (он поставляется как CJS-only пакет и
+// недоступен в edge/browser окружениях).
+export async function register() {
+  if (process.env.NEXT_RUNTIME === "nodejs") {
+    const { LangfuseSpanProcessor } = await import("@langfuse/otel");
+    const { NodeTracerProvider } = await import(
+      "@opentelemetry/sdk-trace-node"
+    );
 
-// Создаём процессор на уровне модуля — он живёт всё время работы сервера.
-// Экспортируем для вызова forceFlush() из route-handler после стриминга.
-export const langfuseSpanProcessor = new LangfuseSpanProcessor();
+    const langfuseSpanProcessor = new LangfuseSpanProcessor();
 
-const tracerProvider = new NodeTracerProvider({
-  spanProcessors: [langfuseSpanProcessor],
-});
+    const tracerProvider = new NodeTracerProvider({
+      spanProcessors: [langfuseSpanProcessor],
+    });
 
-tracerProvider.register();
-
-// register() требуется Next.js как экспорт из instrumentation.ts,
-// но реальная инициализация уже произошла выше при загрузке модуля.
-export async function register() {}
+    tracerProvider.register();
+  }
+}
