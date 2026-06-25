@@ -39,11 +39,24 @@ const catalogNav = [
   },
 ];
 
+const b2bLinks = [
+  {
+    label: "Кафе и рестораны",
+    href: "/b2b",
+    desc: "Абажуры, зонирование, фотозоны",
+  },
+  {
+    label: "Базы отдыха",
+    href: "/resort",
+    desc: "Глэмпинг, террасы, SPA, отели",
+  },
+];
+
 const nav = [
   { label: "Каталог", href: "/catalog", hasMega: true },
   { label: "Мастер-классы", href: "/workshops" },
   { label: "Блог", href: "/blog" },
-  { label: "Для бизнеса", href: "/b2b" },
+  { label: "Для бизнеса", href: "/b2b", hasB2b: true },
   { label: "О бренде", href: "/about" },
 ];
 
@@ -55,7 +68,9 @@ export function Header({ variant = "solid" }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
+  const [b2bOpen, setB2bOpen] = useState(false);
   const megaTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const b2bTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
   const router = useRouter();
   const { data: session } = useSession();
@@ -89,6 +104,15 @@ export function Header({ variant = "solid" }: HeaderProps) {
     megaTimer.current = setTimeout(() => setMegaOpen(false), 200);
   };
 
+  const openB2b = () => {
+    if (b2bTimer.current) clearTimeout(b2bTimer.current);
+    setB2bOpen(true);
+  };
+  const closeB2b = () => {
+    if (b2bTimer.current) clearTimeout(b2bTimer.current);
+    b2bTimer.current = setTimeout(() => setB2bOpen(false), 200);
+  };
+
   const handleSignOut = async () => {
     await signOut();
     setMenuOpen(false);
@@ -100,7 +124,6 @@ export function Header({ variant = "solid" }: HeaderProps) {
     .trim()
     .charAt(0)
     .toUpperCase();
-
   return (
     <>
       <header
@@ -152,7 +175,67 @@ export function Header({ variant = "solid" }: HeaderProps) {
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-1">
             {nav.map((item) =>
-              item.hasMega ? (
+              item.hasB2b ? (
+                // biome-ignore lint/a11y/noStaticElementInteractions: wrapper div needs mouse events for dropdown hover
+                <div
+                  key={item.href}
+                  className="relative"
+                  onMouseEnter={openB2b}
+                  onMouseLeave={closeB2b}
+                >
+                  <Link
+                    href={item.href}
+                    className={`px-4 py-2 rounded-md label-caps-md transition-colors flex items-center gap-1.5 ${
+                      isActive(item.href)
+                        ? "text-terracotta"
+                        : isSolid
+                          ? "text-espresso/70 hover:text-espresso"
+                          : "text-white/80 hover:text-white"
+                    }`}
+                  >
+                    {item.label}
+                    <svg
+                      width="10"
+                      height="10"
+                      viewBox="0 0 10 10"
+                      fill="none"
+                      aria-hidden="true"
+                      className={`transition-transform duration-200 ${b2bOpen ? "rotate-180" : ""}`}
+                    >
+                      <path d="M2 3.5l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </Link>
+
+                  {/* biome-ignore lint/a11y/noStaticElementInteractions: dropdown bridge div needs mouse events for hover persistence */}
+                  <div
+                    onMouseEnter={openB2b}
+                    onMouseLeave={closeB2b}
+                    className={`absolute left-0 top-full pt-2 transition-all duration-200 ease-out z-50 ${
+                      b2bOpen
+                        ? "opacity-100 translate-y-0 pointer-events-auto"
+                        : "opacity-0 -translate-y-1 pointer-events-none"
+                    }`}
+                  >
+                    <div className="bg-white border border-espresso/8 rounded-xl shadow-[0_12px_40px_rgba(22,21,19,0.12)] overflow-hidden min-w-[220px]">
+                      {b2bLinks.map((link) => (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          onClick={() => setB2bOpen(false)}
+                          className={`flex flex-col px-5 py-3.5 hover:bg-off-white transition-colors border-b border-espresso/6 last:border-b-0 ${
+                            isActive(link.href) ? "bg-sand/60" : ""
+                          }`}
+                        >
+                          <span className={`text-[13px] font-medium leading-snug ${isActive(link.href) ? "text-terracotta" : "text-espresso"}`}>
+                            {link.label}
+                          </span>
+                          <span className="text-[11px] text-taupe mt-0.5">{link.desc}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : item.hasMega ? (
                 // biome-ignore lint/a11y/noStaticElementInteractions: wrapper div needs mouse events for mega menu hover
                 <div
                   key={item.href}
@@ -472,7 +555,6 @@ export function Header({ variant = "solid" }: HeaderProps) {
               { label: "Весь каталог", href: "/catalog" },
               { label: "Мастер-классы", href: "/workshops" },
               { label: "Блог", href: "/blog" },
-              { label: "Для бизнеса", href: "/b2b" },
               { label: "О бренде", href: "/about" },
               { label: "Заказать", href: "/#order" },
             ].map((item) => (
@@ -492,6 +574,41 @@ export function Header({ variant = "solid" }: HeaderProps) {
                   fill="none"
                   aria-hidden="true"
                   className="opacity-25 group-hover:opacity-60 transition-opacity"
+                >
+                  <path
+                    d="M3 7h8M8 4l3 3-3 3"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Link>
+            ))}
+
+            <div className="mt-4 label-caps text-taupe text-[10px] px-1 mb-2">
+              Для бизнеса
+            </div>
+            {b2bLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className={`py-3 px-1 border-b border-espresso/6 flex items-center justify-between group ${
+                  isActive(link.href) ? "text-terracotta" : "text-espresso/80"
+                }`}
+              >
+                <div>
+                  <span className="font-serif text-[17px] block leading-snug">{link.label}</span>
+                  <span className="text-taupe text-[11px]">{link.desc}</span>
+                </div>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  aria-hidden="true"
+                  className="opacity-25 group-hover:opacity-60 transition-opacity flex-shrink-0"
                 >
                   <path
                     d="M3 7h8M8 4l3 3-3 3"
