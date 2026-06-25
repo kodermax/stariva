@@ -226,9 +226,6 @@ function ProductCards({ products }: { products: ProductCard[] }) {
                   {p.oldPriceFormatted}
                 </span>
               )}
-              {!p.inStock && (
-                <span className="text-[10.5px] text-terracotta">под заказ</span>
-              )}
             </div>
           </div>
           <span className="shrink-0 text-espresso/30 transition-colors group-hover:text-terracotta">

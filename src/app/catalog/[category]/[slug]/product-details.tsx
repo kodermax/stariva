@@ -162,13 +162,6 @@ export function ProductDetails({
                     {Math.round((1 - product.price / product.oldPrice) * 100)}%
                   </span>
                 )}
-                {!product.inStock && (
-                  <div className="absolute inset-0 bg-parchment/60 flex items-center justify-center">
-                    <span className="bg-parchment/90 text-espresso label-caps px-6 py-3 rounded-full text-lg">
-                      Нет в наличии
-                    </span>
-                  </div>
-                )}
               </div>
               {product.images.length > 1 && (
                 <div className="flex gap-3 overflow-x-auto pb-2">
@@ -592,13 +585,6 @@ export function ProductDetails({
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         unoptimized={p.images[0].startsWith("http")}
                       />
-                      {!p.inStock && (
-                        <div className="absolute inset-0 bg-parchment/50 flex items-center justify-center">
-                          <span className="label-caps text-[10px] bg-parchment/90 text-espresso px-3 py-1.5 rounded-full">
-                            Нет в наличии
-                          </span>
-                        </div>
-                      )}
                     </div>
                     <div className="p-4">
                       <h3 className="font-serif text-lg text-espresso mb-1 group-hover:text-terracotta transition-colors line-clamp-2">
