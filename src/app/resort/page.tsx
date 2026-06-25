@@ -220,7 +220,7 @@ export default function ResortPage() {
                 Скачать КП (PDF)
               </a>
               <a
-                href="https://t.me/stariva"
+                href="https://t.me/Olga_Stariva"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 bg-white/10 border border-white/25 text-white px-7 py-3.5 rounded-full label-caps-md hover:bg-white/20 transition-colors backdrop-blur-sm"
@@ -428,7 +428,7 @@ export default function ResortPage() {
                 Скачать КП (PDF)
               </a>
               <a
-                href="https://t.me/stariva"
+                href="https://t.me/Olga_Stariva"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-3 bg-espresso text-parchment px-8 py-4 rounded-full label-caps-md text-[12px] hover:bg-near-black transition-colors"
@@ -441,10 +441,10 @@ export default function ResortPage() {
             <p className="text-mid-grey text-[12px] mt-6">
               Или позвоните:{" "}
               <a
-                href="tel:+79999999999"
+                href="tel:+79778722546"
                 className="text-espresso/70 hover:text-espresso transition-colors"
               >
-                +7 (999) 999-99-99
+                +7 977 872 25 46
               </a>
             </p>
           </div>
@@ -499,7 +499,7 @@ export default function ResortPage() {
           </div>
           <div className="flex flex-wrap gap-3">
             <a
-              href="https://t.me/stariva"
+              href="https://t.me/Olga_Stariva"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2.5 bg-white/10 border border-white/15 text-white px-5 py-2.5 rounded-full label-caps-md text-[11px] hover:bg-white/20 transition-colors"
@@ -508,7 +508,7 @@ export default function ResortPage() {
               Telegram
             </a>
             <a
-              href="tel:+79999999999"
+              href="tel:+79778722546"
               className="inline-flex items-center gap-2.5 bg-white/10 border border-white/15 text-white px-5 py-2.5 rounded-full label-caps-md text-[11px] hover:bg-white/20 transition-colors"
             >
               <PhoneIcon className="w-4 h-4" />
