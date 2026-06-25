@@ -200,8 +200,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   );
                 case "cta":
                   return (
-                    // biome-ignore lint/suspicious/noArrayIndexKey: blog content blocks are static and never reordered
                     <div
+                      // biome-ignore lint/suspicious/noArrayIndexKey: blog content blocks are static and never reordered
                       key={index}
                       className="my-10 p-6 bg-sand rounded-xl border border-espresso/8 text-center"
                     >
