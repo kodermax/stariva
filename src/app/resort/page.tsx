@@ -3,9 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Footer } from "@/components/stariva/footer";
 import { Header } from "@/components/stariva/header";
-import { Reviews } from "@/components/stariva/reviews";
-import { BreadcrumbJsonLd } from "@/components/stariva/json-ld";
 import { PhoneIcon, TelegramIcon } from "@/components/stariva/icons";
+import { BreadcrumbJsonLd } from "@/components/stariva/json-ld";
+import { Reviews } from "@/components/stariva/reviews";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://stariva.ru";
@@ -94,7 +94,7 @@ const advantages = [
   },
 ];
 
-const process = [
+const workSteps = [
   {
     step: "01",
     title: "Заявка и бриф",
@@ -171,17 +171,29 @@ export default function ResortPage() {
         <div className="relative max-w-[1440px] mx-auto px-5 lg:px-12 pb-16 lg:pb-24 pt-32">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 mb-6">
-              <span className="label-caps text-white/60 text-[10px]">Для бизнеса</span>
+              <span className="label-caps text-white/60 text-[10px]">
+                Для бизнеса
+              </span>
               <span className="w-6 h-px bg-white/30" />
-              <span className="label-caps text-terracotta text-[10px]">Базы отдыха</span>
+              <span className="label-caps text-terracotta text-[10px]">
+                Базы отдыха
+              </span>
             </div>
-            <h1 className="font-serif text-white leading-[1.1] mb-6" style={{ fontSize: "clamp(36px, 6vw, 72px)" }}>
+            <h1
+              className="font-serif text-white leading-[1.1] mb-6"
+              style={{ fontSize: "clamp(36px, 6vw, 72px)" }}
+            >
               Макраме для баз отдыха,
               <br />
               глэмпингов и эко-отелей
             </h1>
-            <p className="text-white/75 leading-relaxed mb-10 max-w-xl" style={{ fontSize: "clamp(15px, 1.5vw, 18px)" }}>
-              Превращаем типовое пространство в атмосферное место, где гости задерживаются и возвращаются. Натуральный хлопок, авторский дизайн, монтаж под ключ.
+            <p
+              className="text-white/75 leading-relaxed mb-10 max-w-xl"
+              style={{ fontSize: "clamp(15px, 1.5vw, 18px)" }}
+            >
+              Превращаем типовое пространство в атмосферное место, где гости
+              задерживаются и возвращаются. Натуральный хлопок, авторский
+              дизайн, монтаж под ключ.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -190,8 +202,20 @@ export default function ResortPage() {
                 download="stariva-kp-bazy-otdykha.pdf"
                 className="inline-flex items-center gap-3 bg-terracotta text-parchment px-7 py-3.5 rounded-full label-caps-md hover:bg-terracotta-dark transition-colors"
               >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M8 2v9M4.5 7.5L8 11l3.5-3.5M3 13.5h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M8 2v9M4.5 7.5L8 11l3.5-3.5M3 13.5h10"
+                    stroke="currentColor"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
                 Скачать КП (PDF)
               </a>
@@ -214,8 +238,12 @@ export default function ResortPage() {
               { value: "24ч", label: "Подготовим КП" },
             ].map((s) => (
               <div key={s.label}>
-                <div className="font-serif text-white text-3xl leading-none mb-1">{s.value}</div>
-                <div className="label-caps text-white/50 text-[10px]">{s.label}</div>
+                <div className="font-serif text-white text-3xl leading-none mb-1">
+                  {s.value}
+                </div>
+                <div className="label-caps text-white/50 text-[10px]">
+                  {s.label}
+                </div>
               </div>
             ))}
           </div>
@@ -226,15 +254,23 @@ export default function ResortPage() {
       <section className="py-24 lg:py-36 bg-parchment">
         <div className="max-w-[1440px] mx-auto px-5 lg:px-12">
           <div className="mb-14">
-            <p className="label-caps text-terracotta text-[10px] mb-4">Где используется</p>
-            <h2 className="font-serif text-near-black leading-tight max-w-xl" style={{ fontSize: "clamp(28px, 4vw, 48px)" }}>
+            <p className="label-caps text-terracotta text-[10px] mb-4">
+              Где используется
+            </p>
+            <h2
+              className="font-serif text-near-black leading-tight max-w-xl"
+              style={{ fontSize: "clamp(28px, 4vw, 48px)" }}
+            >
               Для каждого пространства — своё решение
             </h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
             {scenarios.map((s) => (
-              <article key={s.title} className="group rounded-2xl overflow-hidden border border-espresso/8 hover:border-espresso/20 transition-all duration-300 hover:shadow-[0_12px_40px_rgba(22,21,19,0.08)] bg-white">
+              <article
+                key={s.title}
+                className="group rounded-2xl overflow-hidden border border-espresso/8 hover:border-espresso/20 transition-all duration-300 hover:shadow-[0_12px_40px_rgba(22,21,19,0.08)] bg-white"
+              >
                 <div className="relative h-60 overflow-hidden">
                   <Image
                     src={s.image}
@@ -246,15 +282,22 @@ export default function ResortPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-near-black/40 to-transparent" />
                   <div className="absolute bottom-4 left-5 flex flex-wrap gap-1.5">
                     {s.tags.map((t) => (
-                      <span key={t} className="label-caps text-[9px] text-white bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-full border border-white/25">
+                      <span
+                        key={t}
+                        className="label-caps text-[9px] text-white bg-white/20 backdrop-blur-sm px-2.5 py-1 rounded-full border border-white/25"
+                      >
                         {t}
                       </span>
                     ))}
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="font-serif text-near-black text-xl mb-3">{s.title}</h3>
-                  <p className="text-dark-grey leading-relaxed text-[14px]">{s.body}</p>
+                  <h3 className="font-serif text-near-black text-xl mb-3">
+                    {s.title}
+                  </h3>
+                  <p className="text-dark-grey leading-relaxed text-[14px]">
+                    {s.body}
+                  </p>
                 </div>
               </article>
             ))}
@@ -266,20 +309,35 @@ export default function ResortPage() {
       <section className="py-24 lg:py-36 bg-off-white">
         <div className="max-w-[1440px] mx-auto px-5 lg:px-12">
           <div className="mb-14">
-            <p className="label-caps text-terracotta text-[10px] mb-4">Почему выбирают нас</p>
-            <h2 className="font-serif text-near-black leading-tight max-w-lg" style={{ fontSize: "clamp(28px, 4vw, 48px)" }}>
+            <p className="label-caps text-terracotta text-[10px] mb-4">
+              Почему выбирают нас
+            </p>
+            <h2
+              className="font-serif text-near-black leading-tight max-w-lg"
+              style={{ fontSize: "clamp(28px, 4vw, 48px)" }}
+            >
               Шесть причин работать со Stariva
             </h2>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {advantages.map((a) => (
-              <div key={a.number} className="bg-white rounded-2xl p-7 border border-espresso/6 hover:border-espresso/14 transition-colors">
-                <div className="font-serif text-terracotta/40 text-4xl leading-none mb-5 select-none" aria-hidden="true">
+              <div
+                key={a.number}
+                className="bg-white rounded-2xl p-7 border border-espresso/6 hover:border-espresso/14 transition-colors"
+              >
+                <div
+                  className="font-serif text-terracotta/40 text-4xl leading-none mb-5 select-none"
+                  aria-hidden="true"
+                >
                   {a.number}
                 </div>
-                <h3 className="font-serif text-near-black text-[18px] leading-snug mb-3">{a.title}</h3>
-                <p className="text-dark-grey text-[13px] leading-relaxed">{a.body}</p>
+                <h3 className="font-serif text-near-black text-[18px] leading-snug mb-3">
+                  {a.title}
+                </h3>
+                <p className="text-dark-grey text-[13px] leading-relaxed">
+                  {a.body}
+                </p>
               </div>
             ))}
           </div>
@@ -290,23 +348,36 @@ export default function ResortPage() {
       <section className="py-24 lg:py-36 bg-espresso text-parchment">
         <div className="max-w-[1440px] mx-auto px-5 lg:px-12">
           <div className="mb-14">
-            <p className="label-caps text-terracotta text-[10px] mb-4">Как работаем</p>
-            <h2 className="font-serif leading-tight max-w-lg" style={{ fontSize: "clamp(28px, 4vw, 48px)" }}>
+            <p className="label-caps text-terracotta text-[10px] mb-4">
+              Как работаем
+            </p>
+            <h2
+              className="font-serif leading-tight max-w-lg"
+              style={{ fontSize: "clamp(28px, 4vw, 48px)" }}
+            >
               От заявки до готового объекта
             </h2>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/8 rounded-2xl overflow-hidden">
-            {process.map((p, i) => (
+            {workSteps.map((p, i) => (
               <div key={p.step} className="bg-espresso p-8 relative">
-                {i < process.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-px w-px h-12 -translate-y-1/2 bg-white/8" aria-hidden="true" />
+                {i < workSteps.length - 1 && (
+                  <div
+                    className="hidden lg:block absolute top-1/2 -right-px w-px h-12 -translate-y-1/2 bg-white/8"
+                    aria-hidden="true"
+                  />
                 )}
-                <div className="font-serif text-terracotta/50 text-5xl leading-none mb-6 select-none" aria-hidden="true">
+                <div
+                  className="font-serif text-terracotta/50 text-5xl leading-none mb-6 select-none"
+                  aria-hidden="true"
+                >
                   {p.step}
                 </div>
                 <h3 className="font-serif text-xl mb-3">{p.title}</h3>
-                <p className="text-parchment/60 text-[13px] leading-relaxed">{p.body}</p>
+                <p className="text-parchment/60 text-[13px] leading-relaxed">
+                  {p.body}
+                </p>
               </div>
             ))}
           </div>
@@ -317,14 +388,20 @@ export default function ResortPage() {
       <section className="py-24 lg:py-36 bg-sand">
         <div className="max-w-[1440px] mx-auto px-5 lg:px-12">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="label-caps text-terracotta text-[10px] mb-4">Коммерческое предложение</p>
-            <h2 className="font-serif text-near-black leading-tight mb-6" style={{ fontSize: "clamp(28px, 4vw, 52px)" }}>
+            <p className="label-caps text-terracotta text-[10px] mb-4">
+              Коммерческое предложение
+            </p>
+            <h2
+              className="font-serif text-near-black leading-tight mb-6"
+              style={{ fontSize: "clamp(28px, 4vw, 52px)" }}
+            >
               Скачайте готовое КП
               <br />
               для вашего руководства
             </h2>
             <p className="text-dark-grey leading-relaxed mb-10 text-[15px] max-w-lg mx-auto">
-              PDF с ценами, фотографиями изделий, сроками и условиями работы. Готов к отправке в WhatsApp, Telegram или по email — один клик.
+              PDF с ценами, фотографиями изделий, сроками и условиями работы.
+              Готов к отправке в WhatsApp, Telegram или по email — один клик.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -333,8 +410,20 @@ export default function ResortPage() {
                 download="stariva-kp-bazy-otdykha.pdf"
                 className="inline-flex items-center justify-center gap-3 bg-terracotta text-parchment px-8 py-4 rounded-full label-caps-md text-[12px] hover:bg-terracotta-dark transition-colors"
               >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M8 2v9M4.5 7.5L8 11l3.5-3.5M3 13.5h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M8 2v9M4.5 7.5L8 11l3.5-3.5M3 13.5h10"
+                    stroke="currentColor"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
                 Скачать КП (PDF)
               </a>
@@ -351,7 +440,10 @@ export default function ResortPage() {
 
             <p className="text-mid-grey text-[12px] mt-6">
               Или позвоните:{" "}
-              <a href="tel:+79999999999" className="text-espresso/70 hover:text-espresso transition-colors">
+              <a
+                href="tel:+79999999999"
+                className="text-espresso/70 hover:text-espresso transition-colors"
+              >
                 +7 (999) 999-99-99
               </a>
             </p>
@@ -367,8 +459,13 @@ export default function ResortPage() {
         <div className="max-w-[1440px] mx-auto px-5 lg:px-12">
           <div className="max-w-2xl mx-auto">
             <div className="mb-12 text-center">
-              <p className="label-caps text-terracotta text-[10px] mb-4">Частые вопросы</p>
-              <h2 className="font-serif text-near-black" style={{ fontSize: "clamp(26px, 3.5vw, 42px)" }}>
+              <p className="label-caps text-terracotta text-[10px] mb-4">
+                Частые вопросы
+              </p>
+              <h2
+                className="font-serif text-near-black"
+                style={{ fontSize: "clamp(26px, 3.5vw, 42px)" }}
+              >
                 Вопросы о работе с базами отдыха
               </h2>
             </div>
@@ -376,8 +473,12 @@ export default function ResortPage() {
             <dl className="divide-y divide-espresso/8">
               {faq.map((item) => (
                 <div key={item.q} className="py-6">
-                  <dt className="font-serif text-near-black text-[17px] mb-3">{item.q}</dt>
-                  <dd className="text-dark-grey text-[14px] leading-relaxed">{item.a}</dd>
+                  <dt className="font-serif text-near-black text-[17px] mb-3">
+                    {item.q}
+                  </dt>
+                  <dd className="text-dark-grey text-[14px] leading-relaxed">
+                    {item.a}
+                  </dd>
                 </div>
               ))}
             </dl>
@@ -389,8 +490,12 @@ export default function ResortPage() {
       <section className="py-16 bg-espresso">
         <div className="max-w-[1440px] mx-auto px-5 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div>
-            <p className="font-serif text-white text-xl mb-1">Остались вопросы?</p>
-            <p className="text-parchment/60 text-[13px]">Ответим в течение часа в рабочее время</p>
+            <p className="font-serif text-white text-xl mb-1">
+              Остались вопросы?
+            </p>
+            <p className="text-parchment/60 text-[13px]">
+              Ответим в течение часа в рабочее время
+            </p>
           </div>
           <div className="flex flex-wrap gap-3">
             <a
@@ -416,4 +521,119 @@ export default function ResortPage() {
       <Footer />
     </>
   );
+}
+>
+                  <path
+                    d="M8 2v9M4.5 7.5L8 11l3.5-3.5M3 13.5h10"
+                    stroke="currentColor"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                Скачать КП (PDF)
+              </a>
+              <a
+                href="https://t.me/stariva"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-3 bg-espresso text-parchment px-8 py-4 rounded-full label-caps-md text-[12px] hover:bg-near-black transition-colors"
+              >
+                <TelegramIcon className="w-4 h-4" />
+                Написать в Telegram
+              </a>
+            </div>
+
+            <p className="text-mid-grey text-[12px] mt-6">
+              Или позвоните:
+{
+  (" ");
+}
+<a
+  href="tel:+79999999999"
+  className="text-espresso/70 hover:text-espresso transition-colors"
+>
+  +7 (999) 999-99-99
+</a>;
+</p>
+          </div>
+        </div>
+      </section>
+
+{
+  /* ── Reviews ──────────────────────────────────────────────────────── */
+}
+<Reviews limit={3} heading="Нас выбирают — и возвращаются" />;
+
+{
+  /* ── FAQ ──────────────────────────────────────────────────────────── */
+}
+<section className="py-24 lg:py-32 bg-off-white">
+  <div className="max-w-[1440px] mx-auto px-5 lg:px-12">
+    <div className="max-w-2xl mx-auto">
+      <div className="mb-12 text-center">
+        <p className="label-caps text-terracotta text-[10px] mb-4">
+          Частые вопросы
+        </p>
+        <h2
+          className="font-serif text-near-black"
+          style={{ fontSize: "clamp(26px, 3.5vw, 42px)" }}
+        >
+          Вопросы о работе с базами отдыха
+        </h2>
+      </div>
+
+      <dl className="divide-y divide-espresso/8">
+        {faq.map((item) => (
+          <div key={item.q} className="py-6">
+            <dt className="font-serif text-near-black text-[17px] mb-3">
+              {item.q}
+            </dt>
+            <dd className="text-dark-grey text-[14px] leading-relaxed">
+              {item.a}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </div>
+</section>;
+
+{
+  /* ── Contact strip ────────────────────────────────────────────────── */
+}
+<section className="py-16 bg-espresso">
+        <div className="max-w-[1440px] mx-auto px-5 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div>
+            <p className="font-serif text-white text-xl mb-1">
+              Остались вопросы?
+            </p>
+            <p className="text-parchment/60 text-[13px]">
+              Ответим в течение часа в рабочее время
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <a
+              href="https://t.me/stariva"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 bg-white/10 border border-white/15 text-white px-5 py-2.5 rounded-full label-caps-md text-[11px] hover:bg-white/20 transition-colors"
+            >
+              <TelegramIcon className="w-4 h-4" />
+              Telegram
+            </a>
+            <a
+              href="tel:+79999999999"
+              className="inline-flex items-center gap-2.5 bg-white/10 border border-white/15 text-white px-5 py-2.5 rounded-full label-caps-md text-[11px] hover:bg-white/20 transition-colors"
+            >
+              <PhoneIcon className="w-4 h-4" />
+              Позвонить
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+</>
+  )
 }

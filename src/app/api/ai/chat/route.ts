@@ -295,7 +295,7 @@ async function handler(request: NextRequest) {
 
         // Гарантируем flush трейса в Langfuse после завершения стрима
         // (важно для serverless: функция может завершиться до отправки трейса)
-        after(async () => await langfuseSpanProcessor.forceFlush());
+        after(async () => await langfuseSpanProcessor?.forceFlush());
 
         return streamResponse;
       } catch (error) {

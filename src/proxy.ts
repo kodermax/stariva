@@ -8,7 +8,7 @@ import { type NextRequest, NextResponse } from "next/server";
  * Полноценная проверка сессии выполняется в layout раздела /account через
  * requireSession(). Это рекомендованный подход better-auth для Next.js.
  */
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const sessionCookie = getSessionCookie(request);
 
   if (!sessionCookie) {

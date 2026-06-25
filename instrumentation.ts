@@ -14,14 +14,15 @@
 // Используем динамический import() чтобы Turbopack не пытался резолвить
 // @langfuse/otel во время сборки (он поставляется как CJS-only пакет и
 // недоступен в edge/browser окружениях).
+export let langfuseSpanProcessor: { forceFlush(): Promise<void> } | undefined;
+
 export async function register() {
   if (process.env.NEXT_RUNTIME === "nodejs") {
     const { LangfuseSpanProcessor } = await import("@langfuse/otel");
-    const { NodeTracerProvider } = await import(
-      "@opentelemetry/sdk-trace-node"
-    );
+    const { NodeTracerProvider } =
+      await import("@opentelemetry/sdk-trace-node");
 
-    const langfuseSpanProcessor = new LangfuseSpanProcessor();
+    langfuseSpanProcessor = new LangfuseSpanProcessor();
 
     const tracerProvider = new NodeTracerProvider({
       spanProcessors: [langfuseSpanProcessor],
