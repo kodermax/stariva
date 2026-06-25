@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { blogPosts } from "@/lib/blog-data";
-import { getProducts, categories } from "@/lib/ozon-service";
+import { categories, getProducts } from "@/lib/ozon-service";
 import { workshops } from "@/lib/workshops-data";
 
 const BASE_URL =

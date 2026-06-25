@@ -9,9 +9,26 @@ export const env = createEnv({
     OZON_API_KEY: z.string().min(1).optional(),
     OZON_CLIENT_ID: z.string().min(1).optional(),
 
-    // Groq AI (ai-sdk) — для AI-помощника по индивидуальным заказам
+    // Groq AI (ai-sdk) — основной провайдер AI-помощника
     GROQ_API_KEY: z.string().min(1).optional(),
-    GROQ_MODEL: z.string().min(1).default("llama-3.3-70b-versatile"),
+    GROQ_MODEL: z
+      .string()
+      .min(1)
+      .default("llama3-groq-70b-8192-tool-use-preview"),
+
+    // Cerebras AI (резервный провайдер, если Groq недоступен или вернул ошибку)
+    CEREBRAS_API_KEY: z.string().min(1).optional(),
+    CEREBRAS_MODEL: z.string().min(1).default("gpt-oss-120b"),
+
+    // Langfuse — трассировка и логирование запросов к AI (опционально)
+    // Ключи: https://cloud.langfuse.com → Settings → API Keys
+    LANGFUSE_PUBLIC_KEY: z.string().min(1).optional(),
+    LANGFUSE_SECRET_KEY: z.string().min(1).optional(),
+    LANGFUSE_BASE_URL: z
+      .string()
+      .url()
+      .default("https://cloud.langfuse.com")
+      .optional(),
 
     // Telegram Bot API — для отправки заявок на индивидуальный заказ
     TELEGRAM_BOT_TOKEN: z.string().min(1).optional(),
@@ -21,6 +38,30 @@ export const env = createEnv({
     RESEND_API_KEY: z.string().min(1).optional(),
     ORDER_EMAIL_TO: z.string().email().optional(),
     ORDER_EMAIL_FROM: z.string().min(1).optional(),
+
+    // PostgreSQL — строка подключения для Drizzle ORM и better-auth
+    // Формат: postgres://user:password@host:port/database
+    DATABASE_URL: z.string().url().optional(),
+
+    // better-auth — секрет для подписи сессий и базовый URL приложения
+    // Сгенерировать секрет: `openssl rand -base64 32`
+    BETTER_AUTH_SECRET: z.string().min(1).optional(),
+    BETTER_AUTH_URL: z.string().url().optional(),
+
+    // YooKassa — приём онлайн-платежей за мастер-классы
+    // shopId и секретный ключ из личного кабинета ЮKassa
+    YOOKASSA_SHOP_ID: z.string().min(1).optional(),
+    YOOKASSA_SECRET_KEY: z.string().min(1).optional(),
+
+    // Yandex Cloud S3 — хранилище видеоуроков и материалов (pre-signed URL)
+    YANDEX_S3_ENDPOINT: z
+      .string()
+      .url()
+      .default("https://storage.yandexcloud.net"),
+    YANDEX_S3_REGION: z.string().min(1).default("ru-central1"),
+    YANDEX_S3_ACCESS_KEY_ID: z.string().min(1).optional(),
+    YANDEX_S3_SECRET_ACCESS_KEY: z.string().min(1).optional(),
+    YANDEX_S3_BUCKET: z.string().min(1).optional(),
 
     NODE_ENV: z
       .enum(["development", "test", "production"])
@@ -32,7 +73,8 @@ export const env = createEnv({
    * Должны начинаться с NEXT_PUBLIC_
    */
   client: {
-    // NEXT_PUBLIC_APP_URL: z.string().url().optional(),
+    // Базовый публичный URL сайта (для ссылок и редиректов после оплаты)
+    NEXT_PUBLIC_SITE_URL: z.string().url().optional(),
   },
 
   /**
@@ -44,11 +86,27 @@ export const env = createEnv({
     OZON_CLIENT_ID: process.env.OZON_CLIENT_ID,
     GROQ_API_KEY: process.env.GROQ_API_KEY,
     GROQ_MODEL: process.env.GROQ_MODEL,
+    CEREBRAS_API_KEY: process.env.CEREBRAS_API_KEY,
+    CEREBRAS_MODEL: process.env.CEREBRAS_MODEL,
+    LANGFUSE_PUBLIC_KEY: process.env.LANGFUSE_PUBLIC_KEY,
+    LANGFUSE_SECRET_KEY: process.env.LANGFUSE_SECRET_KEY,
+    LANGFUSE_BASE_URL: process.env.LANGFUSE_BASE_URL,
     TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN,
     TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     ORDER_EMAIL_TO: process.env.ORDER_EMAIL_TO,
     ORDER_EMAIL_FROM: process.env.ORDER_EMAIL_FROM,
+    DATABASE_URL: process.env.DATABASE_URL,
+    BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
+    BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
+    YOOKASSA_SHOP_ID: process.env.YOOKASSA_SHOP_ID,
+    YOOKASSA_SECRET_KEY: process.env.YOOKASSA_SECRET_KEY,
+    YANDEX_S3_ENDPOINT: process.env.YANDEX_S3_ENDPOINT,
+    YANDEX_S3_REGION: process.env.YANDEX_S3_REGION,
+    YANDEX_S3_ACCESS_KEY_ID: process.env.YANDEX_S3_ACCESS_KEY_ID,
+    YANDEX_S3_SECRET_ACCESS_KEY: process.env.YANDEX_S3_SECRET_ACCESS_KEY,
+    YANDEX_S3_BUCKET: process.env.YANDEX_S3_BUCKET,
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
     NODE_ENV: process.env.NODE_ENV,
   },
 

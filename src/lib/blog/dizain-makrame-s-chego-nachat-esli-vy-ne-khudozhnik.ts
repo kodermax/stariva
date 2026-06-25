@@ -5,7 +5,7 @@ export const dizainMakrameSChegoNachatEsliVyNeKhudozhnik: BlogPost = {
   title: "Дизайн макраме: с чего начать, если вы не художник",
   excerpt:
     "Практические советы по поиску вдохновения, созданию собственного узора и адаптации существующих схем для ваших идей.",
-  date: "2026-02-14",
+  date: "2026-04-03",
   readTime: "7 мин",
   category: "Мастерство",
   coverImage: "/images/blog/workspace-creative.jpg",
@@ -59,6 +59,12 @@ export const dizainMakrameSChegoNachatEsliVyNeKhudozhnik: BlogPost = {
     {
       type: "paragraph",
       text: "В наших видео-мастер-классах мы показываем, как буквально из 3–4 узлов создаются разнообразные рисунки. Подпишитесь на Ozon и начните плести прямо сейчас.",
+    },
+    {
+      type: "cta",
+      text: "Видео-мастер-классы с пошаговыми инструкциями — от первого узла до готового изделия",
+      href: "/workshops",
+      label: "Мастер-классы",
     },
   ],
 };

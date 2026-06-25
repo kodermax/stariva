@@ -5,7 +5,7 @@ export const filosofiyaSlowLivingIRuchnayaRabota: BlogPost = {
   title: "Философия slow living и ручная работа",
   excerpt:
     "Почему осознанное потребление и вещи с душой становятся новой роскошью нашего времени.",
-  date: "2025-10-15",
+  date: "2026-01-10",
   readTime: "6 мин",
   category: "Философия",
   coverImage: "/images/blog/slow-living.jpg",
@@ -52,6 +52,18 @@ export const filosofiyaSlowLivingIRuchnayaRabota: BlogPost = {
     {
       type: "paragraph",
       text: "В Stariva мы верим, что дом — это отражение нашего внутреннего мира. И наполнять его стоит вещами, которые несут тепло и смысл. Вещами, рядом с которыми хочется замедлиться, налить чашку чая и просто побыть.",
+    },
+    {
+      type: "cta",
+      text: "Вещи с душой — абажуры и декор ручной работы для вашего дома",
+      href: "/catalog",
+      label: "Перейти в каталог",
+    },
+    {
+      type: "cta",
+      text: "Познакомьтесь с историей мастерской и философией Stariva",
+      href: "/about",
+      label: "О нас",
     },
   ],
 };

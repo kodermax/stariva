@@ -5,7 +5,7 @@ export const istoriyaMakrameOtMoryakovDoInterera: BlogPost = {
   title: "История макраме: от морских узлов до уютного интерьера",
   excerpt:
     "Как древнее искусство плетения узлов превратилось в символ домашнего уюта и осознанного потребления.",
-  date: "2025-11-20",
+  date: "2026-03-06",
   readTime: "7 мин",
   category: "История",
   coverImage: "/images/blog/macrame-history.jpg",
@@ -52,6 +52,18 @@ export const istoriyaMakrameOtMoryakovDoInterera: BlogPost = {
     {
       type: "paragraph",
       text: "В Stariva мы храним традиции ремесла, адаптируя их к современной эстетике. Каждое изделие — это мост между прошлым и настоящим, между мастером и тем, кто принесёт его в свой дом.",
+    },
+    {
+      type: "cta",
+      text: "Посмотрите, как древнее ремесло живёт в современных изделиях Stariva",
+      href: "/catalog",
+      label: "Перейти в каталог",
+    },
+    {
+      type: "cta",
+      text: "Узнайте больше о нашей мастерской и философии ручной работы",
+      href: "/about",
+      label: "О мастерской",
     },
   ],
 };

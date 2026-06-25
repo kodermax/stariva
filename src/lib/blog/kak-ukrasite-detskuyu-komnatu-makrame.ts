@@ -5,7 +5,7 @@ export const kakUkrasiteDetskuyuKomnatuMakrame: BlogPost = {
   title: "Как украсить детскую комнату с помощью макраме",
   excerpt:
     "Идеи декора детской комнаты в стиле бохо и эко: вигвамы, панно, гирлянды и абажуры из натурального хлопка.",
-  date: "2026-04-22",
+  date: "2026-05-15",
   readTime: "5 мин",
   category: "Интерьер",
   coverImage: "/images/catalog/tipi-kids.jpg",
@@ -52,6 +52,12 @@ export const kakUkrasiteDetskuyuKomnatuMakrame: BlogPost = {
     {
       type: "paragraph",
       text: "Все изделия для детской комнаты — вигвамы, панно и абажуры — есть в каталоге Stariva на Ozon. Доставка по всей России, натуральные материалы, ручная работа.",
+    },
+    {
+      type: "cta",
+      text: "Вигвамы, абажуры и панно для детской — натуральные материалы, безопасные для ребёнка",
+      href: "/catalog/interior",
+      label: "Декор для детской",
     },
   ],
 };

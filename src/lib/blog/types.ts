@@ -10,9 +10,13 @@ export interface BlogPost {
 }
 
 export interface BlogContent {
-  type: "paragraph" | "heading" | "image" | "quote";
+  type: "paragraph" | "heading" | "image" | "quote" | "cta";
   text?: string;
   src?: string;
   alt?: string;
   caption?: string;
+  /** Internal link href for "cta" blocks (e.g. "/catalog/interior") */
+  href?: string;
+  /** Button label for "cta" blocks */
+  label?: string;
 }

@@ -1,16 +1,23 @@
 "use client";
 
 import { useChat } from "@ai-sdk/react";
-import { DefaultChatTransport } from "ai";
+import { DefaultChatTransport, isToolUIPart } from "ai";
 import { AnimatePresence, motion } from "motion/react";
 import {
   type FormEvent,
   type KeyboardEvent,
+  type ReactNode,
   useEffect,
   useRef,
   useState,
 } from "react";
 import { CHAT_GREETING, CHAT_SUGGESTIONS } from "@/lib/chat/knowledge";
+import type {
+  ArticleCard,
+  EstimateResult,
+  ProductCard,
+  WorkshopCard,
+} from "@/lib/chat/tools";
 import { cn } from "@/lib/utils";
 
 // ─── Иконки (в стиле проекта — тонкие линии 1.3) ────────────────────────────
@@ -103,19 +110,26 @@ function StopIcon({ className }: { className?: string }) {
   );
 }
 
+function ArrowIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      className={className}
+    >
+      <path
+        d="M5 12h14M13 6l6 6-6 6"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 // ─── Вспомогательное ────────────────────────────────────────────────────────
-
-interface ChatPart {
-  type: string;
-  text?: string;
-}
-
-function textOf(message: { parts: ChatPart[] }): string {
-  return message.parts
-    .filter((p) => p.type === "text" && typeof p.text === "string")
-    .map((p) => p.text)
-    .join("");
-}
 
 function TypingDots() {
   return (
@@ -140,6 +154,329 @@ function TypingDots() {
   );
 }
 
+// ─── Карточки результатов инструментов ──────────────────────────────────────
+
+function CardShell({ children }: { children: ReactNode }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25 }}
+      className="mt-2 space-y-2"
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function ToolThinking({ label }: { label: string }) {
+  return (
+    <div className="mt-2 flex items-center gap-2 rounded-xl bg-sand/70 px-3 py-2 text-espresso/60 text-[12.5px]">
+      <span className="flex h-3.5 w-3.5">
+        <span className="h-3.5 w-3.5 animate-spin rounded-full border-[1.5px] border-espresso/25 border-t-espresso/60" />
+      </span>
+      {label}
+    </div>
+  );
+}
+
+function Thumb({ src, alt }: { src?: string; alt: string }) {
+  if (!src) {
+    return (
+      <div className="h-14 w-14 shrink-0 rounded-lg bg-linen/60 flex items-center justify-center text-taupe text-[10px]">
+        Stariva
+      </div>
+    );
+  }
+  return (
+    // biome-ignore lint/performance/noImgElement: внешние изображения Ozon, next/image требует remotePatterns
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      className="h-14 w-14 shrink-0 rounded-lg object-cover bg-linen/60"
+    />
+  );
+}
+
+function ProductCards({ products }: { products: ProductCard[] }) {
+  if (products.length === 0) return null;
+  return (
+    <CardShell>
+      {products.map((p) => (
+        <a
+          key={p.slug}
+          href={p.url}
+          target={p.url.startsWith("http") ? "_blank" : undefined}
+          rel="noopener noreferrer"
+          className="group flex items-center gap-3 rounded-xl border border-espresso/10 bg-white px-2.5 py-2.5 transition-colors hover:border-espresso/30"
+        >
+          <Thumb src={p.image} alt={p.name} />
+          <div className="min-w-0 flex-1">
+            <p className="truncate font-medium text-[13.5px] text-espresso leading-snug">
+              {p.name}
+            </p>
+            <p className="text-[11px] text-taupe">{p.categoryLabel}</p>
+            <div className="mt-0.5 flex items-center gap-2">
+              <span className="font-serif text-[14px] text-espresso">
+                {p.priceFormatted}
+              </span>
+              {p.oldPriceFormatted && (
+                <span className="text-[11px] text-taupe line-through">
+                  {p.oldPriceFormatted}
+                </span>
+              )}
+            </div>
+          </div>
+          <span className="shrink-0 text-espresso/30 transition-colors group-hover:text-terracotta">
+            <ArrowIcon className="h-4 w-4" />
+          </span>
+        </a>
+      ))}
+    </CardShell>
+  );
+}
+
+function EstimateCardView({ data }: { data: EstimateResult }) {
+  return (
+    <CardShell>
+      <div className="rounded-xl border border-espresso/10 bg-white p-3.5">
+        <p className="text-[11px] uppercase tracking-wide text-taupe">
+          Ориентировочная стоимость
+        </p>
+        <p className="mt-1 font-serif text-[20px] text-espresso leading-tight">
+          {data.rangeFormatted}
+        </p>
+        <div className="mt-2.5 flex flex-wrap gap-1.5">
+          {[
+            data.productLabel,
+            data.sizeLabel,
+            data.colorLabel,
+            data.complexityLabel,
+          ].map((chip) => (
+            <span
+              key={chip}
+              className="rounded-full bg-sand px-2.5 py-1 text-[11px] text-espresso/75"
+            >
+              {chip}
+            </span>
+          ))}
+        </div>
+        <p className="mt-2.5 text-[12px] text-espresso/70 leading-relaxed">
+          Срок изготовления: {data.productionDays}. Точную цену подтвердит
+          мастер.
+        </p>
+      </div>
+    </CardShell>
+  );
+}
+
+function WorkshopCards({ workshops }: { workshops: WorkshopCard[] }) {
+  if (workshops.length === 0) return null;
+  return (
+    <CardShell>
+      {workshops.map((w) => (
+        <a
+          key={w.slug}
+          href={w.url}
+          className="group flex items-center gap-3 rounded-xl border border-espresso/10 bg-white px-2.5 py-2.5 transition-colors hover:border-espresso/30"
+        >
+          <Thumb src={w.image} alt={w.title} />
+          <div className="min-w-0 flex-1">
+            <p className="truncate font-medium text-[13.5px] text-espresso leading-snug">
+              {w.title}
+            </p>
+            <p className="text-[11px] text-taupe">
+              {w.level} · {w.lessonsCount} уроков · {w.duration}
+            </p>
+            <span className="mt-0.5 inline-block font-serif text-[14px] text-espresso">
+              {w.priceFormatted}
+            </span>
+          </div>
+          <span className="shrink-0 text-espresso/30 transition-colors group-hover:text-terracotta">
+            <ArrowIcon className="h-4 w-4" />
+          </span>
+        </a>
+      ))}
+    </CardShell>
+  );
+}
+
+function ArticleCards({ articles }: { articles: ArticleCard[] }) {
+  if (articles.length === 0) return null;
+  return (
+    <CardShell>
+      {articles.map((a) => (
+        <a
+          key={a.slug}
+          href={a.url}
+          className="group flex items-center gap-3 rounded-xl border border-espresso/10 bg-white px-2.5 py-2.5 transition-colors hover:border-espresso/30"
+        >
+          <Thumb src={a.image} alt={a.title} />
+          <div className="min-w-0 flex-1">
+            <p className="line-clamp-2 font-medium text-[13px] text-espresso leading-snug">
+              {a.title}
+            </p>
+            <p className="text-[11px] text-taupe">
+              {a.category} · {a.readTime}
+            </p>
+          </div>
+          <span className="shrink-0 text-espresso/30 transition-colors group-hover:text-terracotta">
+            <ArrowIcon className="h-4 w-4" />
+          </span>
+        </a>
+      ))}
+    </CardShell>
+  );
+}
+
+interface ContactsData {
+  telegram: string;
+  telegramUrl: string;
+  phone: string;
+  schedule: string;
+  master: string;
+  marketplace: string;
+}
+
+function ContactsCard({ data }: { data: ContactsData }) {
+  return (
+    <CardShell>
+      <div className="rounded-xl border border-espresso/10 bg-white p-3.5 text-[13px] text-espresso/85 space-y-2">
+        <a
+          href={data.telegramUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 font-medium text-espresso hover:text-terracotta transition-colors"
+        >
+          <ArrowIcon className="h-3.5 w-3.5" />
+          Telegram {data.telegram}
+        </a>
+        <a
+          href={`tel:${data.phone.replace(/\s/g, "")}`}
+          className="flex items-center gap-2 hover:text-terracotta transition-colors"
+        >
+          <ArrowIcon className="h-3.5 w-3.5" />
+          {data.phone}
+        </a>
+        <p className="text-[12px] text-espresso/65 leading-relaxed pt-0.5">
+          {data.schedule}
+        </p>
+      </div>
+    </CardShell>
+  );
+}
+
+/** Рендерит вывод одного tool-part в соответствующую карточку. */
+function ToolPart({
+  part,
+}: {
+  part: { type: string; state?: string; output?: unknown };
+}) {
+  const name = part.type.replace(/^tool-/, "");
+  const ready = part.state === "output-available";
+
+  if (part.state === "output-error") {
+    return (
+      <div className="mt-2 rounded-xl bg-destructive/10 px-3 py-2 text-destructive text-[12.5px]">
+        Не получилось загрузить данные. Попробуйте переформулировать вопрос.
+      </div>
+    );
+  }
+
+  if (!ready) {
+    const labels: Record<string, string> = {
+      searchProducts: "Ищу изделия в каталоге…",
+      estimateCustomOrder: "Считаю стоимость заказа…",
+      findWorkshops: "Подбираю мастер-классы…",
+      searchArticles: "Ищу статьи с советами…",
+      getContacts: "Открываю контакты…",
+    };
+    return <ToolThinking label={labels[name] ?? "Обрабатываю запрос…"} />;
+  }
+
+  const output = part.output as Record<string, unknown>;
+
+  switch (name) {
+    case "searchProducts":
+      return (
+        <ProductCards products={(output?.products as ProductCard[]) ?? []} />
+      );
+    case "estimateCustomOrder":
+      return "error" in output ? null : (
+        <EstimateCardView data={output as unknown as EstimateResult} />
+      );
+    case "findWorkshops":
+      return (
+        <WorkshopCards
+          workshops={(output?.workshops as WorkshopCard[]) ?? []}
+        />
+      );
+    case "searchArticles":
+      return (
+        <ArticleCards articles={(output?.articles as ArticleCard[]) ?? []} />
+      );
+    case "getContacts":
+      return <ContactsCard data={output as unknown as ContactsData} />;
+    default:
+      return null;
+  }
+}
+
+interface MessageLike {
+  id: string;
+  role: string;
+  parts: Array<{
+    type: string;
+    text?: string;
+    state?: string;
+    output?: unknown;
+  }>;
+}
+
+/** Рендерит сообщение целиком: текстовые пузыри + карточки инструментов. */
+function MessageView({ message }: { message: MessageLike }) {
+  const isUser = message.role === "user";
+
+  return (
+    <>
+      {message.parts.map((part, i) => {
+        if (part.type === "text" && part.text) {
+          return (
+            <div
+              // biome-ignore lint/suspicious/noArrayIndexKey: порядок частей сообщения стабилен, своих id у частей нет
+              key={`${message.id}-t${i}`}
+              className={cn("flex", isUser ? "justify-end" : "")}
+            >
+              <div
+                className={cn(
+                  "max-w-[85%] px-4 py-3 text-[14px] leading-relaxed whitespace-pre-wrap wrap-break-word",
+                  isUser
+                    ? "rounded-2xl rounded-br-sm bg-espresso text-parchment"
+                    : "rounded-2xl rounded-tl-sm bg-sand text-espresso/90",
+                )}
+              >
+                {part.text}
+              </div>
+            </div>
+          );
+        }
+        if (isToolUIPart(part as never)) {
+          return (
+            // biome-ignore lint/suspicious/noArrayIndexKey: порядок частей сообщения стабилен, своих id у частей нет
+            <div key={`${message.id}-tool${i}`} className="flex">
+              <div className="w-[92%]">
+                <ToolPart part={part} />
+              </div>
+            </div>
+          );
+        }
+        return null;
+      })}
+    </>
+  );
+}
+
 // ─── Виджет ───────────────────────────────────────────────────────────────
 
 export function ChatWidget() {
@@ -147,9 +484,15 @@ export function ChatWidget() {
   const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  // Стабильный ID сессии — живёт всё время монтирования компонента,
+  // группирует трейсы одного чата в Langfuse
+  const sessionId = useRef(`session-${Math.random().toString(36).slice(2)}`);
 
   const { messages, sendMessage, status, stop, error } = useChat({
-    transport: new DefaultChatTransport({ api: "/api/ai/chat" }),
+    transport: new DefaultChatTransport({
+      api: "/api/ai/chat",
+      body: { sessionId: sessionId.current },
+    }),
   });
 
   const isBusy = status === "submitted" || status === "streaming";
@@ -200,12 +543,15 @@ export function ChatWidget() {
   }
 
   // Показываем индикатор печати, пока ассистент ещё не начал отвечать
-  const lastMessage = messages[messages.length - 1];
+  // (нет ни текста, ни вызванного инструмента)
+  const lastMessage = messages[messages.length - 1] as MessageLike | undefined;
+  const lastHasContent =
+    lastMessage?.role === "assistant" &&
+    lastMessage.parts.some(
+      (p) => (p.type === "text" && !!p.text) || p.type.startsWith("tool-"),
+    );
   const showTyping =
-    status === "submitted" ||
-    (status === "streaming" &&
-      lastMessage?.role === "assistant" &&
-      textOf(lastMessage as { parts: ChatPart[] }).length === 0);
+    status === "submitted" || (status === "streaming" && !lastHasContent);
 
   return (
     <>
@@ -282,9 +628,9 @@ export function ChatWidget() {
                 <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 border-2 border-espresso" />
               </div>
               <div className="min-w-0">
-                <p className="font-serif text-[17px] leading-tight">Стэри</p>
+                <p className="font-serif text-[17px] leading-tight">Ника</p>
                 <p className="text-parchment/65 text-[11px] leading-tight">
-                  Консультант мастерской · онлайн
+                  Цифровой помощник мастерской · онлайн
                 </p>
               </div>
               <button
@@ -310,28 +656,12 @@ export function ChatWidget() {
               </div>
 
               {/* Сообщения диалога */}
-              {messages.map((message) => {
-                const text = textOf(message as { parts: ChatPart[] });
-                if (!text) return null;
-                const isUser = message.role === "user";
-                return (
-                  <div
-                    key={message.id}
-                    className={cn("flex", isUser ? "justify-end" : "")}
-                  >
-                    <div
-                      className={cn(
-                        "max-w-[85%] px-4 py-3 text-[14px] leading-relaxed whitespace-pre-wrap wrap-break-word",
-                        isUser
-                          ? "rounded-2xl rounded-br-sm bg-espresso text-parchment"
-                          : "rounded-2xl rounded-tl-sm bg-sand text-espresso/90",
-                      )}
-                    >
-                      {text}
-                    </div>
-                  </div>
-                );
-              })}
+              {messages.map((message) => (
+                <MessageView
+                  key={message.id}
+                  message={message as unknown as MessageLike}
+                />
+              ))}
 
               {/* Индикатор печати */}
               {showTyping && (

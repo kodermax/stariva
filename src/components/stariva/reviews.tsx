@@ -35,17 +35,8 @@ const STATIC_REVIEWS: Review[] = [
   },
 ];
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("ru-RU", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-}
-
 function AverageRating({ reviews }: { reviews: Review[] }) {
-  const avg =
-    reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+  const avg = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
   const rounded = Math.round(avg * 10) / 10;
   const total = reviews.length;
   return (
@@ -66,10 +57,10 @@ function AverageRating({ reviews }: { reviews: Review[] }) {
           </svg>
         ))}
       </div>
-      <span className="text-sm text-espresso font-medium">
-        {rounded} / 5
+      <span className="text-sm text-espresso font-medium">{rounded} / 5</span>
+      <span className="text-sm text-taupe">
+        ({total} отзыв{total === 1 ? "" : total < 5 ? "а" : "ов"})
       </span>
-      <span className="text-sm text-taupe">({total} отзыв{total === 1 ? "" : total < 5 ? "а" : "ов"})</span>
     </div>
   );
 }
@@ -83,11 +74,7 @@ interface ReviewsProps {
   heading?: string;
 }
 
-export async function Reviews({
-  limit = 3,
-  skus,
-  heading,
-}: ReviewsProps) {
+export async function Reviews({ limit = 3, skus, heading }: ReviewsProps) {
   // Fetch live reviews; fall back to static on any failure
   const liveReviews = await getReviews(skus);
   const reviews: Review[] =
@@ -110,8 +97,7 @@ export async function Reviews({
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-espresso leading-[1.05] tracking-tight text-balance max-w-3xl">
               {heading ?? (
                 <>
-                  Что говорят{" "}
-                  <span className="italic">мои покупатели</span>
+                  Что говорят <span className="italic">мои покупатели</span>
                 </>
               )}
             </h2>
@@ -135,12 +121,7 @@ export async function Reviews({
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {reviews.map((review, i) => (
-            <ReviewCard
-              key={review.id}
-              review={review}
-              index={i}
-              formatDate={formatDate}
-            />
+            <ReviewCard key={review.id} review={review} index={i} />
           ))}
         </div>
 

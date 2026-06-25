@@ -1,5 +1,6 @@
 import { createGroq } from "@ai-sdk/groq";
-import { generateText } from "ai";
+import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
+import { generateObject, type LanguageModel } from "ai";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import {
@@ -40,8 +41,61 @@ const estimateSchema = z.object({
     .describe("Короткая заметка о том, что итоговую цену подтвердит мастер"),
 });
 
+// ─── Провайдеры (тот же порядок приоритетов, что в chat route) ──────────────
+
+function getAvailableModels(): Array<{ name: string; model: LanguageModel }> {
+  const models: Array<{ name: string; model: LanguageModel }> = [];
+
+  if (env.GROQ_API_KEY) {
+    const groq = createGroq({ apiKey: env.GROQ_API_KEY });
+    models.push({ name: "groq", model: groq(env.GROQ_MODEL) });
+  }
+
+  if (env.CEREBRAS_API_KEY) {
+    const cerebras = createOpenAICompatible({
+      name: "cerebras",
+      apiKey: env.CEREBRAS_API_KEY,
+      baseURL: "https://api.cerebras.ai/v1",
+      headers: { "X-Cerebras-3rd-Party-Integration": "vercel-ai-sdk" },
+    });
+    models.push({ name: "cerebras", model: cerebras(env.CEREBRAS_MODEL) });
+  }
+
+  return models;
+}
+
+function isFallbackError(error: unknown): boolean {
+  // AI SDK: AIAPICallError имеет числовой statusCode
+  if (
+    error != null &&
+    typeof error === "object" &&
+    "statusCode" in error &&
+    typeof (error as { statusCode: unknown }).statusCode === "number"
+  ) {
+    const status = (error as { statusCode: number }).statusCode;
+    if (status === 429 || status === 502 || status === 503 || status === 529) {
+      return true;
+    }
+  }
+
+  const msg = error instanceof Error ? error.message : String(error ?? "");
+  return (
+    msg.includes("rate_limit") ||
+    msg.includes("Rate limit") ||
+    msg.includes("overloaded") ||
+    msg.includes("Service Unavailable") ||
+    msg.includes("Bad Gateway") ||
+    msg.includes("timeout") ||
+    msg.includes("ETIMEDOUT") ||
+    msg.includes("ECONNRESET") ||
+    msg.includes("ECONNREFUSED")
+  );
+}
+
 export async function POST(request: NextRequest) {
-  if (!env.GROQ_API_KEY) {
+  const models = getAvailableModels();
+
+  if (models.length === 0) {
     return NextResponse.json(
       { error: "AI-помощник не настроен", code: "not_configured" },
       { status: 503 },
@@ -69,65 +123,57 @@ export async function POST(request: NextRequest) {
   const ruleEstimate = calculatePrice(data);
   const selectionText = describeSelection(data);
 
-  const groq = createGroq({ apiKey: env.GROQ_API_KEY });
+  const system =
+    "Ты — консультант мастерской макраме Stariva. Изделия плетутся вручную из натурального хлопкового шнура. " +
+    "Помогаешь клиенту с индивидуальным заказом: предлагаешь идеи дизайна и ориентировочную стоимость. " +
+    "Отвечай только на русском языке, дружелюбно и по делу. " +
+    "Не обещай точную цену — это ориентир, итог подтверждает мастер.";
 
-  const jsonSchema = `{
-  "designSummary": "краткое описание изделия, 1–2 предложения",
-  "suggestions": ["идея 1", "идея 2", "идея 3"],
-  "estimatedMin": 2000,
-  "estimatedMax": 4000,
-  "productionDays": "10–14 дней",
-  "note": "короткая заметка про подтверждение цены мастером"
-}`;
+  const prompt = [
+    `Запрос клиента: "${data.description}"`,
+    selectionText ? `Выбранные параметры: ${selectionText}.` : "",
+    data.budget ? `Бюджет клиента: ${data.budget}.` : "",
+    ruleEstimate
+      ? `Базовый расчёт по прайсу мастерской: ${formatRub(ruleEstimate.min)}–${formatRub(ruleEstimate.max)}. Используй его как ориентир, можешь скорректировать с учётом сложности из описания.`
+      : "Параметры не выбраны — оцени по описанию, типичный диапазон для макраме 1500–8000 ₽.",
+  ]
+    .filter(Boolean)
+    .join("\n");
 
-  try {
-    const { text } = await generateText({
-      model: groq(env.GROQ_MODEL),
-      system:
-        "Ты — консультант мастерской макраме Stariva. Изделия плетутся вручную из натурального хлопкового шнура. " +
-        "Помогаешь клиенту с индивидуальным заказом: предлагаешь идеи дизайна и ориентировочную стоимость. " +
-        "Отвечай только на русском языке, дружелюбно и по делу. " +
-        "Не обещай точную цену — это ориентир, итог подтверждает мастер. " +
-        "ВАЖНО: отвечай ТОЛЬКО валидным JSON-объектом без каких-либо пояснений, markdown-блоков или лишнего текста. " +
-        `Формат ответа:\n${jsonSchema}`,
-      prompt: [
-        `Запрос клиента: "${data.description}"`,
-        selectionText ? `Выбранные параметры: ${selectionText}.` : "",
-        data.budget ? `Бюджет клиента: ${data.budget}.` : "",
-        ruleEstimate
-          ? `Базовый расчёт по прайсу мастерской: ${formatRub(ruleEstimate.min)}–${formatRub(ruleEstimate.max)}. Используй его как ориентир, можешь скорректировать с учётом сложности из описания.`
-          : "Параметры не выбраны — оцени по описанию, типичный диапазон для макраме 1500–8000 ₽.",
-        "Дай ответ строго в виде JSON-объекта.",
-      ]
-        .filter(Boolean)
-        .join("\n"),
-    });
+  let lastError: unknown;
 
-    // Извлекаем JSON из ответа (модель иногда оборачивает в ```json ... ```)
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
-      console.error("[ai/estimate] No JSON in response:", text);
-      return NextResponse.json(
-        { error: "Не удалось получить ответ AI. Попробуйте позже." },
-        { status: 502 },
-      );
+  for (const { name, model } of models) {
+    try {
+      const { object } = await generateObject({
+        model,
+        schema: estimateSchema,
+        system,
+        prompt,
+        maxRetries: 0,
+      });
+
+      return NextResponse.json(object);
+    } catch (error) {
+      lastError = error;
+      console.error(`[ai/estimate] provider "${name}" failed:`, error);
+
+      if (isFallbackError(error)) {
+        const isLast = name === models[models.length - 1].name;
+        if (!isLast) {
+          console.warn(
+            `[ai/estimate] falling back from "${name}" to next provider`,
+          );
+          continue;
+        }
+      }
+
+      break;
     }
-
-    const parsed = estimateSchema.safeParse(JSON.parse(jsonMatch[0]));
-    if (!parsed.success) {
-      console.error("[ai/estimate] Schema validation failed:", parsed.error);
-      return NextResponse.json(
-        { error: "Не удалось получить ответ AI. Попробуйте позже." },
-        { status: 502 },
-      );
-    }
-
-    return NextResponse.json(parsed.data);
-  } catch (error) {
-    console.error("[ai/estimate] Groq error:", error);
-    return NextResponse.json(
-      { error: "Не удалось получить ответ AI. Попробуйте позже." },
-      { status: 502 },
-    );
   }
+
+  console.error("[ai/estimate] all providers failed, last error:", lastError);
+  return NextResponse.json(
+    { error: "Не удалось получить ответ AI. Попробуйте позже." },
+    { status: 502 },
+  );
 }

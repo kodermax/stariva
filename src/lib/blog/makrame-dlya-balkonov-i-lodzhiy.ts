@@ -5,7 +5,7 @@ export const makrameDlyaBalkonovILodzhiy: BlogPost = {
   title: "Макраме для балконов и лоджий: защита от солнца и ветра",
   excerpt:
     "Как использовать макраме не только как декор, но и как функциональный элемент: ширмы, экраны и занавески для открытых пространств.",
-  date: "2026-05-10",
+  date: "2026-06-10",
   readTime: "5 мин",
   category: "Интерьер",
   coverImage: "/images/blog/minimalist-interior.jpg",
@@ -52,6 +52,12 @@ export const makrameDlyaBalkonovILodzhiy: BlogPost = {
     {
       type: "paragraph",
       text: "Большие макраме-панно можно заказать в Stariva. Для балконов рекомендуем более плотное плетение — оно лучше держит форму на ветру и дольше служит.",
+    },
+    {
+      type: "cta",
+      text: "Панно и кашпо для балконов и лоджий — ручная работа из натурального хлопка",
+      href: "/catalog/interior",
+      label: "Смотреть каталог",
     },
   ],
 };

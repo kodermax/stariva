@@ -6,10 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { ColorSwatches } from "@/components/stariva/color-indicator";
 import { OzonIcon } from "@/components/stariva/icons";
-import { trackOzonClick } from "@/lib/analytics";
-import { parseMultipleColors } from "@/lib/colors";
-import type { Category, Product } from "@/lib/ozon-types";
-import { formatPrice } from "@/lib/products";
+import { PinterestSaveButton } from "@/components/stariva/pinterest-save-button";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -19,6 +16,10 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
+import { trackOzonClick } from "@/lib/analytics";
+import { parseMultipleColors } from "@/lib/colors";
+import type { Category, Product } from "@/lib/ozon-types";
+import { formatPrice } from "@/lib/products";
 
 interface ProductDetailsProps {
   product: Product;
@@ -160,13 +161,6 @@ export function ProductDetails({
                     Скидка{" "}
                     {Math.round((1 - product.price / product.oldPrice) * 100)}%
                   </span>
-                )}
-                {!product.inStock && (
-                  <div className="absolute inset-0 bg-parchment/60 flex items-center justify-center">
-                    <span className="bg-parchment/90 text-espresso label-caps px-6 py-3 rounded-full text-lg">
-                      Нет в наличии
-                    </span>
-                  </div>
                 )}
               </div>
               {product.images.length > 1 && (
@@ -396,6 +390,19 @@ export function ProductDetails({
                   </a>
                 </Button>
 
+                {/* Pinterest Save */}
+                <PinterestSaveButton
+                  url={`${typeof window !== "undefined" ? window.location.origin : "https://stariva.ru"}/catalog/${categorySlug}/${product.slug}`}
+                  imageUrl={
+                    product.images[0]?.startsWith("http")
+                      ? product.images[0]
+                      : `https://stariva.ru${product.images[0]}`
+                  }
+                  description={`${product.name} — ${product.shortDescription || "изделие ручного макраме из натурального хлопка"} | Stariva`}
+                  variant="button"
+                  className="w-full justify-center"
+                />
+
                 {/* Delivery info */}
                 <div className="flex items-center justify-center gap-4 pt-1">
                   <span className="flex items-center gap-1.5 text-[10px] text-taupe label-caps">
@@ -578,13 +585,6 @@ export function ProductDetails({
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         unoptimized={p.images[0].startsWith("http")}
                       />
-                      {!p.inStock && (
-                        <div className="absolute inset-0 bg-parchment/50 flex items-center justify-center">
-                          <span className="label-caps text-[10px] bg-parchment/90 text-espresso px-3 py-1.5 rounded-full">
-                            Нет в наличии
-                          </span>
-                        </div>
-                      )}
                     </div>
                     <div className="p-4">
                       <h3 className="font-serif text-lg text-espresso mb-1 group-hover:text-terracotta transition-colors line-clamp-2">

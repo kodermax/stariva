@@ -2,9 +2,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { signOut, useSession } from "@/lib/auth/client";
 
 const catalogNav = [
   {
@@ -63,6 +72,8 @@ export function Header({ variant = "solid" }: HeaderProps) {
   const megaTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const b2bTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
+  const router = useRouter();
+  const { data: session } = useSession();
 
   const isSolid = variant === "solid" || scrolled;
 
@@ -102,6 +113,17 @@ export function Header({ variant = "solid" }: HeaderProps) {
     b2bTimer.current = setTimeout(() => setB2bOpen(false), 200);
   };
 
+  const handleSignOut = async () => {
+    await signOut();
+    setMenuOpen(false);
+    router.push("/");
+    router.refresh();
+  };
+
+  const initials = (session?.user?.name || session?.user?.email || "?")
+    .trim()
+    .charAt(0)
+    .toUpperCase();
   return (
     <>
       <header
@@ -382,6 +404,54 @@ export function Header({ variant = "solid" }: HeaderProps) {
 
           {/* Right: CTA + Burger */}
           <div className="flex items-center gap-3">
+            {session ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    type="button"
+                    aria-label="Личный кабинет"
+                    className={`hidden lg:inline-flex items-center justify-center w-9 h-9 rounded-full text-sm font-medium transition-colors ${
+                      isSolid
+                        ? "bg-espresso/8 text-espresso hover:bg-espresso/14"
+                        : "bg-white/15 border border-white/40 text-white hover:bg-white hover:text-espresso"
+                    }`}
+                  >
+                    {initials}
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel className="truncate">
+                    {session.user?.name || session.user?.email}
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/account">Мои мастер-классы</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/account/orders">Заказы</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/account/profile">Профиль</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut}>
+                    Выйти
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link
+                href="/sign-in"
+                className={`hidden lg:inline-flex items-center label-caps-md px-3 py-2 rounded-full transition-colors ${
+                  isSolid
+                    ? "text-espresso/70 hover:text-espresso"
+                    : "text-white/80 hover:text-white"
+                }`}
+              >
+                Войти
+              </Link>
+            )}
+
             <Button
               asChild
               className={`hidden lg:inline-flex items-center gap-2 label-caps-md px-5 py-2 h-auto rounded-full transition-all ${
@@ -550,6 +620,47 @@ export function Header({ variant = "solid" }: HeaderProps) {
                 </svg>
               </Link>
             ))}
+
+            {/* Account */}
+            <div className="mt-4 label-caps text-taupe text-[10px] px-1 mb-2">
+              Личный кабинет
+            </div>
+            {session ? (
+              <>
+                <div className="px-1 pb-2 text-taupe text-[12px] truncate">
+                  {session.user?.name || session.user?.email}
+                </div>
+                {[
+                  { label: "Мои мастер-классы", href: "/account" },
+                  { label: "Заказы", href: "/account/orders" },
+                  { label: "Профиль", href: "/account/profile" },
+                ].map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="py-3 px-1 border-b border-espresso/6 flex items-center justify-between text-espresso/80"
+                  >
+                    <span className="font-serif text-[17px]">{item.label}</span>
+                  </Link>
+                ))}
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="py-3 px-1 text-left text-terracotta font-serif text-[17px]"
+                >
+                  Выйти
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/sign-in"
+                onClick={() => setMenuOpen(false)}
+                className="py-3 px-1 border-b border-espresso/6 flex items-center justify-between text-espresso/80"
+              >
+                <span className="font-serif text-[17px]">Войти</span>
+              </Link>
+            )}
           </div>
         </div>
       </div>

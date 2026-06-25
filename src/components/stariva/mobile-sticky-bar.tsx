@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { OzonIcon, PhoneIcon, TelegramIcon } from "./icons";
+import { useEffect, useState } from "react";
 import { trackOzonClick } from "@/lib/analytics";
+import { OzonIcon, PhoneIcon, TelegramIcon } from "./icons";
 
 interface MobileStickyBarProps {
   /** If provided, shows an Ozon CTA instead of the default contact bar */
@@ -16,7 +16,7 @@ export function MobileStickyBar({
   productName,
 }: MobileStickyBarProps) {
   const [show, setShow] = useState(false);
-  const pathname = usePathname();
+  const _pathname = usePathname();
 
   // Show after scrolling past the hero / product info
   const threshold = ozonUrl ? 400 : 600;

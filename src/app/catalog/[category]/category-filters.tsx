@@ -185,7 +185,7 @@ function ProductCard({
             )}
           </div>
           {/* Quick Ozon link on hover */}
-          {product.ozonUrl && product.inStock && (
+          {product.ozonUrl && (
             <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               <span className="flex items-center justify-center gap-1.5 w-full bg-[#005BFF] text-white label-caps text-[10px] py-2 rounded-lg">
                 <svg

@@ -5,7 +5,7 @@ export const kakUkhazhivatZaMakrameStirkaChistkaKhranenie: BlogPost = {
   title: "Как ухаживать за макраме: стирка, чистка, хранение",
   excerpt:
     "Полный гид по уходу за изделиями из макраме. Как стирать, как убрать пыль, как хранить сезонные вещи и что делать, если появились пятна.",
-  date: "2025-07-05",
+  date: "2025-09-28",
   readTime: "6 мин",
   category: "Уход",
   coverImage: "/images/blog/care-washing.png",
@@ -63,6 +63,12 @@ export const kakUkhazhivatZaMakrameStirkaChistkaKhranenie: BlogPost = {
     {
       type: "quote",
       text: "«Натуральные материалы живут долго, если вы относитесь к ним с уважением.»",
+    },
+    {
+      type: "cta",
+      text: "Изделия из натурального хлопка, которые служат годами — абажуры, панно и сумки ручной работы",
+      href: "/catalog",
+      label: "Перейти в каталог",
     },
   ],
 };

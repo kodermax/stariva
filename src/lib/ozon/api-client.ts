@@ -1,5 +1,3 @@
-import type { Product, OzonReview, Review } from "../ozon-types";
-
 import { env } from "../env";
 import { extractAttributes, transformOzonProduct } from "./transformers";
 import type { ExtractedAttributes, OzonProductInfoV3 } from "./transformers";
@@ -150,8 +148,8 @@ export async function fetchOzonReviews(
   try {
     const body: Record<string, unknown> = {
       limit,
+      sort_by: "created_at",
       sort_dir: "DESC",
-      with_text_only: true,
     };
     if (skus && skus.length > 0) {
       body.skus = skus;
@@ -169,6 +167,10 @@ export async function fetchOzonReviews(
     });
 
     if (!res.ok) {
+      if (res.status === 403) {
+        // Subscription doesn't include reviews API — skip silently
+        return null;
+      }
       const text = await res.text();
       console.log("[ozon] Reviews request failed:", res.status, text);
       return null;
@@ -176,12 +178,16 @@ export async function fetchOzonReviews(
 
     const data = await res.json();
     // API returns { reviews: [...] } or { result: { reviews: [...] } }
-    const raw: OzonReview[] =
-      data.reviews ?? data.result?.reviews ?? [];
-    const published = raw.filter((r) => r.status === "published" && r.text?.trim());
+    const raw: OzonReview[] = data.reviews ?? data.result?.reviews ?? [];
+    const published = raw.filter(
+      (r) => r.status === "published" && r.text?.trim(),
+    );
     return published.map(transformOzonReview);
   } catch (error) {
-    console.log("[ozon] Reviews fetch error:", error instanceof Error ? error.message : error);
+    console.log(
+      "[ozon] Reviews fetch error:",
+      error instanceof Error ? error.message : error,
+    );
     return null;
   }
 }

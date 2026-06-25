@@ -1,31 +1,30 @@
-export type { BlogPost, BlogContent } from "./types";
+export type { BlogContent, BlogPost } from "./types";
 
-import { istoriyaMakrameOtMoryakovDoInterera } from "./istoriya-makrame-ot-moryakov-do-interera";
-import { kakVybratMakrameSvetilnikDlyaDoma } from "./kak-vybrat-makrame-svetilnik-dlya-doma";
-import { uhodZaIzdeliyamiIzMakrame } from "./uhod-za-izdeliyami-iz-makrame";
-import { filosofiyaSlowLivingIRuchnayaRabota } from "./filosofiya-slow-living-i-ruchnaya-rabota";
-import { makrameAbazhurSvoimiRukamiSChegoNachat } from "./makrame-abazhur-svoimi-rukami-s-chego-nachat";
-import { kakUkrasiteDetskuyuKomnatuMakrame } from "./kak-ukrasite-detskuyu-komnatu-makrame";
-import { makrameVInterereSkandinvskiyStil } from "./makrame-v-interere-skandinavskiy-stil";
-import { kakVyibratNaturalnyeMaterialyDlyaMakrame } from "./kak-vyibrat-naturalnye-materialy-dlya-makrame";
+import { bazovyeUzlyMakrame } from "./5-bazovykh-uzlov-makrame";
 import { dizainMakrameSChegoNachatEsliVyNeKhudozhnik } from "./dizain-makrame-s-chego-nachat-esli-vy-ne-khudozhnik";
-import { makrameIFengShui } from "./makrame-i-feng-shui";
-import { makrameDlyaMolodozhenov } from "./makrame-dlya-molodozhenov";
+import { filosofiyaSlowLivingIRuchnayaRabota } from "./filosofiya-slow-living-i-ruchnaya-rabota";
+import { istoriyaMakrameOtMoryakovDoInterera } from "./istoriya-makrame-ot-moryakov-do-interera";
+import { kakUkhazhivatZaMakrameStirkaChistkaKhranenie } from "./kak-ukhazhivat-za-makrame-stirka-chistka-khranenie";
+import { kakUkrasiteDetskuyuKomnatuMakrame } from "./kak-ukrasite-detskuyu-komnatu-makrame";
+import { kakVybratMakrameSvetilnikDlyaDoma } from "./kak-vybrat-makrame-svetilnik-dlya-doma";
+import { kakVybratPervyyMasterKlass } from "./kak-vybrat-pervyy-master-klass";
+import { kakVyibratNaturalnyeMaterialyDlyaMakrame } from "./kak-vyibrat-naturalnye-materialy-dlya-makrame";
+import { makrameAbazhurSvoimiRukamiSChegoNachat } from "./makrame-abazhur-svoimi-rukami-s-chego-nachat";
 import { makrameDlyaBalkonovILodzhiy } from "./makrame-dlya-balkonov-i-lodzhiy";
-import { makrameVPodarok } from "./makrame-v-podarok";
 import { makrameDlyaDetskoyBezopasnyeIdei } from "./makrame-dlya-detskoy-bezopasnye-idei";
 import { makrameDlyaKafeIRestoranov } from "./makrame-dlya-kafe-i-restoranov";
-import { makrameSumkiTrendLeta } from "./makrame-sumki-trend-leta";
-import { kakUkhazhivatZaMakrameStirkaChistkaKhranenie } from "./kak-ukhazhivat-za-makrame-stirka-chistka-khranenie";
-import { makrameVMalenkoyKvartire } from "./makrame-v-malenkoy-kvartire";
-import { makrameOsenZimniyDekor } from "./makrame-osen-zimniy-dekor";
-import { naturalnoKrasenieKhlopka } from "./naturalnoe-krasenie-khlopka";
+import { makrameDlyaMolodozhenov } from "./makrame-dlya-molodozhenov";
+import { makrameIFengShui } from "./makrame-i-feng-shui";
 import { makrameNaUlice } from "./makrame-na-ulice";
-import { bazovyeUzlyMakrame } from "./5-bazovykh-uzlov-makrame";
+import { makrameOsenZimniyDekor } from "./makrame-osen-zimniy-dekor";
+import { makrameSumkiTrendLeta } from "./makrame-sumki-trend-leta";
+import { makrameVInterereSkandinvskiyStil } from "./makrame-v-interere-skandinavskiy-stil";
+import { makrameVMalenkoyKvartire } from "./makrame-v-malenkoy-kvartire";
+import { makrameVPodarok } from "./makrame-v-podarok";
+import { naturalnoKrasenieKhlopka } from "./naturalnoe-krasenie-khlopka";
 import { trendyMakrame20252026 } from "./trendy-makrame-2025-2026";
-import { kakVybratPervyyMasterKlass } from "./kak-vybrat-pervyy-master-klass";
-
 import type { BlogPost } from "./types";
+import { uhodZaIzdeliyamiIzMakrame } from "./uhod-za-izdeliyami-iz-makrame";
 
 export const blogPosts: BlogPost[] = [
   istoriyaMakrameOtMoryakovDoInterera,
@@ -52,7 +51,7 @@ export const blogPosts: BlogPost[] = [
   bazovyeUzlyMakrame,
   trendyMakrame20252026,
   kakVybratPervyyMasterKlass,
-];
+].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return blogPosts.find((post) => post.slug === slug);
