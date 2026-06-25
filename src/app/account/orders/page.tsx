@@ -26,7 +26,9 @@ export default async function AccountOrdersPage() {
   if (orders.length === 0) {
     return (
       <div className="bg-white border border-espresso/10 rounded-2xl p-10 text-center">
-        <h2 className="font-serif text-2xl text-espresso mb-2">Заказов пока нет</h2>
+        <h2 className="font-serif text-2xl text-espresso mb-2">
+          Заказов пока нет
+        </h2>
         <p className="text-taupe text-sm">
           Здесь будет история ваших покупок мастер-классов.
         </p>

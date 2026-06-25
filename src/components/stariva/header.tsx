@@ -202,7 +202,13 @@ export function Header({ variant = "solid" }: HeaderProps) {
                       aria-hidden="true"
                       className={`transition-transform duration-200 ${b2bOpen ? "rotate-180" : ""}`}
                     >
-                      <path d="M2 3.5l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                      <path
+                        d="M2 3.5l3 3 3-3"
+                        stroke="currentColor"
+                        strokeWidth="1.3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </Link>
 
@@ -226,10 +232,14 @@ export function Header({ variant = "solid" }: HeaderProps) {
                             isActive(link.href) ? "bg-sand/60" : ""
                           }`}
                         >
-                          <span className={`text-[13px] font-medium leading-snug ${isActive(link.href) ? "text-terracotta" : "text-espresso"}`}>
+                          <span
+                            className={`text-[13px] font-medium leading-snug ${isActive(link.href) ? "text-terracotta" : "text-espresso"}`}
+                          >
                             {link.label}
                           </span>
-                          <span className="text-[11px] text-taupe mt-0.5">{link.desc}</span>
+                          <span className="text-[11px] text-taupe mt-0.5">
+                            {link.desc}
+                          </span>
                         </Link>
                       ))}
                     </div>
@@ -599,7 +609,9 @@ export function Header({ variant = "solid" }: HeaderProps) {
                 }`}
               >
                 <div>
-                  <span className="font-serif text-[17px] block leading-snug">{link.label}</span>
+                  <span className="font-serif text-[17px] block leading-snug">
+                    {link.label}
+                  </span>
                   <span className="text-taupe text-[11px]">{link.desc}</span>
                 </div>
                 <svg

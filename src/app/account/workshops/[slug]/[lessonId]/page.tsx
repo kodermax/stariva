@@ -1,14 +1,8 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import {
-  getCourseProgressMap,
-  hasAccess,
-} from "@/lib/account/access";
+import { getCourseProgressMap, hasAccess } from "@/lib/account/access";
 import { getSession } from "@/lib/auth/session";
-import {
-  getWorkshopBySlug,
-  getWorkshopLessons,
-} from "@/lib/workshops-data";
+import { getWorkshopBySlug, getWorkshopLessons } from "@/lib/workshops-data";
 import { VideoPlayer } from "./video-player";
 
 export const dynamic = "force-dynamic";
@@ -61,7 +55,9 @@ export default async function LessonPlayerPage({
             <p className="label-caps text-[10px] text-taupe mb-1">
               Урок {index + 1} из {lessons.length}
             </p>
-            <h1 className="font-serif text-2xl text-espresso">{lesson.title}</h1>
+            <h1 className="font-serif text-2xl text-espresso">
+              {lesson.title}
+            </h1>
           </div>
 
           <div className="flex items-center justify-between mt-6 gap-3">

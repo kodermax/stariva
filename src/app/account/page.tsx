@@ -28,17 +28,33 @@ export default async function AccountCoursesPage() {
     return (
       <div className="bg-white border border-espresso/10 rounded-2xl p-10 text-center">
         <div className="mx-auto w-14 h-14 rounded-full bg-sand flex items-center justify-center mb-4">
-          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
-            <path d="M5 7l8 4 8-4-8-4-8 4z" stroke="#b85c38" strokeWidth="1.5" strokeLinejoin="round" />
-            <path d="M5 7v8l8 4 8-4V7" stroke="#b85c38" strokeWidth="1.5" strokeLinejoin="round" />
+          <svg
+            width="26"
+            height="26"
+            viewBox="0 0 26 26"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M5 7l8 4 8-4-8-4-8 4z"
+              stroke="#b85c38"
+              strokeWidth="1.5"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M5 7v8l8 4 8-4V7"
+              stroke="#b85c38"
+              strokeWidth="1.5"
+              strokeLinejoin="round"
+            />
           </svg>
         </div>
         <h2 className="font-serif text-2xl text-espresso mb-2">
           Пока нет купленных курсов
         </h2>
         <p className="text-taupe text-sm mb-6 max-w-sm mx-auto">
-          Выберите мастер-класс в каталоге — после оплаты он появится здесь, и вы
-          сможете смотреть уроки в любое время.
+          Выберите мастер-класс в каталоге — после оплаты он появится здесь, и
+          вы сможете смотреть уроки в любое время.
         </p>
         <Button
           asChild

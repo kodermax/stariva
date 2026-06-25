@@ -70,5 +70,10 @@ export async function issueCertificateIfComplete(
     });
 
   // Возвращаем актуальную запись (на случай гонки)
-  return (await getCertificate(userId, workshopSlug)) ?? { number, issuedAt: new Date() };
+  return (
+    (await getCertificate(userId, workshopSlug)) ?? {
+      number,
+      issuedAt: new Date(),
+    }
+  );
 }

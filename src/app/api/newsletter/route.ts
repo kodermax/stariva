@@ -31,19 +31,16 @@ async function sendToTelegram(email: string, source?: string): Promise<void> {
     source ? `<b>Источник:</b> ${escapeHtml(source)}` : "",
   ].filter((l) => l !== "");
 
-  const res = await fetch(
-    `https://api.telegram.org/bot${token}/sendMessage`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: lines.join("\n"),
-        parse_mode: "HTML",
-        disable_web_page_preview: true,
-      }),
-    },
-  );
+  const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: lines.join("\n"),
+      parse_mode: "HTML",
+      disable_web_page_preview: true,
+    }),
+  });
   if (!res.ok) {
     throw new Error(`telegram_message_failed_${res.status}`);
   }

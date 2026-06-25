@@ -10,7 +10,10 @@ export const metadata: Metadata = {
 
 export default function ResetPasswordPage() {
   return (
-    <AuthCard title="Новый пароль" description="Задайте новый пароль для входа в кабинет.">
+    <AuthCard
+      title="Новый пароль"
+      description="Задайте новый пароль для входа в кабинет."
+    >
       <Suspense fallback={null}>
         <ResetPasswordForm />
       </Suspense>

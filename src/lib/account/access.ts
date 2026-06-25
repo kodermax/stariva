@@ -103,7 +103,8 @@ export async function getCourseProgressSummary(
     (l) => progress.get(l.id)?.completed,
   ).length;
   const total = lessons.length;
-  const percent = total === 0 ? 0 : Math.round((completedLessons / total) * 100);
+  const percent =
+    total === 0 ? 0 : Math.round((completedLessons / total) * 100);
 
   const firstUnfinished = lessons.find((l) => !progress.get(l.id)?.completed);
   const resumeLessonId =

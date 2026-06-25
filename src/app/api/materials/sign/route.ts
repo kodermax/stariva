@@ -50,7 +50,10 @@ export async function GET(request: NextRequest) {
 
   try {
     const url = getPresignedUrl({ key, expiresIn: 300 });
-    return NextResponse.json({ url }, { headers: { "Cache-Control": "no-store" } });
+    return NextResponse.json(
+      { url },
+      { headers: { "Cache-Control": "no-store" } },
+    );
   } catch (error) {
     console.error("[materials/sign] Ошибка подписи URL:", error);
     return NextResponse.json(

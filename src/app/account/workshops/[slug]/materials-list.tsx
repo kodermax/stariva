@@ -45,12 +45,23 @@ export function MaterialsList({ slug, materials }: MaterialsListProps) {
               disabled={loadingKey === material.key}
               className="flex items-center gap-3 text-sm text-espresso/80 hover:text-terracotta transition-colors w-full text-left disabled:opacity-50"
             >
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" className="flex-shrink-0 text-terracotta">
-                <path d="M9 2v9m0 0l-3.5-3.5M9 11l3.5-3.5M3 14h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                aria-hidden="true"
+                className="flex-shrink-0 text-terracotta"
+              >
+                <path
+                  d="M9 2v9m0 0l-3.5-3.5M9 11l3.5-3.5M3 14h12"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
-              {loadingKey === material.key
-                ? "Готовим файл…"
-                : material.label}
+              {loadingKey === material.key ? "Готовим файл…" : material.label}
             </button>
           </li>
         ))}

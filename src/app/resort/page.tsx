@@ -41,9 +41,9 @@ export default function ResortPage() {
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: "Главная", url: `${BASE_URL}/` },
-          { name: "Для бизнеса", url: `${BASE_URL}/b2b` },
-          { name: "Базы отдыха", url: `${BASE_URL}/resort` },
+          { name: "Главная", href: "/" },
+          { name: "Для бизнеса", href: "/b2b" },
+          { name: "Базы отдыха", href: "/resort" },
         ]}
       />
 

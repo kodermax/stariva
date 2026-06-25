@@ -14,7 +14,11 @@ interface WorkshopPurchaseProps {
   title: string;
 }
 
-export function WorkshopPurchase({ slug, price, title }: WorkshopPurchaseProps) {
+export function WorkshopPurchase({
+  slug,
+  price,
+  title,
+}: WorkshopPurchaseProps) {
   const { data: session, isPending: sessionPending } = useSession();
   const [owned, setOwned] = useState<boolean | null>(null);
   const [buying, setBuying] = useState(false);

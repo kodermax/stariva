@@ -290,7 +290,12 @@ export async function GET() {
   <!-- Cover -->
   <div class="cover">
     <div class="cover-decoration" aria-hidden="true">
-      ${Array.from({ length: 30 }).map((_, i) => `<div class="cover-decoration-line" style="width:${60 + (i % 5) * 28}%;opacity:${0.3 + (i % 3) * 0.2}"></div>`).join("")}
+      ${Array.from({ length: 30 })
+        .map(
+          (_, i) =>
+            `<div class="cover-decoration-line" style="width:${60 + (i % 5) * 28}%;opacity:${0.3 + (i % 3) * 0.2}"></div>`,
+        )
+        .join("")}
     </div>
     <p class="cover-eyebrow">Stariva · Коммерческое предложение</p>
     <h1 class="cover-title">Макраме-декор<br>для баз отдыха<br>и глэмпингов</h1>
@@ -413,7 +418,8 @@ export async function GET() {
   return new NextResponse(html, {
     headers: {
       "Content-Type": "text/html; charset=utf-8",
-      "Content-Disposition": 'attachment; filename="stariva-kp-bazy-otdykha.html"',
+      "Content-Disposition":
+        'attachment; filename="stariva-kp-bazy-otdykha.html"',
       "Cache-Control": "public, max-age=3600",
     },
   });

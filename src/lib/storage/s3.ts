@@ -83,7 +83,8 @@ export function getPresignedUrl({
   const canonicalQuerystring = Object.keys(query)
     .sort()
     .map(
-      (k) => `${encodeURIComponent(k)}=${encodeURIComponent(query[k] as string)}`,
+      (k) =>
+        `${encodeURIComponent(k)}=${encodeURIComponent(query[k] as string)}`,
     )
     .join("&");
 

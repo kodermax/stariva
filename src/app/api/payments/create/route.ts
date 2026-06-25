@@ -3,15 +3,9 @@ import { z } from "zod";
 import { hasAccess } from "@/lib/account/access";
 import { getSession } from "@/lib/auth/session";
 import { env } from "@/lib/env";
-import {
-  attachPaymentId,
-  createOrder,
-} from "@/lib/payments/orders";
+import { attachPaymentId, createOrder } from "@/lib/payments/orders";
 import { createPayment, isYooKassaConfigured } from "@/lib/payments/yookassa";
-import {
-  getWorkshopBySlug,
-  workshopPriceKopecks,
-} from "@/lib/workshops-data";
+import { getWorkshopBySlug, workshopPriceKopecks } from "@/lib/workshops-data";
 
 export const runtime = "nodejs";
 

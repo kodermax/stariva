@@ -94,7 +94,9 @@ export default async function CertificatePage({
 
         <div className="flex items-center justify-center gap-10 text-xs text-taupe mt-10 pt-6 border-t border-[#c9a36a]/40">
           <div>
-            <p className="text-espresso">{dateFormatter.format(certificate.issuedAt)}</p>
+            <p className="text-espresso">
+              {dateFormatter.format(certificate.issuedAt)}
+            </p>
             <p className="mt-0.5">Дата выдачи</p>
           </div>
           <div>

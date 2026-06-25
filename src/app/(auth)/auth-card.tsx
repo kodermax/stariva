@@ -8,13 +8,20 @@ interface AuthCardProps {
 }
 
 /** Карточка-обёртка для форм авторизации в фирменном стиле. */
-export function AuthCard({ title, description, children, footer }: AuthCardProps) {
+export function AuthCard({
+  title,
+  description,
+  children,
+  footer,
+}: AuthCardProps) {
   return (
     <div className="bg-white border border-espresso/10 rounded-2xl shadow-[0_4px_30px_rgba(44,36,27,0.08)] overflow-hidden">
       <div className="p-7 sm:p-8">
         <h1 className="font-serif text-2xl text-espresso mb-1.5">{title}</h1>
         {description && (
-          <p className="text-taupe text-sm leading-relaxed mb-6">{description}</p>
+          <p className="text-taupe text-sm leading-relaxed mb-6">
+            {description}
+          </p>
         )}
         {children}
       </div>

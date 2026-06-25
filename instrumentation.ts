@@ -19,8 +19,9 @@ export let langfuseSpanProcessor: { forceFlush(): Promise<void> } | undefined;
 export async function register() {
   if (process.env.NEXT_RUNTIME === "nodejs") {
     const { LangfuseSpanProcessor } = await import("@langfuse/otel");
-    const { NodeTracerProvider } =
-      await import("@opentelemetry/sdk-trace-node");
+    const { NodeTracerProvider } = await import(
+      "@opentelemetry/sdk-trace-node"
+    );
 
     langfuseSpanProcessor = new LangfuseSpanProcessor();
 
