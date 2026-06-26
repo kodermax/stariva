@@ -9,6 +9,7 @@ import {
   type LanguageModel,
   type ModelMessage,
   streamText,
+  type TextStreamPart,
   type ToolSet,
   toUIMessageStream,
   type UIMessage,
@@ -126,6 +127,11 @@ function isFallbackError(error: unknown): boolean {
  * Возвращает result если поток начался успешно.
  * Бросает ошибку если провайдер ответил ошибкой ДО начала стриминга
  * (например "Failed to call a function" от Groq).
+ *
+ * ВАЖНО: В AI SDK v7 стрим ленивый — колбеки (onChunk, onError, onEnd)
+ * срабатывают только когда кто-то потребляет result.stream.
+ * Поэтому мы вручную запускаем reader, чтобы дождаться первого chunk-а,
+ * а затем оборачиваем уже прочитанные и оставшиеся данные обратно в ReadableStream.
  */
 async function tryStreamText(
   model: LanguageModel,
@@ -140,10 +146,8 @@ async function tryStreamText(
   const telemetryEnabled =
     !!env.LANGFUSE_PUBLIC_KEY && !!env.LANGFUSE_SECRET_KEY;
 
-  // Промис, который реджектится если streamText поймал ошибку провайдера.
-  // Резолвится как только первый chunk пришёл (поток начался нормально).
-  let resolveStreamStarted: () => void;
-  let rejectStreamStarted: (e: unknown) => void;
+  let resolveStreamStarted!: () => void;
+  let rejectStreamStarted!: (e: unknown) => void;
   const streamStarted = new Promise<void>((res, rej) => {
     resolveStreamStarted = res;
     rejectStreamStarted = rej;
@@ -188,10 +192,61 @@ async function tryStreamText(
     },
   });
 
-  // Ждём либо первый chunk, либо ошибку провайдера
-  await streamStarted;
+  // В AI SDK v7 стрим ленивый: колбеки не стреляют пока стрим не потребляется.
+  // Запускаем чтение стрима чтобы onChunk/onError/onEnd начали работать.
+  const reader = result.stream.getReader();
+  const bufferedChunks: TextStreamPart<ToolSet>[] = [];
+  let readerDone = false;
 
-  return result;
+  // Читаем до первого значимого chunk-а или ошибки
+  const readUntilStarted = (async () => {
+    try {
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) {
+          readerDone = true;
+          break;
+        }
+        bufferedChunks.push(value);
+        if (gotChunk) break;
+      }
+    } catch (e) {
+      rejectStreamStarted(e);
+    }
+  })();
+
+  // Ждём либо первый chunk, либо ошибку провайдера
+  await Promise.race([streamStarted, readUntilStarted]);
+
+  // Если после readUntilStarted промис streamStarted так и не зарезолвился — бросаем
+  if (!gotChunk) {
+    await streamStarted; // пробросит ошибку из rejectStreamStarted
+  }
+
+  // Собираем новый ReadableStream: сначала буферизированные части, потом остаток
+  const wrappedStream = new ReadableStream<TextStreamPart<ToolSet>>({
+    async start(controller) {
+      for (const chunk of bufferedChunks) {
+        controller.enqueue(chunk);
+      }
+      if (readerDone) {
+        controller.close();
+        return;
+      }
+      try {
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          controller.enqueue(value);
+        }
+        controller.close();
+      } catch (e) {
+        controller.error(e);
+      }
+    },
+  });
+
+  return { result, wrappedStream };
 }
 
 // ─── Основной обработчик ─────────────────────────────────────────────────────
@@ -277,7 +332,7 @@ async function handler(request: NextRequest) {
   return await propagateAttributes({ sessionId }, async () => {
     for (const { name, model } of models) {
       try {
-        const result = await tryStreamText(model, {
+        const { result, wrappedStream } = await tryStreamText(model, {
           system,
           messages: safeModelMessages,
           tools: chatTools as ToolSet,
@@ -287,7 +342,7 @@ async function handler(request: NextRequest) {
 
         const streamResponse = createUIMessageStreamResponse({
           stream: toUIMessageStream({
-            stream: result.stream,
+            stream: wrappedStream,
             onError: (error) => {
               console.error(`[ai/chat] stream error (${name}):`, error);
               return "Не удалось получить ответ. Попробуйте ещё раз.";
