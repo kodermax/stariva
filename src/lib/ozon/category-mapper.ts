@@ -7,7 +7,11 @@ export function mapOfferIdToCategory(offerId: string): {
   const id = offerId.toLowerCase();
 
   // ── Одежда: туники, накидки, кофты ──
-  if (id.startsWith("plt-macr") || id.startsWith("plphr-macr")) {
+  if (
+    id.startsWith("plt-macr") ||
+    id.startsWith("plphr-macr") ||
+    id.startsWith("ubka")
+  ) {
     return { category: "clothes", subcategory: "dresses" };
   }
   if (id.startsWith("komplekt")) {
