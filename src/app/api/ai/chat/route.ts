@@ -4,11 +4,13 @@ import { observe, propagateAttributes } from "@langfuse/tracing";
 import { trace } from "@opentelemetry/api";
 import {
   convertToModelMessages,
+  createUIMessageStreamResponse,
+  isStepCount,
   type LanguageModel,
   type ModelMessage,
-  stepCountIs,
   streamText,
   type ToolSet,
+  toUIMessageStream,
   type UIMessage,
   validateUIMessages,
 } from "ai";
@@ -151,13 +153,13 @@ async function tryStreamText(
 
   const result = streamText({
     model,
-    system: params.system,
+    instructions: params.system,
     messages: params.messages,
     tools: params.tools,
-    stopWhen: stepCountIs(5),
+    stopWhen: isStepCount(5),
     temperature: 0.6,
     maxRetries: 0,
-    experimental_telemetry: {
+    telemetry: {
       isEnabled: telemetryEnabled,
       functionId: `stariva-chat:${params.providerName}:${params.sessionId}`,
     },
@@ -173,7 +175,7 @@ async function tryStreamText(
       }
     },
     onError: ({ error }) => rejectStreamStarted(error),
-    onFinish: () => {
+    onEnd: () => {
       if (!gotChunk) {
         rejectStreamStarted(
           new Error(
@@ -283,11 +285,14 @@ async function handler(request: NextRequest) {
           providerName: name,
         });
 
-        const streamResponse = result.toUIMessageStreamResponse({
-          onError: (error) => {
-            console.error(`[ai/chat] stream error (${name}):`, error);
-            return "Не удалось получить ответ. Попробуйте ещё раз.";
-          },
+        const streamResponse = createUIMessageStreamResponse({
+          stream: toUIMessageStream({
+            stream: result.stream,
+            onError: (error) => {
+              console.error(`[ai/chat] stream error (${name}):`, error);
+              return "Не удалось получить ответ. Попробуйте ещё раз.";
+            },
+          }),
         });
 
         // Обновляем output root span и закрываем его после завершения стрима
