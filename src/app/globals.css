@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -9,31 +9,33 @@
      No accent color. Hierarchy through white, warm grey, deep dark.
      ────────────────────────────────────────────────────────────── */
 
-  --white:      #FDFCFB;   /* primary background — warm optical white     */
-  --off-white:  #F5F3F0;   /* cards, subtle section separator             */
-  --light-grey: #EAE8E4;   /* hover surfaces, light borders               */
-  --mid-grey:   #B0ACA6;   /* secondary text, disabled states             */
-  --dark-grey:  #4A4845;   /* body text, captions                         */
-  --near-black: #161513;   /* headings, primary text, dark UI elements    */
+  --white: #fdfcfb; /* primary background — warm optical white     */
+  --off-white: #f5f3f0; /* cards, subtle section separator             */
+  --light-grey: #eae8e4; /* hover surfaces, light borders               */
+  --mid-grey: #b0aca6; /* secondary text, disabled states             */
+  --dark-grey: #4a4845; /* body text, captions                         */
+  --near-black: #161513; /* headings, primary text, dark UI elements    */
 
   /* Semantic aliases — every existing bg-parchment / text-espresso etc. keeps working */
-  --parchment:       var(--white);
-  --sand:            var(--off-white);
-  --cream:           var(--off-white);
-  --espresso:        var(--near-black);
-  --taupe:           var(--mid-grey);
-  --terracotta:      var(--near-black);   /* buttons & accents → dark instead of colour */
+  --parchment: var(--white);
+  --sand: var(--off-white);
+  --cream: var(--off-white);
+  --espresso: var(--near-black);
+  --taupe: var(--mid-grey);
+  --terracotta: var(
+    --near-black
+  ); /* buttons & accents → dark instead of colour */
   --terracotta-dark: var(--dark-grey);
-  --linen:           var(--light-grey);
-  --birch:           var(--mid-grey);
-  --sage:            var(--dark-grey);
-  --sage-light:      var(--mid-grey);
-  --sage-pale:       var(--off-white);
-  --warm-beige:      var(--light-grey);
-  --chalk:           var(--white);
-  --chalk-card:      var(--off-white);
-  --graphite:        var(--near-black);
-  --smoke:           var(--mid-grey);
+  --linen: var(--light-grey);
+  --birch: var(--mid-grey);
+  --sage: var(--dark-grey);
+  --sage-light: var(--mid-grey);
+  --sage-pale: var(--off-white);
+  --warm-beige: var(--light-grey);
+  --chalk: var(--white);
+  --chalk-card: var(--off-white);
+  --graphite: var(--near-black);
+  --smoke: var(--mid-grey);
 
   /* shadcn tokens */
   --background: var(--white);
@@ -52,42 +54,43 @@
   --accent-foreground: var(--near-black);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: rgba(22, 21, 19, 0.10);
+  --border: rgba(22, 21, 19, 0.1);
   --input: rgba(22, 21, 19, 0.13);
   --ring: var(--near-black);
   --radius: 0.5rem;
 }
 
 @theme inline {
-  --font-sans: var(--font-sans), 'Inter Fallback', system-ui, sans-serif;
-  --font-serif: var(--font-serif), 'Cormorant Garamond Fallback', Georgia, serif;
+  --font-sans: var(--font-sans), "Inter Fallback", system-ui, sans-serif;
+  --font-serif:
+    var(--font-serif), "Cormorant Garamond Fallback", Georgia, serif;
   --font-mono: ui-monospace, monospace;
 
   /* Core tokens */
-  --color-white:      var(--white);
-  --color-off-white:  var(--off-white);
+  --color-white: var(--white);
+  --color-off-white: var(--off-white);
   --color-light-grey: var(--light-grey);
-  --color-mid-grey:   var(--mid-grey);
-  --color-dark-grey:  var(--dark-grey);
+  --color-mid-grey: var(--mid-grey);
+  --color-dark-grey: var(--dark-grey);
   --color-near-black: var(--near-black);
   /* Full alias set — nothing breaks in existing components */
-  --color-chalk:           var(--chalk);
-  --color-chalk-card:      var(--chalk-card);
-  --color-graphite:        var(--graphite);
-  --color-smoke:           var(--smoke);
-  --color-sage:            var(--sage);
-  --color-sage-light:      var(--sage-light);
-  --color-sage-pale:       var(--sage-pale);
-  --color-warm-beige:      var(--warm-beige);
-  --color-parchment:       var(--parchment);
-  --color-sand:            var(--sand);
-  --color-terracotta:      var(--terracotta);
+  --color-chalk: var(--chalk);
+  --color-chalk-card: var(--chalk-card);
+  --color-graphite: var(--graphite);
+  --color-smoke: var(--smoke);
+  --color-sage: var(--sage);
+  --color-sage-light: var(--sage-light);
+  --color-sage-pale: var(--sage-pale);
+  --color-warm-beige: var(--warm-beige);
+  --color-parchment: var(--parchment);
+  --color-sand: var(--sand);
+  --color-terracotta: var(--terracotta);
   --color-terracotta-dark: var(--terracotta-dark);
-  --color-espresso:        var(--espresso);
-  --color-taupe:           var(--taupe);
-  --color-linen:           var(--linen);
-  --color-birch:           var(--birch);
-  --color-cream:           var(--cream);
+  --color-espresso: var(--espresso);
+  --color-taupe: var(--taupe);
+  --color-linen: var(--linen);
+  --color-birch: var(--birch);
+  --color-cream: var(--cream);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -167,8 +170,12 @@
     animation: marquee 50s linear infinite;
   }
   @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
   }
 }
 
@@ -182,4 +189,21 @@
 .atmosphere-scroll::-webkit-scrollbar-thumb {
   background: var(--mid-grey);
   border-radius: 2px;
+}
+
+/* Thin scrollbar for chat textarea */
+.chat-input-scroll {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--mid-grey) transparent;
+}
+.chat-input-scroll::-webkit-scrollbar {
+  width: 3px;
+}
+.chat-input-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-input-scroll::-webkit-scrollbar-thumb {
+  background: var(--mid-grey);
+  border-radius: 99px;
 }

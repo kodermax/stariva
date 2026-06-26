@@ -712,7 +712,7 @@ export function ChatWidget() {
                   onKeyDown={handleKeyDown}
                   rows={1}
                   placeholder="Спросите о макраме, заказе или мастер-классах…"
-                  className="flex-1 resize-none bg-transparent text-[14px] text-espresso placeholder:text-taupe leading-relaxed outline-none max-h-[120px] py-1"
+                  className="flex-1 resize-none bg-transparent text-[14px] text-espresso placeholder:text-taupe leading-relaxed outline-none max-h-[120px] py-1 chat-input-scroll"
                 />
                 {isBusy ? (
                   <button
