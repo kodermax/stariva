@@ -199,7 +199,17 @@ async function handler(request: NextRequest) {
         if (!InvalidToolInputError.isInstance(error)) return null;
         try {
           const parsed = JSON.parse(toolCall.input || "{}");
-          const repairedInput = JSON.stringify(stripNulls(parsed));
+          let cleaned = stripNulls(parsed);
+          // Модель иногда присылает весь вход как null/массив/примитив.
+          // Схемы инструментов — всегда объект, поэтому подставляем {}.
+          if (
+            cleaned === null ||
+            typeof cleaned !== "object" ||
+            Array.isArray(cleaned)
+          ) {
+            cleaned = {};
+          }
+          const repairedInput = JSON.stringify(cleaned);
           if (repairedInput === toolCall.input) return null;
           return { ...toolCall, input: repairedInput };
         } catch {
