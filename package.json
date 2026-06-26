@@ -20,6 +20,7 @@
   "dependencies": {
     "@ai-sdk/groq": "^4.0.0",
     "@ai-sdk/openai-compatible": "^3.0.0",
+    "@ai-sdk/otel": "^1.0.2",
     "@ai-sdk/react": "^4.0.2",
     "@hookform/resolvers": "5.4.0",
     "@langfuse/otel": "^5.7.0",

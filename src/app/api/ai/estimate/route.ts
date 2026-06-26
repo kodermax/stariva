@@ -147,7 +147,7 @@ export async function POST(request: NextRequest) {
       const { object } = await generateObject({
         model,
         schema: estimateSchema,
-        system,
+        instructions: system,
         prompt,
         maxRetries: 0,
       });

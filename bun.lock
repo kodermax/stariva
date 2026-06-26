@@ -7,6 +7,7 @@
       "dependencies": {
         "@ai-sdk/groq": "^4.0.0",
         "@ai-sdk/openai-compatible": "^3.0.0",
+        "@ai-sdk/otel": "^1.0.2",
         "@ai-sdk/react": "^4.0.2",
         "@hookform/resolvers": "5.4.0",
         "@langfuse/otel": "^5.7.0",
@@ -92,6 +93,8 @@
     "@ai-sdk/mcp": ["@ai-sdk/mcp@2.0.0", "", { "dependencies": { "@ai-sdk/provider": "4.0.0", "@ai-sdk/provider-utils": "5.0.0", "pkce-challenge": "^5.0.1" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-+N6gJ1AbcDk3+6asoEsdIojVmgEReKNcvWIT716pDL3AepGI6j7RJVdaRyhQLltwzTj0arwpwU4BBzvhOiCd/g=="],
 
     "@ai-sdk/openai-compatible": ["@ai-sdk/openai-compatible@3.0.0", "", { "dependencies": { "@ai-sdk/provider": "4.0.0", "@ai-sdk/provider-utils": "5.0.0" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-2Ln97FfBrIKTlV/F1uTfUl+Pwk76LqrfnT5+6vu2LnSNwvLdDhTP5uMfryIrxCaYvY2MZeL4ciM1UVd52k7wTQ=="],
+
+    "@ai-sdk/otel": ["@ai-sdk/otel@1.0.2", "", { "dependencies": { "@ai-sdk/provider": "4.0.0", "@opentelemetry/api": "1.9.1", "ai": "7.0.2" } }, "sha512-vmuuwOxJ5OuwMYDktABTLb9V33hwR2k77QIDPZ8mSHSo04seT88IXCmzZwLjTskHfIa5C9IRizzNy6sr2qOQWQ=="],
 
     "@ai-sdk/provider": ["@ai-sdk/provider@4.0.0", "", { "dependencies": { "json-schema": "^0.4.0" } }, "sha512-fr9Gs89prDWiuox/T+kCA+i2cJkHpxU5S+tr4megjTzRC27ZsvFhwjU/+XrqqMbvBUlfmXxTOYWy8ng45dsjIg=="],
 
