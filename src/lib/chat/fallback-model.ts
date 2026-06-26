@@ -36,58 +36,96 @@ const CONTENT_PART_TYPES = new Set<LanguageModelV4StreamPart["type"]>([
 // ─── Определение ошибок, при которых стоит пробовать следующий провайдер ────
 
 /**
- * Возвращает true, если ошибку имеет смысл «пережить» переключением
- * на резервного провайдера (rate limit, перегрузка, сетевые сбои,
- * неудачный вызов функции и т.п.).
+ * Собирает все текстовые поля ошибки (message / type / code) рекурсивно,
+ * обходя вложенные error / data / responseBody / cause.
+ *
+ * Это важно, потому что провайдеры (Groq) часто отдают ошибку обычным
+ * объектом `{ message, type }`, а НЕ экземпляром Error. В таком случае
+ * `String(error)` вернул бы "[object Object]" и текст ошибки потерялся бы.
  */
-export function isFallbackError(error: unknown): boolean {
-  // AI SDK: APICallError имеет числовой statusCode
+function collectErrorText(error: unknown, depth = 0): string {
+  if (error == null || depth > 4) return "";
+  if (typeof error === "string") return error;
+  if (typeof error !== "object") return String(error);
+
+  const obj = error as Record<string, unknown>;
+  const parts: string[] = [];
+
+  if (typeof obj.message === "string") parts.push(obj.message);
+  if (typeof obj.type === "string") parts.push(obj.type);
+  if (typeof obj.code === "string") parts.push(obj.code);
+
+  parts.push(collectErrorText(obj.error, depth + 1));
+  parts.push(collectErrorText(obj.data, depth + 1));
+  parts.push(collectErrorText(obj.responseBody, depth + 1));
+  parts.push(collectErrorText(obj.cause, depth + 1));
+
+  return parts.filter(Boolean).join(" | ");
+}
+
+/** HTTP-статусы, при которых имеет смысл переключиться на резерв. */
+function getStatusCode(error: unknown): number | undefined {
   if (
     error != null &&
     typeof error === "object" &&
     "statusCode" in error &&
     typeof (error as { statusCode: unknown }).statusCode === "number"
   ) {
-    const status = (error as { statusCode: number }).statusCode;
-    if (status === 408 || status === 409 || status === 429 || status >= 500) {
-      return true;
-    }
+    return (error as { statusCode: number }).statusCode;
+  }
+  return undefined;
+}
+
+/**
+ * Ошибки именно «модель не смогла корректно вызвать функцию».
+ * Их нельзя вылечить сменой провайдера того же класса — нужен резерв
+ * либо повтор без инструментов.
+ */
+export function isToolCallError(error: unknown): boolean {
+  const text = collectErrorText(error);
+  return (
+    text.includes("Failed to call a function") ||
+    text.includes("failed_generation") ||
+    text.includes("tool_use_failed")
+  );
+}
+
+/**
+ * Возвращает true, если ошибку имеет смысл «пережить» переключением
+ * на резервного провайдера (rate limit, перегрузка, сетевые сбои,
+ * неудачный вызов функции и т.п.).
+ */
+export function isFallbackError(error: unknown): boolean {
+  const status = getStatusCode(error);
+  if (
+    status === 400 || // Groq отдаёт failed_generation со статусом 400
+    status === 408 ||
+    status === 409 ||
+    status === 429 ||
+    (status !== undefined && status >= 500)
+  ) {
+    return true;
   }
 
-  // Проверяем вложенный responseBody / data — Groq возвращает {error: {message, type}}
-  const data =
-    (error as { data?: unknown })?.data ??
-    (error as { responseBody?: unknown })?.responseBody;
-  if (data != null) {
-    const dataStr =
-      typeof data === "string" ? data : JSON.stringify(data ?? "");
-    if (
-      dataStr.includes("Failed to call a function") ||
-      dataStr.includes("failed_generation") ||
-      dataStr.includes("rate_limit")
-    ) {
-      return true;
-    }
-  }
-
-  const msg = error instanceof Error ? error.message : String(error ?? "");
+  const text = collectErrorText(error);
   return (
     // Groq: модель не смогла вызвать tool — пробуем другой провайдер
-    msg.includes("Failed to call a function") ||
-    msg.includes("failed_generation") ||
+    text.includes("Failed to call a function") ||
+    text.includes("failed_generation") ||
+    text.includes("tool_use_failed") ||
     // Groq: вернул пустой ответ без текста и без tool calls
-    msg.includes("empty_response") ||
+    text.includes("empty_response") ||
     // Groq: в истории есть reasoning parts, которые модель не поддерживает
-    msg.includes("reasoning is not supported") ||
-    msg.includes("rate_limit") ||
-    msg.includes("Rate limit") ||
-    msg.includes("overloaded") ||
-    msg.includes("Service Unavailable") ||
-    msg.includes("Bad Gateway") ||
-    msg.includes("timeout") ||
-    msg.includes("ETIMEDOUT") ||
-    msg.includes("ECONNRESET") ||
-    msg.includes("ECONNREFUSED")
+    text.includes("reasoning is not supported") ||
+    text.includes("rate_limit") ||
+    text.includes("Rate limit") ||
+    text.includes("overloaded") ||
+    text.includes("Service Unavailable") ||
+    text.includes("Bad Gateway") ||
+    text.includes("timeout") ||
+    text.includes("ETIMEDOUT") ||
+    text.includes("ECONNRESET") ||
+    text.includes("ECONNREFUSED")
   );
 }
 
@@ -108,7 +146,7 @@ export function isFallbackError(error: unknown): boolean {
  * срабатывает на КАЖДОМ шаге агентного цикла streamText (multi-step),
  * а не только на самом первом запросе.
  */
-async function streamWithFallback(
+async function attemptStream(
   entries: FallbackEntry[],
   options: LanguageModelV4CallOptions,
   onFallback: (from: string, to: string, error: unknown) => void,
@@ -204,9 +242,39 @@ async function streamWithFallback(
   throw lastError ?? new Error("no_available_providers");
 }
 
+/**
+ * Запускает стрим с переключением провайдеров (см. attemptStream).
+ *
+ * Дополнительный рубеж: если ВСЕ провайдеры упали именно на вызове функции
+ * (Groq «Failed to call a function» / failed_generation), делаем повторный
+ * проход без инструментов. Так клиент гарантированно получит текстовый ответ,
+ * а не ошибку.
+ */
+async function streamWithFallback(
+  entries: FallbackEntry[],
+  options: LanguageModelV4CallOptions,
+  onFallback: (from: string, to: string, error: unknown) => void,
+): Promise<LanguageModelV4StreamResult> {
+  try {
+    return await attemptStream(entries, options, onFallback);
+  } catch (error) {
+    const hasTools = (options.tools?.length ?? 0) > 0;
+    if (hasTools && isToolCallError(error)) {
+      onFallback("tools", "no-tools", error);
+      const noToolsOptions: LanguageModelV4CallOptions = {
+        ...options,
+        tools: undefined,
+        toolChoice: undefined,
+      };
+      return await attemptStream(entries, noToolsOptions, onFallback);
+    }
+    throw error;
+  }
+}
+
 // ─── Генерация (non-streaming) с переключением провайдеров ───────────────────
 
-async function generateWithFallback(
+async function attemptGenerate(
   entries: FallbackEntry[],
   options: LanguageModelV4CallOptions,
   onFallback: (from: string, to: string, error: unknown) => void,
@@ -229,6 +297,28 @@ async function generateWithFallback(
   }
 
   throw lastError ?? new Error("no_available_providers");
+}
+
+async function generateWithFallback(
+  entries: FallbackEntry[],
+  options: LanguageModelV4CallOptions,
+  onFallback: (from: string, to: string, error: unknown) => void,
+): Promise<LanguageModelV4GenerateResult> {
+  try {
+    return await attemptGenerate(entries, options, onFallback);
+  } catch (error) {
+    const hasTools = (options.tools?.length ?? 0) > 0;
+    if (hasTools && isToolCallError(error)) {
+      onFallback("tools", "no-tools", error);
+      const noToolsOptions: LanguageModelV4CallOptions = {
+        ...options,
+        tools: undefined,
+        toolChoice: undefined,
+      };
+      return await attemptGenerate(entries, noToolsOptions, onFallback);
+    }
+    throw error;
+  }
 }
 
 // ─── Фабрика fallback-модели ─────────────────────────────────────────────────
