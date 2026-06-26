@@ -109,19 +109,19 @@ export const chatTools = {
     inputSchema: z.object({
       query: z
         .string()
-        .optional()
+        .nullish()
         .describe(
           "Ключевые слова для поиска по названию и описанию, например «абажур», «сумка авоська», «платье»",
         ),
       category: z
         .enum(["clothes", "bags", "interior"])
-        .optional()
+        .nullish()
         .describe(
           "Категория: clothes — одежда, bags — сумки, interior — декор интерьера",
         ),
       maxPrice: z
         .number()
-        .optional()
+        .nullish()
         .describe("Максимальная цена в рублях, если клиент назвал бюджет"),
     }),
     execute: async ({
@@ -257,17 +257,17 @@ export const chatTools = {
     inputSchema: z.object({
       category: z
         .enum(["lampshades", "clothing", "interior"])
-        .optional()
+        .nullish()
         .describe(
           "Категория: lampshades — абажуры, clothing — одежда, interior — декор интерьера",
         ),
       level: z
         .enum(["beginner", "intermediate", "advanced"])
-        .optional()
+        .nullish()
         .describe(
           "Уровень: beginner — начинающий, intermediate — средний, advanced — продвинутый",
         ),
-      maxPrice: z.number().optional().describe("Максимальная цена в рублях"),
+      maxPrice: z.number().nullish().describe("Максимальная цена в рублях"),
     }),
     execute: async ({
       category,
@@ -312,6 +312,7 @@ export const chatTools = {
     inputSchema: z.object({
       query: z
         .string()
+        .nullish()
         .describe(
           "Тема или ключевые слова, например «уход за изделием», «идеи для детской», «тренды»",
         ),
@@ -319,12 +320,14 @@ export const chatTools = {
     execute: async ({
       query,
     }): Promise<{ articles: ArticleCard[]; total: number }> => {
-      const filtered = blogPosts.filter(
-        (post) =>
-          matches(post.title, query) ||
-          matches(post.excerpt, query) ||
-          matches(post.category, query),
-      );
+      const filtered = query
+        ? blogPosts.filter(
+            (post) =>
+              matches(post.title, query) ||
+              matches(post.excerpt, query) ||
+              matches(post.category, query),
+          )
+        : [];
       const list = filtered.length > 0 ? filtered : blogPosts.slice(0, 3);
 
       const cards: ArticleCard[] = list.slice(0, 4).map((post) => ({

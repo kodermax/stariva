@@ -6,6 +6,7 @@ import { trace } from "@opentelemetry/api";
 import {
   convertToModelMessages,
   createUIMessageStreamResponse,
+  InvalidToolInputError,
   isStepCount,
   type ModelMessage,
   streamText,
@@ -75,6 +76,28 @@ function getAvailableModels(): FallbackEntry[] {
   }
 
   return models;
+}
+
+// ─── Починка вызовов инструментов ────────────────────────────────────────────
+
+/**
+ * Рекурсивно удаляет null-значения из объекта.
+ * Модели (особенно Groq/llama) часто присылают `null` вместо того, чтобы
+ * опустить необязательное поле — это ломает Zod-валидацию (.optional()
+ * пропускает только undefined). После удаления null необязательные поля
+ * проходят валидацию, а поля с .default() получают значение по умолчанию.
+ */
+function stripNulls(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(stripNulls);
+  if (value !== null && typeof value === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [key, val] of Object.entries(value as Record<string, unknown>)) {
+      if (val === null) continue;
+      out[key] = stripNulls(val);
+    }
+    return out;
+  }
+  return value;
 }
 
 // ─── Основной обработчик ─────────────────────────────────────────────────────
@@ -170,6 +193,19 @@ async function handler(request: NextRequest) {
       messages: safeModelMessages,
       tools: chatTools as ToolSet,
       stopWhen: isStepCount(5),
+      // Чиним некорректные вызовы инструментов локально, без обращения к модели:
+      // убираем null-значения, которые модель ставит вместо пропуска поля.
+      experimental_repairToolCall: async ({ toolCall, error }) => {
+        if (!InvalidToolInputError.isInstance(error)) return null;
+        try {
+          const parsed = JSON.parse(toolCall.input || "{}");
+          const repairedInput = JSON.stringify(stripNulls(parsed));
+          if (repairedInput === toolCall.input) return null;
+          return { ...toolCall, input: repairedInput };
+        } catch {
+          return null;
+        }
+      },
       temperature: 0.6,
       // Переключение между провайдерами берёт на себя createFallbackModel,
       // поэтому внутренние ретраи streamText отключаем.
