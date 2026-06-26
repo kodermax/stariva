@@ -159,11 +159,7 @@ async function tryStreamText(
     maxRetries: 0,
     experimental_telemetry: {
       isEnabled: telemetryEnabled,
-      functionId: "stariva-chat",
-      metadata: {
-        provider: params.providerName,
-        sessionId: params.sessionId,
-      },
+      functionId: `stariva-chat:${params.providerName}:${params.sessionId}`,
     },
     onChunk: ({ chunk }) => {
       // Tool calls тоже считаются валидным ответом
