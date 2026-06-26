@@ -180,8 +180,24 @@ async function handler(request: NextRequest) {
   // Единая модель с автоматическим переключением на резерв при ошибках.
   // Переключение работает на КАЖДОМ шаге агентного цикла streamText,
   // поэтому rate limit в середине стрима больше не доходит до клиента —
-  // запрос прозрачно уходит к следующему провайдеру.
-  const fallbackModel = createFallbackModel(providers);
+  // запрос прозрачно уходит к следующему провайдеру. Если же недоступны
+  // ВСЕ провайдеры, клиент получает вежливый текстовый ответ, а не ошибку.
+  const fallbackModel = createFallbackModel(providers, {
+    exhaustedMessage: (error) => {
+      const status = (error as { statusCode?: unknown })?.statusCode;
+      let blob = error instanceof Error ? error.message : String(error ?? "");
+      try {
+        blob += ` ${JSON.stringify(error)}`;
+      } catch {
+        // объект ошибки может быть не сериализуемым — игнорируем
+      }
+      const isRateLimited =
+        status === 429 || /rate.?limit|429|temporarily|too many/i.test(blob);
+      return isRateLimited
+        ? "Сейчас очень много обращений, и я не успеваю отвечать. Пожалуйста, повторите вопрос через минуту — или напишите мастеру в Telegram @Olga_Stariva."
+        : "Извините, мне не удалось сформировать ответ. Попробуйте переформулировать вопрос или напишите мастеру в Telegram @Olga_Stariva.";
+    },
+  });
 
   const telemetryEnabled =
     !!env.LANGFUSE_PUBLIC_KEY && !!env.LANGFUSE_SECRET_KEY;

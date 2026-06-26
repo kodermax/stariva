@@ -129,6 +129,57 @@ export function isFallbackError(error: unknown): boolean {
   );
 }
 
+// ─── Синтетический ответ при недоступности всех провайдеров ─────────────────
+
+const EMPTY_USAGE = {
+  inputTokens: {
+    total: undefined,
+    noCache: undefined,
+    cacheRead: undefined,
+    cacheWrite: undefined,
+  },
+  outputTokens: { total: undefined, text: undefined, reasoning: undefined },
+} as const;
+
+const FALLBACK_FINISH = { unified: "stop", raw: "fallback" } as const;
+
+/** Стрим из одного текстового сообщения — будто его сгенерировала модель. */
+function syntheticTextStreamResult(text: string): LanguageModelV4StreamResult {
+  const id = "fallback-message";
+  const stream = new ReadableStream<LanguageModelV4StreamPart>({
+    start(controller) {
+      controller.enqueue({ type: "stream-start", warnings: [] });
+      controller.enqueue({ type: "text-start", id });
+      controller.enqueue({ type: "text-delta", id, delta: text });
+      controller.enqueue({ type: "text-end", id });
+      controller.enqueue({
+        type: "finish",
+        usage: EMPTY_USAGE,
+        finishReason: FALLBACK_FINISH,
+      });
+      controller.close();
+    },
+  });
+  return { stream };
+}
+
+/** Аналог для non-streaming вызова. */
+function syntheticGenerateResult(text: string): LanguageModelV4GenerateResult {
+  return {
+    content: [{ type: "text", text }],
+    finishReason: FALLBACK_FINISH,
+    usage: EMPTY_USAGE,
+    warnings: [],
+  };
+}
+
+function resolveExhaustedMessage(
+  message: string | ((error: unknown) => string),
+  error: unknown,
+): string {
+  return typeof message === "function" ? message(error) : message;
+}
+
 // ─── Стриминг с переключением провайдеров ───────────────────────────────────
 
 /**
@@ -254,19 +305,35 @@ async function streamWithFallback(
   entries: FallbackEntry[],
   options: LanguageModelV4CallOptions,
   onFallback: (from: string, to: string, error: unknown) => void,
+  exhaustedMessage?: string | ((error: unknown) => string),
 ): Promise<LanguageModelV4StreamResult> {
   try {
-    return await attemptStream(entries, options, onFallback);
+    try {
+      return await attemptStream(entries, options, onFallback);
+    } catch (error) {
+      const hasTools = (options.tools?.length ?? 0) > 0;
+      if (hasTools && isToolCallError(error)) {
+        onFallback("tools", "no-tools", error);
+        const noToolsOptions: LanguageModelV4CallOptions = {
+          ...options,
+          tools: undefined,
+          toolChoice: undefined,
+        };
+        return await attemptStream(entries, noToolsOptions, onFallback);
+      }
+      throw error;
+    }
   } catch (error) {
-    const hasTools = (options.tools?.length ?? 0) > 0;
-    if (hasTools && isToolCallError(error)) {
-      onFallback("tools", "no-tools", error);
-      const noToolsOptions: LanguageModelV4CallOptions = {
-        ...options,
-        tools: undefined,
-        toolChoice: undefined,
-      };
-      return await attemptStream(entries, noToolsOptions, onFallback);
+    // Все провайдеры недоступны. Чтобы клиент не получил ошибку, отдаём
+    // обычный текстовый ответ (если задано резервное сообщение).
+    if (exhaustedMessage != null) {
+      console.error(
+        "[ai/chat] все провайдеры недоступны, отдаём резервное сообщение:",
+        error,
+      );
+      return syntheticTextStreamResult(
+        resolveExhaustedMessage(exhaustedMessage, error),
+      );
     }
     throw error;
   }
@@ -303,19 +370,33 @@ async function generateWithFallback(
   entries: FallbackEntry[],
   options: LanguageModelV4CallOptions,
   onFallback: (from: string, to: string, error: unknown) => void,
+  exhaustedMessage?: string | ((error: unknown) => string),
 ): Promise<LanguageModelV4GenerateResult> {
   try {
-    return await attemptGenerate(entries, options, onFallback);
+    try {
+      return await attemptGenerate(entries, options, onFallback);
+    } catch (error) {
+      const hasTools = (options.tools?.length ?? 0) > 0;
+      if (hasTools && isToolCallError(error)) {
+        onFallback("tools", "no-tools", error);
+        const noToolsOptions: LanguageModelV4CallOptions = {
+          ...options,
+          tools: undefined,
+          toolChoice: undefined,
+        };
+        return await attemptGenerate(entries, noToolsOptions, onFallback);
+      }
+      throw error;
+    }
   } catch (error) {
-    const hasTools = (options.tools?.length ?? 0) > 0;
-    if (hasTools && isToolCallError(error)) {
-      onFallback("tools", "no-tools", error);
-      const noToolsOptions: LanguageModelV4CallOptions = {
-        ...options,
-        tools: undefined,
-        toolChoice: undefined,
-      };
-      return await attemptGenerate(entries, noToolsOptions, onFallback);
+    if (exhaustedMessage != null) {
+      console.error(
+        "[ai/chat] все провайдеры недоступны, отдаём резервное сообщение:",
+        error,
+      );
+      return syntheticGenerateResult(
+        resolveExhaustedMessage(exhaustedMessage, error),
+      );
     }
     throw error;
   }
@@ -326,6 +407,13 @@ async function generateWithFallback(
 export type FallbackModelOptions = {
   /** Колбэк вызывается при каждом переключении на резервного провайдера. */
   onFallback?: (from: string, to: string, error: unknown) => void;
+  /**
+   * Текст, который будет отдан как обычный ответ модели, если ВСЕ провайдеры
+   * недоступны. Это позволяет не показывать клиенту техническую ошибку.
+   * Можно передать функцию для разного текста в зависимости от ошибки.
+   * Если не задано — ошибка пробрасывается наружу как раньше.
+   */
+  exhaustedMessage?: string | ((error: unknown) => string);
 };
 
 /**
@@ -348,6 +436,7 @@ export function createFallbackModel(
       const reason = error instanceof Error ? error.message : String(error);
       console.warn(`[ai/chat] fallback ${from} → ${to}: ${reason}`);
     });
+  const exhaustedMessage = options.exhaustedMessage;
 
   return {
     specificationVersion: "v4",
@@ -355,8 +444,8 @@ export function createFallbackModel(
     modelId: primary.modelId,
     supportedUrls: primary.supportedUrls,
     doStream: (callOptions) =>
-      streamWithFallback(entries, callOptions, onFallback),
+      streamWithFallback(entries, callOptions, onFallback, exhaustedMessage),
     doGenerate: (callOptions) =>
-      generateWithFallback(entries, callOptions, onFallback),
+      generateWithFallback(entries, callOptions, onFallback, exhaustedMessage),
   };
 }
