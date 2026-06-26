@@ -25,6 +25,10 @@ import { naturalnoKrasenieKhlopka } from "./naturalnoe-krasenie-khlopka";
 import { trendyMakrame20252026 } from "./trendy-makrame-2025-2026";
 import type { BlogPost } from "./types";
 import { uhodZaIzdeliyamiIzMakrame } from "./uhod-za-izdeliyami-iz-makrame";
+import { makramePoyasaSChem } from "./makrame-poyasa-s-chem-nosit";
+import { makrameAbazhurAtmosfera } from "./makrame-abazhur-atmosfera-vechera";
+import { makramePodarokKakUpak } from "./makrame-podarok-kak-upakovyvat";
+import { makrameNaSvadbe } from "./makrame-na-svadbe";
 
 export const blogPosts: BlogPost[] = [
   istoriyaMakrameOtMoryakovDoInterera,
@@ -51,6 +55,10 @@ export const blogPosts: BlogPost[] = [
   bazovyeUzlyMakrame,
   trendyMakrame20252026,
   kakVybratPervyyMasterKlass,
+  makramePoyasaSChem,
+  makrameAbazhurAtmosfera,
+  makramePodarokKakUpak,
+  makrameNaSvadbe,
 ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
