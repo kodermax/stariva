@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { env } from "@/lib/env";
 import { describeSelection, formatRub } from "@/lib/custom-order/pricing";
+import { env } from "@/lib/env";
 
 export const runtime = "nodejs";
 
@@ -98,18 +98,24 @@ async function sendTelegramMessage(
   chatId: string,
   message: string,
 ): Promise<void> {
+  // Telegram лимит — 4096 символов
+  const truncated = message.length > 4096
+    ? message.slice(0, 4090) + "\n...(обрезано)"
+    : message;
+
   const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      chat_id: chatId,
-      text: message,
+      chat_id: chatId.trim(),
+      text: truncated,
       parse_mode: "HTML",
       disable_web_page_preview: true,
     }),
   });
   if (!res.ok) {
-    throw new Error(`telegram_message_failed_${res.status}`);
+    const body = await res.text().catch(() => "unknown");
+    throw new Error(`telegram_message_failed_${res.status}: ${body}`);
   }
 }
 
@@ -189,32 +195,33 @@ export async function POST(request: NextRequest) {
     env.TELEGRAM_BOT_TOKEN && env.TELEGRAM_CHAT_ID,
   );
 
-  try {
-    if (telegramConfigured) {
-      await sendToTelegram(message, photo);
-    }
-    await sendEmail(message);
+  // Telegram — отдельный try, чтобы его ошибки не блокировали email
+  const telegramPromise = telegramConfigured
+    ? sendToTelegram(message, photo).catch((err) => {
+        console.error("[custom-order] Ошибка Telegram:", err);
+      })
+    : Promise.resolve();
 
-    if (!telegramConfigured && !env.RESEND_API_KEY) {
-      // Ни один канал не настроен
-      if (env.NODE_ENV === "production") {
-        return NextResponse.json(
-          { error: "Приём заявок временно недоступен" },
-          { status: 503 },
-        );
-      }
-      console.warn(
-        "[custom-order] Каналы доставки не настроены. Заявка:\n",
-        message,
+  // Email отправляем синхронно, ждём его результата
+  const emailPromise = sendEmail(message).catch((err) => {
+    console.error("[custom-order] Ошибка email:", err);
+  });
+
+  await Promise.all([telegramPromise, emailPromise]);
+
+  if (!telegramConfigured && !env.RESEND_API_KEY) {
+    // Ни один канал не настроен
+    if (env.NODE_ENV === "production") {
+      return NextResponse.json(
+        { error: "Приём заявок временно недоступен" },
+        { status: 503 },
       );
     }
-
-    return NextResponse.json({ ok: true });
-  } catch (error) {
-    console.error("[custom-order] Ошибка доставки заявки:", error);
-    return NextResponse.json(
-      { error: "Не удалось отправить заявку. Напишите нам в Telegram." },
-      { status: 502 },
+    console.warn(
+      "[custom-order] Каналы доставки не настроены. Заявка:\n",
+      message,
     );
   }
+
+  return NextResponse.json({ ok: true });
 }
